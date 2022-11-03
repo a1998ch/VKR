@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VKRView
+namespace ViewGUI
 {
-    public partial class Form1 : Form
+    public partial class DownloadForm : Form
     {
-        public Form1()
+        internal event EventHandler CloseForm;
+
+        public DownloadForm()
         {
             InitializeComponent();
+        }
+
+        private void DownloadFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+            CloseForm?.Invoke(sender, e);
         }
     }
 }
