@@ -88,18 +88,17 @@ namespace ExcelModel
             return array;
         }
 
-        public string[] WriteBookColumn(string nameColumn, int firstRow = 1)
+        public List<T> WriteBookColumn<T>(string nameColumn, int firstRow = 1)
         {
-            string[] array = new string[0];
+            List<T> list = new List<T>();
             int i = 0;
             Range range = _worksheet.get_Range($"{nameColumn.ToUpper()}{firstRow}", $"{nameColumn}{LastRow}");
-            foreach (object cell in range.Value)
+            foreach (var cell in range.Value)
             {
-                Array.Resize(ref array, i + 1);
-                array[i] = cell.ToString();
+                list[i] = cell;
                 i++;
             }
-            return array;
+            return list;
         }
 
         public void WriteCell(string[] array, int numberColumn, int firstRow = 1)

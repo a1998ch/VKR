@@ -68,20 +68,20 @@ namespace ViewGUI
             // ToolStripMenuItemSave
             // 
             this.ToolStripMenuItemSave.Name = "ToolStripMenuItemSave";
-            this.ToolStripMenuItemSave.Size = new System.Drawing.Size(233, 22);
+            this.ToolStripMenuItemSave.Size = new System.Drawing.Size(208, 22);
             this.ToolStripMenuItemSave.Text = "Сохранить как...";
             // 
             // ToolStripMenuItemBD
             // 
             this.ToolStripMenuItemBD.Name = "ToolStripMenuItemBD";
-            this.ToolStripMenuItemBD.Size = new System.Drawing.Size(233, 22);
-            this.ToolStripMenuItemBD.Text = "Загрузить данные из БД ОИК";
+            this.ToolStripMenuItemBD.Size = new System.Drawing.Size(208, 22);
+            this.ToolStripMenuItemBD.Text = "Выгрузить данные из БД";
             this.ToolStripMenuItemBD.Click += new System.EventHandler(this.ToolStripMenuItemBDClick);
             // 
             // ToolStripMenuItemExit
             // 
             this.ToolStripMenuItemExit.Name = "ToolStripMenuItemExit";
-            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(233, 22);
+            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(208, 22);
             this.ToolStripMenuItemExit.Text = "Выход";
             // 
             // расчётToolStripMenuItem
@@ -98,6 +98,7 @@ namespace ViewGUI
             this.ToolStripMenuItemCalc.Name = "ToolStripMenuItemCalc";
             this.ToolStripMenuItemCalc.Size = new System.Drawing.Size(214, 22);
             this.ToolStripMenuItemCalc.Text = "Запустить расчёт";
+            this.ToolStripMenuItemCalc.Click += new System.EventHandler(this.ToolStripMenuItemCalcClick);
             // 
             // ToolStripMenuItemAdd
             // 
@@ -137,6 +138,7 @@ namespace ViewGUI
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainFormLoad);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

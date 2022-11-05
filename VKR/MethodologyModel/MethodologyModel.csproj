@@ -44,5 +44,11 @@
     <Compile Include="PowerReserve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelModel\ExcelModel.csproj">
+      <Project>{a22163ad-2a98-43c4-9619-5cc6b39a96df}</Project>
+      <Name>ExcelModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

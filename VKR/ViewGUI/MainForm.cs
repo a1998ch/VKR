@@ -12,22 +12,37 @@ namespace ViewGUI
 {
     public partial class MainForm : Form
     {
+        private List<double> _listVoltage = new List<double>(3); 
+
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainFormLoad(object sender, EventArgs e)
+        {
+            double Uab = 225.8, Ubc = 229, Uca = 214.2;
+            _listVoltage.Add(Uab);
+            _listVoltage.Add(Ubc);
+            _listVoltage.Add(Uca);
         }
 
         private void ToolStripMenuItemBDClick(object sender, EventArgs e)
         {
             this.Hide();
             DownloadForm downloadForm = new DownloadForm();
-            downloadForm.CloseForm += DownloadFormCloseForm;
+            downloadForm.CloseForm += OtherCloseForm;
             downloadForm.ShowDialog();
         }
 
-        private void DownloadFormCloseForm(object sender, EventArgs e)
+        private void OtherCloseForm(object sender, EventArgs e)
         {
             this.Show();
+        }
+
+        private void ToolStripMenuItemCalcClick(object sender, EventArgs e)
+        {
+
         }
     }
 }
