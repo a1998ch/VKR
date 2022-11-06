@@ -91,12 +91,10 @@ namespace ExcelModel
         public List<T> WriteBookColumn<T>(string nameColumn, int firstRow = 1)
         {
             List<T> list = new List<T>();
-            int i = 0;
             Range range = _worksheet.get_Range($"{nameColumn.ToUpper()}{firstRow}", $"{nameColumn}{LastRow}");
             foreach (var cell in range.Value)
             {
-                list[i] = cell;
-                i++;
+                list.Add(cell);
             }
             return list;
         }

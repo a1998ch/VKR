@@ -40,6 +40,7 @@ namespace ViewGUI
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemAboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemManual = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,11 +128,20 @@ namespace ViewGUI
             this.ToolStripMenuItemManual.Size = new System.Drawing.Size(221, 22);
             this.ToolStripMenuItemManual.Text = "Руководство пользователя";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(59, 36);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(195, 67);
+            this.textBox1.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(362, 154);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -159,6 +169,7 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAboutProg;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemManual;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

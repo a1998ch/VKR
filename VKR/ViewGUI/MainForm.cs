@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MethodologyModel;
 
 namespace ViewGUI
 {
@@ -42,7 +43,9 @@ namespace ViewGUI
 
         private void ToolStripMenuItemCalcClick(object sender, EventArgs e)
         {
-
+            PowerReserve power = new PowerReserve();
+            var P = power.LimitFlow(_listVoltage);
+            textBox1.Text = P.ToString();
         }
     }
 }

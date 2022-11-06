@@ -9,46 +9,57 @@ namespace MethodologyModel
 {
     public class PowerReserve
     {
-        private double ActivePower(List<double> listVoltage, int listNumber)
+        public double LimitFlow(List<double> listVoltage)
         {
-            /*int listNumber;
-
-            if (MeanVoltage(listVoltage) > 220 && MeanVoltage(listVoltage) < 240)
+            Dictionary<double, double> dict = new Dictionary<double, double>();
+            if (MeanVoltage(listVoltage) > 220)
             {
-                listNumber = 1;
+                var one = Interpolation(RangePowerAndK2U(listVoltage, 1));
+                var two = Interpolation(RangePowerAndK2U(listVoltage, 2));
+                dict.Add(two, one);
+                return Interpolation(dict);
             }
-            else if (MeanVoltage(listVoltage) > 200 && MeanVoltage(listVoltage) < 220)
+            else if (MeanVoltage(listVoltage) < 220)
             {
-                listNumber = 2;
+                var one = Interpolation(RangePowerAndK2U(listVoltage, 2));
+                var two = Interpolation(RangePowerAndK2U(listVoltage, 3));
+                dict.Add(two, one);
+                return Interpolation(dict);
             }
             else
             {
                 throw new ArgumentException("Ошибка");
-            }*/
+            }
+        }
 
+        private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, int listNumber)
+        {
             Excel excel = new Excel(@"D:\универ\Магистратура\ВКР\Моё\Диссер ИТ\Test.xlsx", listNumber);
 
-            List<double> list = excel.WriteBookColumn<double>("A", 2);
+            List<double> listK2U = excel.WriteBookColumn<double>("A", 2);
+            List<double> listPower = excel.WriteBookColumn<double>("B", 2);
             var K2U = AsymmetryCoefficientCalc(listVoltage);
 
-            Dictionary<int, double> dictK2U = new Dictionary<int, double>();
+            Dictionary<double, double> dict = new Dictionary<double, double>();
 
-            for (int i = 0, cellNumber = 2; i < list.Count; i++, cellNumber++)
+            for (int i = 0; i < listK2U.Count; i++)
             {
-                if (list[i] > K2U)
+                if (listK2U[i] > K2U)
                 {
-                    dictK2U.Add(cellNumber-2, list[i - 2]);
-                    dictK2U.Add(cellNumber, list[i]);
+                    dict.Add(listK2U[i], listPower[i]);
+                    dict.Add(listK2U[i - 1], listPower[i - 1]);
                     break;
                 }
             }
+            return dict;
+        }
 
-            /*switch (MeanVoltage(listVoltage))
-            {
-                case 1:
-                    break;
-            }*/
-            return 0;
+        private double Interpolation(Dictionary<double, double> dict)
+        {
+            var pathEquations = ((dict.Values.ElementAt(0) - dict.Values.ElementAt(1)) /
+                                (dict.Keys.ElementAt(0) - dict.Keys.ElementAt(1)));
+            var result = pathEquations * dict.Keys.ElementAt(0) + (dict.Values.ElementAt(1) - pathEquations * dict.Keys.ElementAt(1));
+            return result;
         }
 
         private double AsymmetryCoefficientCalc(List<double> listVoltage)
