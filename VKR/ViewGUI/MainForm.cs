@@ -22,7 +22,7 @@ namespace ViewGUI
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            double Uab = 225.8, Ubc = 229, Uca = 214.2;
+            double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
             _listVoltage.Add(Uca);

@@ -14,17 +14,18 @@ namespace MethodologyModel
             Dictionary<double, double> dict = new Dictionary<double, double>();
             if (MeanVoltage(listVoltage) > 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, 1));
-                var two = Interpolation(RangePowerAndK2U(listVoltage, 2));
-                dict.Add(two, one);
-                return Interpolation(dict);
+                var one = Interpolation(RangePowerAndK2U(listVoltage, 1), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, 2), listVoltage);
+                dict.Add(220, two);
+                dict.Add(240, one);
+                return Interpolation(dict, listVoltage, true);
             }
             else if (MeanVoltage(listVoltage) < 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, 2));
-                var two = Interpolation(RangePowerAndK2U(listVoltage, 3));
+                var one = Interpolation(RangePowerAndK2U(listVoltage, 2), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, 3), listVoltage);
                 dict.Add(two, one);
-                return Interpolation(dict);
+                return Interpolation(dict, listVoltage, true);
             }
             else
             {
@@ -46,20 +47,29 @@ namespace MethodologyModel
             {
                 if (listK2U[i] > K2U)
                 {
-                    dict.Add(listK2U[i], listPower[i]);
-                    dict.Add(listK2U[i - 1], listPower[i - 1]);
+                    dict.Add(Math.Round(listK2U[i], 0), Math.Round(listPower[i], 3));
+                    dict.Add(Math.Round(listK2U[i - 1], 0), Math.Round(listPower[i - 1], 3));
                     break;
                 }
             }
+            excel.ExcelClose();
             return dict;
         }
 
-        private double Interpolation(Dictionary<double, double> dict)
+        private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {
+            var K2U = AsymmetryCoefficientCalc(listVoltage);
             var pathEquations = ((dict.Values.ElementAt(0) - dict.Values.ElementAt(1)) /
                                 (dict.Keys.ElementAt(0) - dict.Keys.ElementAt(1)));
-            var result = pathEquations * dict.Keys.ElementAt(0) + (dict.Values.ElementAt(1) - pathEquations * dict.Keys.ElementAt(1));
-            return result;
+
+            if (!flag)
+            {
+                return pathEquations * K2U + (dict.Values.ElementAt(1) - pathEquations * dict.Keys.ElementAt(1));
+            }
+            else
+            {
+                return pathEquations * MeanVoltage(listVoltage) + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(1));
+            }
         }
 
         private double AsymmetryCoefficientCalc(List<double> listVoltage)
