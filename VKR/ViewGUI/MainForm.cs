@@ -14,7 +14,7 @@ namespace ViewGUI
 {
     public partial class MainForm : Form
     {
-        private List<double> _listVoltage = new List<double>(3); 
+        private readonly List<double> _listVoltage = new List<double>(3); 
 
         public MainForm()
         {
@@ -23,7 +23,6 @@ namespace ViewGUI
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            var power = new PowerReserve();
             double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
