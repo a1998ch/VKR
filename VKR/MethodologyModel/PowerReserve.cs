@@ -4,12 +4,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelModel;
+using System.IO;
 
 namespace MethodologyModel
 {
     public class PowerReserve
     {
+        private Dictionary<double, double> _dict200 = DownloadData("200");
+
+        private Dictionary<double, double> _dict220 = DownloadData("220");
+
+        private Dictionary<double, double> _dict240 = DownloadData("240");
+
+        private static Dictionary<double, double> DownloadData(string path)
+        {
+            Dictionary<double, double> dict = new Dictionary<double, double>();
+            using (var stream = new StreamReader($@"E:\универ\Магистратура\ВКР\Моё\Диссер ИТ\{path}.txt"))
+            {
+                var data = stream.ReadToEnd().Split(';');
+                for (int i = 0; i < data.Length - 1; i += 2)
+                {
+                    dict.Add(Convert.ToDouble(data[i]), Convert.ToDouble(data[i + 1]));
+                }
+                return dict;
+            }
+        }
+
         public double LimitFlow(List<double> listVoltage)
+        {
+            Dictionary<double, double> dict = new Dictionary<double, double>();
+
+            if (MeanVoltage(listVoltage) > 220)
+            {
+                var one = Interpolation(RangePowerAndK2U(listVoltage, _dict240), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, _dict220), listVoltage);
+                dict.Add(220, two);
+                dict.Add(240, one);
+                return Interpolation(dict, listVoltage, true);
+            }
+            else if (MeanVoltage(listVoltage) < 220)
+            {
+                var one = Interpolation(RangePowerAndK2U(listVoltage, _dict220), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, _dict200), listVoltage);
+                dict.Add(200, two);
+                dict.Add(220, one);
+                return Interpolation(dict, listVoltage, true);
+            }
+            else
+            {
+                throw new ArgumentException("Ошибка");
+            }
+        }
+
+        /*public double LimitFlow(List<double> listVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
             if (MeanVoltage(listVoltage) > 220)
@@ -31,9 +78,26 @@ namespace MethodologyModel
             {
                 throw new ArgumentException("Ошибка");
             }
+        }*/
+
+        private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, Dictionary<double, double> dict)
+        {
+            var K2U = AsymmetryCoefficientCalc(listVoltage);
+
+            Dictionary<double, double> dictResult = new Dictionary<double, double>();
+            for (int i = 0; i < dict.Count; i++)
+            {
+                if (dict.Keys.ElementAt(i) > K2U)
+                {
+                    dictResult.Add(dict.Keys.ElementAt(i), dict.Values.ElementAt(i));
+                    dictResult.Add(dict.Keys.ElementAt(i+1), dict.Values.ElementAt(i+1));
+                    break;
+                }
+            }
+            return dictResult;
         }
 
-        private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, int listNumber)
+        /*private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, int listNumber)
         {
             Excel excel = new Excel(@"D:\универ\Магистратура\ВКР\Моё\Диссер ИТ\Test.xlsx", listNumber);
 
@@ -54,7 +118,7 @@ namespace MethodologyModel
             }
             excel.ExcelClose();
             return dict;
-        }
+        }*/
 
         private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {

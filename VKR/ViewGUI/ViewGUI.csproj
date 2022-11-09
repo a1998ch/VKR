@@ -89,6 +89,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExcelModel\ExcelModel.csproj">
+      <Project>{a22163ad-2a98-43c4-9619-5cc6b39a96df}</Project>
+      <Name>ExcelModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MethodologyModel\MethodologyModel.csproj">
       <Project>{22b91b7b-3c4b-44bf-90cf-7898b0a9c044}</Project>
       <Name>MethodologyModel</Name>

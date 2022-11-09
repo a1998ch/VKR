@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MethodologyModel;
+using System.IO;
 
 namespace ViewGUI
 {
@@ -22,6 +23,7 @@ namespace ViewGUI
 
         private void MainFormLoad(object sender, EventArgs e)
         {
+            var power = new PowerReserve();
             double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
