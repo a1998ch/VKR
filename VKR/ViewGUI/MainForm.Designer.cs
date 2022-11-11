@@ -41,6 +41,7 @@ namespace ViewGUI
             this.ToolStripMenuItemAboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemManual = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ToolStripMenuItemConnectBD = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +90,8 @@ namespace ViewGUI
             // 
             this.расчётToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemCalc,
-            this.ToolStripMenuItemAdd});
+            this.ToolStripMenuItemAdd,
+            this.ToolStripMenuItemConnectBD});
             this.расчётToolStripMenuItem.Name = "расчётToolStripMenuItem";
             this.расчётToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.расчётToolStripMenuItem.Text = "Расчёт";
@@ -136,6 +138,13 @@ namespace ViewGUI
             this.textBox1.Size = new System.Drawing.Size(195, 67);
             this.textBox1.TabIndex = 1;
             // 
+            // ToolStripMenuItemConnectBD
+            // 
+            this.ToolStripMenuItemConnectBD.Name = "ToolStripMenuItemConnectBD";
+            this.ToolStripMenuItemConnectBD.Size = new System.Drawing.Size(214, 22);
+            this.ToolStripMenuItemConnectBD.Text = "Подключить БД";
+            this.ToolStripMenuItemConnectBD.Click += new System.EventHandler(this.ToolStripMenuItemConnectBDClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,6 +179,7 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAboutProg;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemManual;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemConnectBD;
     }
 }
 

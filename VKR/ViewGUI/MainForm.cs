@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MethodologyModel;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace ViewGUI
 {
@@ -47,6 +48,22 @@ namespace ViewGUI
             PowerReserve power = new PowerReserve();
             var P = power.LimitFlow(_listVoltage);
             textBox1.Text = P.ToString();
+        }
+
+        private void ToolStripMenuItemConnectBDClick(object sender, EventArgs e)
+        {
+            SqlConnection sqlConnection = new SqlConnection(@"Data Source=ST15;Initial Catalog=DatabaseDownload;Integrated Security=True");
+            string sql = "SELECT Voltage_value From Voltage_level";
+            sqlConnection.Open();
+            SqlCommand comand = new SqlCommand(sql, sqlConnection);
+            SqlDataReader dataReader = comand.ExecuteReader();
+
+            List<int> list = new List<int>();
+            while(dataReader.Read())
+            {
+                textBox1.Text += Convert.ToString(dataReader.GetString(0));
+            }
+            sqlConnection.Close();
         }
     }
 }
