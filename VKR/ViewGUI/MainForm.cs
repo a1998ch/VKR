@@ -52,16 +52,20 @@ namespace ViewGUI
 
         private void ToolStripMenuItemConnectBDClick(object sender, EventArgs e)
         {
-            SqlConnection sqlConnection = new SqlConnection(@"Data Source=ST15;Initial Catalog=DatabaseDownload;Integrated Security=True");
+            SqlConnection sqlConnection = new SqlConnection(@"data source=DESKTOP-M77O4Q0\SQLEXPRESS;initial catalog=
+                                                                CharacteristicsDB;trusted_connection=true");
             string sql = "SELECT Voltage_value From Voltage_level";
             sqlConnection.Open();
             SqlCommand comand = new SqlCommand(sql, sqlConnection);
             SqlDataReader dataReader = comand.ExecuteReader();
 
             List<int> list = new List<int>();
+            int i = 0;
             while(dataReader.Read())
             {
-                textBox1.Text += Convert.ToString(dataReader.GetString(0));
+                list.Add(dataReader.GetInt32(0));
+                textBox1.Text += list[i].ToString() + " ";
+                i++;
             }
             sqlConnection.Close();
         }
