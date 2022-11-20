@@ -1,7 +1,7 @@
 ﻿
 namespace ViewGUI
 {
-    partial class ConnectDataBase
+    partial class ConnectDataBaseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -105,7 +105,7 @@ namespace ViewGUI
             this.Cancellation.UseVisualStyleBackColor = true;
             this.Cancellation.Click += new System.EventHandler(this.CancellationClick);
             // 
-            // ConnectDataBase
+            // ConnectDataBaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,9 +115,9 @@ namespace ViewGUI
             this.Controls.Add(this.ConnectDB);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "ConnectDataBase";
+            this.Name = "ConnectDataBaseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ConnectDataBase";
+            this.Text = "ConnectDataBaseForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConnectDataBaseClosing);
             this.Load += new System.EventHandler(this.ConnectDataBaseLoad);
             this.ServerConnection.ResumeLayout(false);

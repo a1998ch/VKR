@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace ViewGUI
 {
-    public partial class ConnectDataBase : Form
+    public partial class ConnectDataBaseForm : Form
     {
         internal event EventHandler CloseForm;
 
         internal event EventHandler<string> ConnectEvent;
 
-        public ConnectDataBase()
+        public ConnectDataBaseForm()
         {
             InitializeComponent();
         }
@@ -35,8 +35,8 @@ namespace ViewGUI
         private void ConnectDBClick(object sender, EventArgs e)
         {
             string connectionString = $@"data source={NameServer.Text};
-                          initial catalog={NameDB.Text};
-                          trusted_connection=true";
+                                         initial catalog={NameDB.Text};
+                                         trusted_connection=true";
             ConnectEvent.Invoke(this, connectionString);
             this.Close();
         }

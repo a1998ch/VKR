@@ -28,7 +28,7 @@ namespace ViewGUI
         private void ConnectDBClick(object sender, EventArgs e)
         {
             this.Hide();
-            ConnectDataBase connectDataBase = new ConnectDataBase();
+            ConnectDataBaseForm connectDataBase = new ConnectDataBaseForm();
             connectDataBase.CloseForm += OtherCloseForm;
             connectDataBase.ConnectEvent += (o, args) =>
             {
@@ -44,28 +44,29 @@ namespace ViewGUI
 
         private void StartSystemClick(object sender, EventArgs e)
         {
-            PowerReserve power = new PowerReserve();
+            PowerReserve power = new PowerReserve(_sqlConnection);
             var P = power.LimitFlow(_listVoltage);
             textBox1.Text = P.ToString();
         }
 
         private void DatabaseDataImportClick(object sender, EventArgs e)
         {
-            SqlConnection sqlConnection = new SqlConnection(_sqlConnection);
-            string sql = "SELECT Voltage_value From Voltage_level";
-            sqlConnection.Open();
-            SqlCommand comand = new SqlCommand(sql, sqlConnection);
-            SqlDataReader dataReader = comand.ExecuteReader();
-
-            List<int> list = new List<int>();
+            var queryAllData = new WorkingWithDatabase();
+            var a = queryAllData.Data<object>(_sqlConnection);
             int i = 0;
-            while(dataReader.Read())
+            foreach (var item in a)
             {
-                list.Add(dataReader.GetInt32(0));
-                textBox1.Text += list[i].ToString() + " ";
                 i++;
+                if (i == 5)
+                {
+                    textBox1.Text += item.ToString() + "\n";
+                    i = 0;
+                }
+                else
+                {
+                    textBox1.Text += item.ToString() + ";";
+                }
             }
-            sqlConnection.Close();
         }
     }
 }

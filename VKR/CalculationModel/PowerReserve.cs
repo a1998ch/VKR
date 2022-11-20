@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,23 +10,42 @@ namespace CalculationModel
 {
     public class PowerReserve
     {
-        private Dictionary<double, double> _dict200 = DownloadData("200");
+        private readonly string _connectionString;
 
-        private Dictionary<double, double> _dict220 = DownloadData("220");
+        public PowerReserve() { }
 
-        private Dictionary<double, double> _dict240 = DownloadData("240");
-
-        private static Dictionary<double, double> DownloadData(string path)
+        public PowerReserve(string SqlConnect) 
         {
-            Dictionary<double, double> dict = new Dictionary<double, double>();
-            using (var stream = new StreamReader($@"D:\Магистратура\ВКР\Моё\Диссер ИТ\{path}.txt"))
+            _connectionString = SqlConnect;
+        }
+
+        private string QueryCharacteristicsFromDB(string regulationType, int voltageLevel)
+        {
+            return $"SELECT p.K2U_Value, p.Power_Value, v.Voltage_value, r.Regulation_Name, s.Scheme_Name " +
+                   $"FROM Value_param p, Voltage_level v, Regulation_Type r, Scheme s " +
+                   $"WHERE s.Voltage_id = v.Voltage_id AND " +
+                   $"s.Value_id = p.Value_id AND " +
+                   $"r.Regulation_id = s.Regulation_id AND " +
+                   $"Regulation_Name = '{regulationType}' AND " +
+                   $"Voltage_value = {voltageLevel};";
+        }
+
+        private Dictionary<double, double> DatabaseDataLoading(string regulationType, int voltageLevel)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
             {
-                var data = stream.ReadToEnd().Split(';');
-                for (int i = 0; i < data.Length - 1; i += 2)
+                Dictionary<double, double> dictWithCharact = new Dictionary<double, double>();
+
+                string sql = QueryCharacteristicsFromDB(regulationType, voltageLevel);
+                sqlConnection.Open();
+                SqlCommand comand = new SqlCommand(sql, sqlConnection);
+                SqlDataReader dataReader = comand.ExecuteReader();
+
+                while (dataReader.Read())
                 {
-                    dict.Add(Convert.ToDouble(data[i]), Convert.ToDouble(data[i + 1]));
+                    dictWithCharact.Add(dataReader.GetDouble(0), dataReader.GetDouble(1));
                 }
-                return dict;
+                return dictWithCharact;
             }
         }
 
@@ -35,16 +55,16 @@ namespace CalculationModel
 
             if (MeanVoltage(listVoltage) > 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, _dict240), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, _dict220), listVoltage);
+                var one = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading("Симметричное", 240)), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading("Симметричное", 220)), listVoltage);
                 dict.Add(220, two);
                 dict.Add(240, one);
                 return Interpolation(dict, listVoltage, true);
             }
             else if (MeanVoltage(listVoltage) < 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, _dict220), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, _dict200), listVoltage);
+                var one = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading("Симметричное", 220)), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading("Симметричное", 200)), listVoltage);
                 dict.Add(200, two);
                 dict.Add(220, one);
                 return Interpolation(dict, listVoltage, true);
@@ -54,30 +74,6 @@ namespace CalculationModel
                 throw new ArgumentException("Ошибка");
             }
         }
-
-        /*public double LimitFlow(List<double> listVoltage)
-        {
-            Dictionary<double, double> dict = new Dictionary<double, double>();
-            if (MeanVoltage(listVoltage) > 220)
-            {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, 1), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, 2), listVoltage);
-                dict.Add(220, two);
-                dict.Add(240, one);
-                return Interpolation(dict, listVoltage, true);
-            }
-            else if (MeanVoltage(listVoltage) < 220)
-            {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, 2), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, 3), listVoltage);
-                dict.Add(two, one);
-                return Interpolation(dict, listVoltage, true);
-            }
-            else
-            {
-                throw new ArgumentException("Ошибка");
-            }
-        }*/
 
         private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, Dictionary<double, double> dict)
         {
@@ -95,29 +91,6 @@ namespace CalculationModel
             }
             return dictResult;
         }
-
-        /*private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, int listNumber)
-        {
-            Excel excel = new Excel(@"D:\универ\Магистратура\ВКР\Моё\Диссер ИТ\Test.xlsx", listNumber);
-
-            List<double> listK2U = excel.WriteBookColumn<double>("A", 2);
-            List<double> listPower = excel.WriteBookColumn<double>("B", 2);
-            var K2U = AsymmetryCoefficientCalc(listVoltage);
-
-            Dictionary<double, double> dict = new Dictionary<double, double>();
-
-            for (int i = 0; i < listK2U.Count; i++)
-            {
-                if (listK2U[i] > K2U)
-                {
-                    dict.Add(Math.Round(listK2U[i], 0), Math.Round(listPower[i], 3));
-                    dict.Add(Math.Round(listK2U[i - 1], 0), Math.Round(listPower[i - 1], 3));
-                    break;
-                }
-            }
-            excel.ExcelClose();
-            return dict;
-        }*/
 
         private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {
