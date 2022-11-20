@@ -1,15 +1,8 @@
-﻿using System;
+﻿using CalculationModel;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MethodologyModel;
-using System.IO;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ViewGUI
 {
@@ -30,7 +23,7 @@ namespace ViewGUI
             _listVoltage.Add(Uca);
         }
 
-        private void ToolStripMenuItemBDClick(object sender, EventArgs e)
+        private void ConnectDBClick(object sender, EventArgs e)
         {
             this.Hide();
             DownloadForm downloadForm = new DownloadForm();
@@ -43,14 +36,14 @@ namespace ViewGUI
             this.Show();
         }
 
-        private void ToolStripMenuItemCalcClick(object sender, EventArgs e)
+        private void StartSystemClick(object sender, EventArgs e)
         {
             PowerReserve power = new PowerReserve();
             var P = power.LimitFlow(_listVoltage);
             textBox1.Text = P.ToString();
         }
 
-        private void ToolStripMenuItemConnectBDClick(object sender, EventArgs e)
+        private void DatabaseDataImportClick(object sender, EventArgs e)
         {
             SqlConnection sqlConnection = new SqlConnection(@"data source=DESKTOP-M77O4Q0\SQLEXPRESS;initial catalog=
                                                                 CharacteristicsDB;trusted_connection=true");

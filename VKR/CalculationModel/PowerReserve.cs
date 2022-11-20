@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;using ExcelModel;
-using System.IO;
+using System.Threading.Tasks;
 
-namespace MethodologyModel
+namespace CalculationModel
 {
     public class PowerReserve
     {
@@ -18,7 +18,7 @@ namespace MethodologyModel
         private static Dictionary<double, double> DownloadData(string path)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
-            using (var stream = new StreamReader($@"E:\универ\Магистратура\ВКР\Моё\Диссер ИТ\{path}.txt"))
+            using (var stream = new StreamReader($@"D:\Магистратура\ВКР\Моё\Диссер ИТ\{path}.txt"))
             {
                 var data = stream.ReadToEnd().Split(';');
                 for (int i = 0; i < data.Length - 1; i += 2)
@@ -89,7 +89,7 @@ namespace MethodologyModel
                 if (dict.Keys.ElementAt(i) > K2U)
                 {
                     dictResult.Add(dict.Keys.ElementAt(i), dict.Values.ElementAt(i));
-                    dictResult.Add(dict.Keys.ElementAt(i+1), dict.Values.ElementAt(i+1));
+                    dictResult.Add(dict.Keys.ElementAt(i + 1), dict.Values.ElementAt(i + 1));
                     break;
                 }
             }

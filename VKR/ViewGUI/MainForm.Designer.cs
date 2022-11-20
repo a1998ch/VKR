@@ -30,17 +30,19 @@ namespace ViewGUI
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemBD = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.расчётToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemCalc = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemConnectBD = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemAboutProg = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemManual = new System.Windows.Forms.ToolStripMenuItem();
+            this.Start = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartSystem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StopSystem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SystemDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConnectDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.DatabaseDataImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
+            this.бДРВОИКСК11ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.расчётнаяМодельRastrWin3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
+            this.Manual = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -49,99 +51,114 @@ namespace ViewGUI
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.расчётToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.Start,
+            this.SystemDB,
+            this.ExternalSystems,
+            this.Documentation});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(760, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // Start
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemSave,
-            this.ToolStripMenuItemBD,
-            this.ToolStripMenuItemExit});
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
-            this.файлToolStripMenuItem.Text = "Файл";
+            this.Start.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StartSystem,
+            this.StopSystem});
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(69, 24);
+            this.Start.Text = "Запуск";
             // 
-            // ToolStripMenuItemSave
+            // StartSystem
             // 
-            this.ToolStripMenuItemSave.Name = "ToolStripMenuItemSave";
-            this.ToolStripMenuItemSave.Size = new System.Drawing.Size(264, 26);
-            this.ToolStripMenuItemSave.Text = "Сохранить как...";
+            this.StartSystem.Name = "StartSystem";
+            this.StartSystem.Size = new System.Drawing.Size(234, 26);
+            this.StartSystem.Text = "Запустить Систему";
+            this.StartSystem.Click += new System.EventHandler(this.StartSystemClick);
             // 
-            // ToolStripMenuItemBD
+            // StopSystem
             // 
-            this.ToolStripMenuItemBD.Name = "ToolStripMenuItemBD";
-            this.ToolStripMenuItemBD.Size = new System.Drawing.Size(264, 26);
-            this.ToolStripMenuItemBD.Text = "Выгрузить данные из БД";
-            this.ToolStripMenuItemBD.Click += new System.EventHandler(this.ToolStripMenuItemBDClick);
+            this.StopSystem.Name = "StopSystem";
+            this.StopSystem.Size = new System.Drawing.Size(234, 26);
+            this.StopSystem.Text = "Остановить Систему";
             // 
-            // ToolStripMenuItemExit
+            // SystemDB
             // 
-            this.ToolStripMenuItemExit.Name = "ToolStripMenuItemExit";
-            this.ToolStripMenuItemExit.Size = new System.Drawing.Size(264, 26);
-            this.ToolStripMenuItemExit.Text = "Выход";
+            this.SystemDB.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ConnectDB,
+            this.AddEditDataDB,
+            this.DatabaseDataImport});
+            this.SystemDB.Name = "SystemDB";
+            this.SystemDB.Size = new System.Drawing.Size(176, 24);
+            this.SystemDB.Text = "База данных Системы";
             // 
-            // расчётToolStripMenuItem
+            // ConnectDB
             // 
-            this.расчётToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemCalc,
-            this.ToolStripMenuItemAdd,
-            this.ToolStripMenuItemConnectBD});
-            this.расчётToolStripMenuItem.Name = "расчётToolStripMenuItem";
-            this.расчётToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
-            this.расчётToolStripMenuItem.Text = "Расчёт";
+            this.ConnectDB.Name = "ConnectDB";
+            this.ConnectDB.Size = new System.Drawing.Size(359, 26);
+            this.ConnectDB.Text = "Подключение к БД";
+            this.ConnectDB.Click += new System.EventHandler(this.ConnectDBClick);
             // 
-            // ToolStripMenuItemCalc
+            // AddEditDataDB
             // 
-            this.ToolStripMenuItemCalc.Name = "ToolStripMenuItemCalc";
-            this.ToolStripMenuItemCalc.Size = new System.Drawing.Size(270, 26);
-            this.ToolStripMenuItemCalc.Text = "Запустить расчёт";
-            this.ToolStripMenuItemCalc.Click += new System.EventHandler(this.ToolStripMenuItemCalcClick);
+            this.AddEditDataDB.Name = "AddEditDataDB";
+            this.AddEditDataDB.Size = new System.Drawing.Size(359, 26);
+            this.AddEditDataDB.Text = "Добавить/Редактировать данные в БД";
             // 
-            // ToolStripMenuItemAdd
+            // DatabaseDataImport
             // 
-            this.ToolStripMenuItemAdd.Name = "ToolStripMenuItemAdd";
-            this.ToolStripMenuItemAdd.Size = new System.Drawing.Size(270, 26);
-            this.ToolStripMenuItemAdd.Text = "Добавить новый элемент";
+            this.DatabaseDataImport.Name = "DatabaseDataImport";
+            this.DatabaseDataImport.Size = new System.Drawing.Size(359, 26);
+            this.DatabaseDataImport.Text = "Импорт данных БД";
+            this.DatabaseDataImport.Click += new System.EventHandler(this.DatabaseDataImportClick);
             // 
-            // ToolStripMenuItemConnectBD
+            // ExternalSystems
             // 
-            this.ToolStripMenuItemConnectBD.Name = "ToolStripMenuItemConnectBD";
-            this.ToolStripMenuItemConnectBD.Size = new System.Drawing.Size(270, 26);
-            this.ToolStripMenuItemConnectBD.Text = "Подключить БД";
-            this.ToolStripMenuItemConnectBD.Click += new System.EventHandler(this.ToolStripMenuItemConnectBDClick);
+            this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.бДРВОИКСК11ToolStripMenuItem,
+            this.расчётнаяМодельRastrWin3ToolStripMenuItem});
+            this.ExternalSystems.Name = "ExternalSystems";
+            this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
+            this.ExternalSystems.Text = "Внешние Системы";
             // 
-            // справкаToolStripMenuItem
+            // бДРВОИКСК11ToolStripMenuItem
             // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItemAboutProg,
-            this.ToolStripMenuItemManual});
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
-            this.справкаToolStripMenuItem.Text = "Справка";
+            this.бДРВОИКСК11ToolStripMenuItem.Name = "бДРВОИКСК11ToolStripMenuItem";
+            this.бДРВОИКСК11ToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.бДРВОИКСК11ToolStripMenuItem.Text = "БДРВ ОИК \"СК-11\"";
             // 
-            // ToolStripMenuItemAboutProg
+            // расчётнаяМодельRastrWin3ToolStripMenuItem
             // 
-            this.ToolStripMenuItemAboutProg.Name = "ToolStripMenuItemAboutProg";
-            this.ToolStripMenuItemAboutProg.Size = new System.Drawing.Size(278, 26);
-            this.ToolStripMenuItemAboutProg.Text = "О программе";
+            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Name = "расчётнаяМодельRastrWin3ToolStripMenuItem";
+            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
+            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Text = "Расчётная модель RastrWin3";
             // 
-            // ToolStripMenuItemManual
+            // Documentation
             // 
-            this.ToolStripMenuItemManual.Name = "ToolStripMenuItemManual";
-            this.ToolStripMenuItemManual.Size = new System.Drawing.Size(278, 26);
-            this.ToolStripMenuItemManual.Text = "Руководство пользователя";
+            this.Documentation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutProg,
+            this.Manual});
+            this.Documentation.Name = "Documentation";
+            this.Documentation.Size = new System.Drawing.Size(81, 24);
+            this.Documentation.Text = "Справка";
+            // 
+            // AboutProg
+            // 
+            this.AboutProg.Name = "AboutProg";
+            this.AboutProg.Size = new System.Drawing.Size(278, 26);
+            this.AboutProg.Text = "О программе";
+            // 
+            // Manual
+            // 
+            this.Manual.Name = "Manual";
+            this.Manual.Size = new System.Drawing.Size(278, 26);
+            this.Manual.Text = "Руководство пользователя";
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(24, 45);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(259, 82);
@@ -155,7 +172,7 @@ namespace ViewGUI
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -171,18 +188,20 @@ namespace ViewGUI
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemBD;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSave;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemExit;
-        private System.Windows.Forms.ToolStripMenuItem расчётToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCalc;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAdd;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAboutProg;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemManual;
+        private System.Windows.Forms.ToolStripMenuItem Start;
+        private System.Windows.Forms.ToolStripMenuItem StopSystem;
+        private System.Windows.Forms.ToolStripMenuItem StartSystem;
+        private System.Windows.Forms.ToolStripMenuItem SystemDB;
+        private System.Windows.Forms.ToolStripMenuItem ConnectDB;
+        private System.Windows.Forms.ToolStripMenuItem AddEditDataDB;
+        private System.Windows.Forms.ToolStripMenuItem Documentation;
+        private System.Windows.Forms.ToolStripMenuItem AboutProg;
+        private System.Windows.Forms.ToolStripMenuItem Manual;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemConnectBD;
+        private System.Windows.Forms.ToolStripMenuItem DatabaseDataImport;
+        private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
+        private System.Windows.Forms.ToolStripMenuItem бДРВОИКСК11ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem расчётнаяМодельRastrWin3ToolStripMenuItem;
     }
 }
 
