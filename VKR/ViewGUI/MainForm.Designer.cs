@@ -161,7 +161,7 @@ namespace ViewGUI
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(259, 82);
+            this.textBox1.Size = new System.Drawing.Size(723, 82);
             this.textBox1.TabIndex = 1;
             // 
             // MainForm

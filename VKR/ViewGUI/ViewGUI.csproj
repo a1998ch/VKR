@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DownloadForm.cs">
+    <Compile Include="ConnectDataBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DownloadForm.Designer.cs">
-      <DependentUpon>DownloadForm.cs</DependentUpon>
+    <Compile Include="ConnectDataBase.Designer.cs">
+      <DependentUpon>ConnectDataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -60,8 +60,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DownloadForm.resx">
-      <DependentUpon>DownloadForm.cs</DependentUpon>
+    <EmbeddedResource Include="ConnectDataBase.resx">
+      <DependentUpon>ConnectDataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

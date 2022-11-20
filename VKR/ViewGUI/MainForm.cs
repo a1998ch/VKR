@@ -8,6 +8,8 @@ namespace ViewGUI
 {
     public partial class MainForm : Form
     {
+        private string _sqlConnection;
+
         private readonly List<double> _listVoltage = new List<double>(3); 
 
         public MainForm()
@@ -26,9 +28,13 @@ namespace ViewGUI
         private void ConnectDBClick(object sender, EventArgs e)
         {
             this.Hide();
-            DownloadForm downloadForm = new DownloadForm();
-            downloadForm.CloseForm += OtherCloseForm;
-            downloadForm.ShowDialog();
+            ConnectDataBase connectDataBase = new ConnectDataBase();
+            connectDataBase.CloseForm += OtherCloseForm;
+            connectDataBase.ConnectEvent += (o, args) =>
+            {
+                _sqlConnection = args;
+            };
+            connectDataBase.ShowDialog();
         }
 
         private void OtherCloseForm(object sender, EventArgs e)
@@ -45,8 +51,7 @@ namespace ViewGUI
 
         private void DatabaseDataImportClick(object sender, EventArgs e)
         {
-            SqlConnection sqlConnection = new SqlConnection(@"data source=DESKTOP-M77O4Q0\SQLEXPRESS;initial catalog=
-                                                                CharacteristicsDB;trusted_connection=true");
+            SqlConnection sqlConnection = new SqlConnection(_sqlConnection);
             string sql = "SELECT Voltage_value From Voltage_level";
             sqlConnection.Open();
             SqlCommand comand = new SqlCommand(sql, sqlConnection);
