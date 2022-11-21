@@ -51,22 +51,30 @@ namespace ViewGUI
 
         private void DatabaseDataImportClick(object sender, EventArgs e)
         {
-            var queryAllData = new WorkingWithDatabase();
-            var a = queryAllData.Data<object>(_sqlConnection);
-            int i = 0;
-            foreach (var item in a)
+            var saveFile = new SaveFileDialog();
+            saveFile.Filter = "Файл csv (*.csv)|*.csv";
+            saveFile.ShowDialog();
+            string path = saveFile.FileName;
+
+            if (string.IsNullOrEmpty(path)) { return; }
+
+            try
             {
-                i++;
-                if (i == 5)
-                {
-                    textBox1.Text += item.ToString() + "\n";
-                    i = 0;
-                }
-                else
-                {
-                    textBox1.Text += item.ToString() + ";";
-                }
+                var save = new WorkingWithDatabase();
+                save.SaveToCSV(_sqlConnection, path);
+                MessageBox.Show("Сохранение успешно", "Сообщение", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            catch(Exception ex)
+            {
+                ExeptionMessage(ex);
+            }
+        }
+
+        public void ExeptionMessage(Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
