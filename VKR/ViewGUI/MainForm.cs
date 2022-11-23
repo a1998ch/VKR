@@ -42,7 +42,7 @@ namespace ViewGUI
         private void StartSystemClick(object sender, EventArgs e)
         {
             PowerReserve power = new PowerReserve();
-            var P = power.LimitFlow(_sqlConnection, _listVoltage);
+            var P = power.LimitFlow(1, _sqlConnection, _listVoltage);
             textBox1.Text = P.ToString();
         }
 
@@ -81,12 +81,10 @@ namespace ViewGUI
 
         private void AddEditDataDBClick(object sender, EventArgs e)
         {
-            var query = new WorkingWithDatabase();
-
             this.Hide();
             DatabaseEditorForm databaseEditor = new DatabaseEditorForm();
             databaseEditor.CloseForm += OtherCloseForm;
-            databaseEditor.PullData(_sqlConnection, query.QueryAllData);
+            databaseEditor.PullData(_sqlConnection, DataBaseQuerys.QueryAllData);
             databaseEditor.ShowDialog();
 
             /*var openFile = new OpenFileDialog();

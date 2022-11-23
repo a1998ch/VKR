@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBaseQuerys.cs" />
     <Compile Include="WorkingWithDatabase.cs" />
     <Compile Include="PowerReserve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,24 +12,14 @@ namespace CalculationModel
     {
         public PowerReserve() { }
 
-        private string QueryCharacteristicsFromDB(string regulationType, int voltageLevel)
-        {
-            return $"SELECT p.K2U_Value, p.Power_Value, v.Voltage_value, r.Regulation_type, s.Energy_object_name, s.Scheme_number " +
-                   $"FROM Value_param p, Voltage_level v, Regulation r, Scheme s " +
-                   $"WHERE s.Voltage_id = v.Voltage_id AND " +
-                   $"s.Value_id = p.Value_id AND " +
-                   $"r.Regulation_id = s.Regulation_id AND " +
-                   $"Regulation_type = '{regulationType}' AND " +
-                   $"Voltage_value = {voltageLevel};";
-        }
-
-        private Dictionary<double, double> DatabaseDataLoading(string connectionString, string regulationType, int voltageLevel)
+        private Dictionary<double, double> DatabaseDataLoading(int schemeNumber, string connectionString, 
+                                                                string regulationType, int voltageLevel)
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 Dictionary<double, double> dictWithCharact = new Dictionary<double, double>();
 
-                string sql = QueryCharacteristicsFromDB(regulationType, voltageLevel);
+                string sql = DataBaseQuerys.QueryForCalc(schemeNumber, regulationType, voltageLevel);
                 sqlConnection.Open();
                 SqlCommand comand = new SqlCommand(sql, sqlConnection);
                 SqlDataReader dataReader = comand.ExecuteReader();
@@ -42,22 +32,30 @@ namespace CalculationModel
             }
         }
 
-        public double LimitFlow(string connectionString, List<double> listVoltage)
+        public double LimitFlow(int schemeNumber, string connectionString, List<double> listVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
 
             if (MeanVoltage(listVoltage) > 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading(connectionString, "Симметричное", 240)), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading(connectionString, "Симметричное", 220)), listVoltage);
+                var one = Interpolation(RangePowerAndK2U(
+                    listVoltage, DatabaseDataLoading(
+                        schemeNumber, connectionString, "Симметричное", 240)), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(
+                    listVoltage, DatabaseDataLoading(
+                        schemeNumber, connectionString, "Симметричное", 220)), listVoltage);
                 dict.Add(220, two);
                 dict.Add(240, one);
                 return Interpolation(dict, listVoltage, true);
             }
             else if (MeanVoltage(listVoltage) < 220)
             {
-                var one = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading(connectionString, "Симметричное", 220)), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(listVoltage, DatabaseDataLoading(connectionString, "Симметричное", 200)), listVoltage);
+                var one = Interpolation(RangePowerAndK2U(
+                    listVoltage, DatabaseDataLoading(
+                        schemeNumber, connectionString, "Симметричное", 220)), listVoltage);
+                var two = Interpolation(RangePowerAndK2U(
+                    listVoltage, DatabaseDataLoading(
+                        schemeNumber, connectionString, "Симметричное", 200)), listVoltage);
                 dict.Add(200, two);
                 dict.Add(220, one);
                 return Interpolation(dict, listVoltage, true);

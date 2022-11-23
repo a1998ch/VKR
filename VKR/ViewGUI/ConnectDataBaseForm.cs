@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculationModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,9 +35,7 @@ namespace ViewGUI
 
         private void ConnectDBClick(object sender, EventArgs e)
         {
-            string connectionString = $@"data source={NameServer.Text};
-                                         initial catalog={NameDB.Text};
-                                         trusted_connection=true";
+            string connectionString = DataBaseQuerys.ConnectToDB(NameServer.Text, NameDB.Text);
             ConnectEvent.Invoke(this, connectionString);
             this.Close();
         }
