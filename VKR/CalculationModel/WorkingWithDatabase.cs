@@ -16,7 +16,7 @@ namespace CalculationModel
 {
     public class WorkingWithDatabase
     {
-        private string QueryAllData
+        public string QueryAllData
         {
             get =>
                    $"SELECT p.K2U_Value, p.Power_Value, v.Voltage_value, r.Regulation_type, s.Energy_object_name, s.Scheme_number " +
@@ -87,7 +87,7 @@ namespace CalculationModel
             }
         }
 
-        private DataTable ConvertCSVtoDataTable(string filePath)
+        public DataTable ConvertToDataTable(string filePath)
         {
             DataTable dataTable = new DataTable();
             using (var stream = new StreamReader(filePath, Encoding.Default))
@@ -113,7 +113,7 @@ namespace CalculationModel
 
         public string LoadingCSVInDB(string connectionString, string path)
         {
-            DataTable csvFileData = ConvertCSVtoDataTable(path);
+            DataTable csvFileData = ConvertToDataTable(path);
             string a = String.Empty;
 
             foreach (DataRow row in csvFileData.Rows)
@@ -125,20 +125,6 @@ namespace CalculationModel
             }
 
             return a;
-            
-            /*DataTable csvFileData = ConvertCSVtoDataTable(path);
-            using (SqlConnection dbConnection = new SqlConnection(connectionString))
-            {
-                dbConnection.Open();
-                using (SqlBulkCopy s = new SqlBulkCopy(dbConnection))
-                {
-                    s.DestinationTableName = "CharacteristicsDB";
-                    foreach (var column in csvFileData.Columns)
-                        s.ColumnMappings.Add(column.ToString(), column.ToString());
-                    s.WriteToServer(csvFileData);
-                }
-            }
-            return null;*/
         }
     }
 }

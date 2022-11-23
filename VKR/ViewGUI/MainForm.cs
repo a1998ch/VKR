@@ -81,7 +81,15 @@ namespace ViewGUI
 
         private void AddEditDataDBClick(object sender, EventArgs e)
         {
-            var openFile = new OpenFileDialog();
+            var query = new WorkingWithDatabase();
+
+            this.Hide();
+            DatabaseEditorForm databaseEditor = new DatabaseEditorForm();
+            databaseEditor.CloseForm += OtherCloseForm;
+            databaseEditor.PullData(_sqlConnection, query.QueryAllData);
+            databaseEditor.ShowDialog();
+
+            /*var openFile = new OpenFileDialog();
             string path = WorkWithCSV(openFile);
 
             if (string.IsNullOrEmpty(path)) { return; }
@@ -97,7 +105,7 @@ namespace ViewGUI
             catch (Exception ex)
             {
                 ExeptionMessage(ex);
-            }
+            }*/
         }
 
         public void ExeptionMessage(Exception ex)
