@@ -30,10 +30,7 @@ namespace ViewGUI
             this.Hide();
             ConnectDataBaseForm connectDataBase = new ConnectDataBaseForm();
             connectDataBase.CloseForm += OtherCloseForm;
-            connectDataBase.ConnectEvent += (o, args) =>
-            {
-                _sqlConnection = args;
-            };
+            connectDataBase.ConnectEvent += (o, args) => _sqlConnection = args;
             connectDataBase.ShowDialog();
         }
 
@@ -44,17 +41,28 @@ namespace ViewGUI
 
         private void StartSystemClick(object sender, EventArgs e)
         {
-            PowerReserve power = new PowerReserve(_sqlConnection);
-            var P = power.LimitFlow(_listVoltage);
+            PowerReserve power = new PowerReserve();
+            var P = power.LimitFlow(_sqlConnection, _listVoltage);
             textBox1.Text = P.ToString();
+        }
+
+        /// <summary>
+        /// Сохранение/загрузка данных
+        /// </summary>
+        /// <param name="saveOpenFile">saveFileDialog or openFileDialog</param>
+        /// <returns>Путь для сохранения/загрузки</returns>
+        private string WorkWithCSV(FileDialog saveOpenFile)
+        {
+            saveOpenFile.Filter = "Файл csv (*.csv)|*.csv";
+            saveOpenFile.ShowDialog();
+            string path = saveOpenFile.FileName;
+            return path;
         }
 
         private void DatabaseDataImportClick(object sender, EventArgs e)
         {
             var saveFile = new SaveFileDialog();
-            saveFile.Filter = "Файл csv (*.csv)|*.csv";
-            saveFile.ShowDialog();
-            string path = saveFile.FileName;
+            string path = WorkWithCSV(saveFile);
 
             if (string.IsNullOrEmpty(path)) { return; }
 
@@ -66,6 +74,27 @@ namespace ViewGUI
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
+            {
+                ExeptionMessage(ex);
+            }
+        }
+
+        private void AddEditDataDBClick(object sender, EventArgs e)
+        {
+            var openFile = new OpenFileDialog();
+            string path = WorkWithCSV(openFile);
+
+            if (string.IsNullOrEmpty(path)) { return; }
+
+            try
+            {
+                var load = new WorkingWithDatabase();
+                string a = load.LoadingCSVInDB(_sqlConnection, path);
+                MessageBox.Show("Загрузк успешна", "Сообщение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox1.Text = a;
+            }
+            catch (Exception ex)
             {
                 ExeptionMessage(ex);
             }

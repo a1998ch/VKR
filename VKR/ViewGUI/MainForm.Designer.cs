@@ -105,6 +105,7 @@ namespace ViewGUI
             this.AddEditDataDB.Name = "AddEditDataDB";
             this.AddEditDataDB.Size = new System.Drawing.Size(359, 26);
             this.AddEditDataDB.Text = "Добавить/Редактировать данные в БД";
+            this.AddEditDataDB.Click += new System.EventHandler(this.AddEditDataDBClick);
             // 
             // DatabaseDataImport
             // 
