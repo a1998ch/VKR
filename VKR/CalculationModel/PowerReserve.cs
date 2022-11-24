@@ -12,14 +12,14 @@ namespace CalculationModel
     {
         public PowerReserve() { }
 
-        private Dictionary<double, double> DatabaseDataLoading(int schemeNumber, string connectionString, 
+        private Dictionary<double, double> DatabaseDataLoading(string eoName, string schemeName, string connectionString, 
                                                                 string regulationType, int voltageLevel)
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 Dictionary<double, double> dictWithCharact = new Dictionary<double, double>();
 
-                string sql = DataBaseQuerys.QueryForCalc(schemeNumber, regulationType, voltageLevel);
+                string sql = DataBaseQuerys.QueryForCalc(eoName, schemeName, regulationType, voltageLevel);
                 sqlConnection.Open();
                 SqlCommand comand = new SqlCommand(sql, sqlConnection);
                 SqlDataReader dataReader = comand.ExecuteReader();
@@ -32,7 +32,7 @@ namespace CalculationModel
             }
         }
 
-        public double LimitFlow(int schemeNumber, string connectionString, List<double> listVoltage)
+        public double LimitFlow(string eoName, string schemeName, string connectionString, List<double> listVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
 
@@ -40,10 +40,10 @@ namespace CalculationModel
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        schemeNumber, connectionString, "Симметричное", 240)), listVoltage);
+                        eoName, schemeName, connectionString, "Симметричное", 240)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        schemeNumber, connectionString, "Симметричное", 220)), listVoltage);
+                        eoName, schemeName, connectionString, "Симметричное", 220)), listVoltage);
                 dict.Add(220, two);
                 dict.Add(240, one);
                 return Interpolation(dict, listVoltage, true);
@@ -52,10 +52,10 @@ namespace CalculationModel
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        schemeNumber, connectionString, "Симметричное", 220)), listVoltage);
+                        eoName, schemeName, connectionString, "Симметричное", 220)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        schemeNumber, connectionString, "Симметричное", 200)), listVoltage);
+                        eoName, schemeName, connectionString, "Симметричное", 200)), listVoltage);
                 dict.Add(200, two);
                 dict.Add(220, one);
                 return Interpolation(dict, listVoltage, true);

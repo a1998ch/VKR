@@ -42,7 +42,7 @@ namespace ViewGUI
         private void StartSystemClick(object sender, EventArgs e)
         {
             PowerReserve power = new PowerReserve();
-            var P = power.LimitFlow(1, _sqlConnection, _listVoltage);
+            var P = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
             textBox1.Text = P.ToString();
         }
 
