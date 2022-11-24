@@ -86,24 +86,6 @@ namespace ViewGUI
             databaseEditor.CloseForm += OtherCloseForm;
             databaseEditor.PullData(_sqlConnection, DataBaseQuerys.QueryAllData);
             databaseEditor.ShowDialog();
-
-            /*var openFile = new OpenFileDialog();
-            string path = WorkWithCSV(openFile);
-
-            if (string.IsNullOrEmpty(path)) { return; }
-
-            try
-            {
-                var load = new WorkingWithDatabase();
-                string a = load.LoadingCSVInDB(_sqlConnection, path);
-                MessageBox.Show("Загрузк успешна", "Сообщение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                textBox1.Text = a;
-            }
-            catch (Exception ex)
-            {
-                ExeptionMessage(ex);
-            }*/
         }
 
         public void ExeptionMessage(Exception ex)

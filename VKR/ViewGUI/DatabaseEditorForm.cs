@@ -26,16 +26,6 @@ namespace ViewGUI
 
         private void DatabaseEditorFormLoad(object sender, EventArgs e)
         {
-            /*var openFile = new OpenFileDialog();
-            openFile.Filter = "Файл csv (*.csv)|*.csv";
-            openFile.ShowDialog();
-            string path = openFile.FileName;
-
-            if (string.IsNullOrEmpty(path)) { return; }
-
-            var db = new WorkingWithDatabase();
-            dataGridViewDB.DataSource = db.ConvertToDataTable(path);*/
-
             dataGridViewDB.DataSource = _dataTable;
             dataGridViewDB.AutoResizeColumns();
         }
@@ -43,6 +33,20 @@ namespace ViewGUI
         private void DatabaseEditorFormClosing(object sender, FormClosingEventArgs e)
         {
             CloseForm?.Invoke(sender, e);
+        }
+
+        private void AddDataToDBClick(object sender, EventArgs e)
+        {
+            var openFile = new OpenFileDialog();
+            openFile.Filter = "Файл csv (*.csv)|*.csv";
+            openFile.ShowDialog();
+            string path = openFile.FileName;
+
+            if (string.IsNullOrEmpty(path)) { return; }
+
+            var db = new WorkingWithDatabase();
+            _dataTable = db.ConvertToDataTable(path);
+            dataGridViewDB.DataSource = _dataTable;
         }
 
         public void PullData(string connectionString, string query)

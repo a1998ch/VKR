@@ -113,7 +113,6 @@ namespace CalculationModel
                     a += row[column.ColumnName].ToString() + " ";
                 }
             }
-
             return a;
         }
     }
