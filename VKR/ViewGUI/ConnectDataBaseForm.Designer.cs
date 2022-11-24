@@ -113,6 +113,7 @@ namespace ViewGUI
             this.Controls.Add(this.Cancellation);
             this.Controls.Add(this.ServerConnection);
             this.Controls.Add(this.ConnectDB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "ConnectDataBaseForm";

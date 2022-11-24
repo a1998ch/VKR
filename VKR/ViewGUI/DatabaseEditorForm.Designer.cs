@@ -36,10 +36,14 @@
             // 
             // dataGridViewDB
             // 
+            this.dataGridViewDB.AllowUserToAddRows = false;
+            this.dataGridViewDB.AllowUserToResizeColumns = false;
+            this.dataGridViewDB.AllowUserToResizeRows = false;
             this.dataGridViewDB.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewDB.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDB.Location = new System.Drawing.Point(22, 33);
             this.dataGridViewDB.Name = "dataGridViewDB";
+            this.dataGridViewDB.RowHeadersVisible = false;
             this.dataGridViewDB.RowHeadersWidth = 51;
             this.dataGridViewDB.RowTemplate.Height = 24;
             this.dataGridViewDB.Size = new System.Drawing.Size(735, 493);
@@ -61,6 +65,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 603);
             this.Controls.Add(this.groupBoxDB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "DatabaseEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

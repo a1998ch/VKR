@@ -37,6 +37,7 @@ namespace ViewGUI
             dataGridViewDB.DataSource = db.ConvertToDataTable(path);*/
 
             dataGridViewDB.DataSource = _dataTable;
+            dataGridViewDB.AutoResizeColumns();
         }
 
         private void DatabaseEditorFormClosing(object sender, FormClosingEventArgs e)
