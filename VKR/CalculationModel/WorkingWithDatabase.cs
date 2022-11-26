@@ -65,9 +65,9 @@ namespace CalculationModel
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        public void SaveToCSV(string connectionString, string path)
+        public void SaveToCSV(string connectionString, string query, string path)
         {
-            List<object> data = DataList<object>(connectionString, DataBaseQuerys.QueryAllData);
+            List<object> data = DataList<object>(connectionString, query);
             using (var writer = new StreamWriter(path, false, Encoding.Default))
             {
                 foreach (var value in data)
@@ -101,15 +101,15 @@ namespace CalculationModel
             return dataTable;
         }
 
-        public string LoadingCSVInDB(string connectionString, string path)
+        public string LoadingDataIntoDB(DataTable dataTable)
         {
-            DataTable csvFileData = ConvertToDataTable(path);
             string a = String.Empty;
 
-            foreach (DataRow row in csvFileData.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
-                foreach (DataColumn column in csvFileData.Columns)
+                foreach (DataColumn column in dataTable.Columns)
                 {
+
                     a += row[column.ColumnName].ToString() + " ";
                 }
             }

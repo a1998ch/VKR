@@ -30,7 +30,9 @@
         {
             this.dataGridViewDB = new System.Windows.Forms.DataGridView();
             this.groupBoxDB = new System.Windows.Forms.GroupBox();
-            this.AddDataToDB = new System.Windows.Forms.Button();
+            this.ImportFromCSV = new System.Windows.Forms.Button();
+            this.DataExportFromDB = new System.Windows.Forms.Button();
+            this.LoadDataIntoDB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             this.groupBoxDB.SuspendLayout();
             this.SuspendLayout();
@@ -60,22 +62,44 @@
             this.groupBoxDB.TabStop = false;
             this.groupBoxDB.Text = "База данных";
             // 
-            // AddDataToDB
+            // ImportFromCSV
             // 
-            this.AddDataToDB.Location = new System.Drawing.Point(35, 12);
-            this.AddDataToDB.Name = "AddDataToDB";
-            this.AddDataToDB.Size = new System.Drawing.Size(165, 42);
-            this.AddDataToDB.TabIndex = 2;
-            this.AddDataToDB.Text = "Добавить данные в БД";
-            this.AddDataToDB.UseVisualStyleBackColor = true;
-            this.AddDataToDB.Click += new System.EventHandler(this.AddDataToDBClick);
+            this.ImportFromCSV.Location = new System.Drawing.Point(35, 12);
+            this.ImportFromCSV.Name = "ImportFromCSV";
+            this.ImportFromCSV.Size = new System.Drawing.Size(165, 42);
+            this.ImportFromCSV.TabIndex = 2;
+            this.ImportFromCSV.Text = "Импорт данных из csv";
+            this.ImportFromCSV.UseVisualStyleBackColor = true;
+            this.ImportFromCSV.Click += new System.EventHandler(this.ImportFromCSVClick);
+            // 
+            // DataExportFromDB
+            // 
+            this.DataExportFromDB.Location = new System.Drawing.Point(230, 12);
+            this.DataExportFromDB.Name = "DataExportFromDB";
+            this.DataExportFromDB.Size = new System.Drawing.Size(155, 41);
+            this.DataExportFromDB.TabIndex = 3;
+            this.DataExportFromDB.Text = "Экспорт в csv";
+            this.DataExportFromDB.UseVisualStyleBackColor = true;
+            this.DataExportFromDB.Click += new System.EventHandler(this.DataExportFromDBClick);
+            // 
+            // LoadDataIntoDB
+            // 
+            this.LoadDataIntoDB.Location = new System.Drawing.Point(410, 13);
+            this.LoadDataIntoDB.Name = "LoadDataIntoDB";
+            this.LoadDataIntoDB.Size = new System.Drawing.Size(258, 40);
+            this.LoadDataIntoDB.TabIndex = 4;
+            this.LoadDataIntoDB.Text = "Добавить данные в БД";
+            this.LoadDataIntoDB.UseVisualStyleBackColor = true;
+            this.LoadDataIntoDB.Click += new System.EventHandler(this.LoadDataIntoDBClick);
             // 
             // DatabaseEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 603);
-            this.Controls.Add(this.AddDataToDB);
+            this.Controls.Add(this.LoadDataIntoDB);
+            this.Controls.Add(this.DataExportFromDB);
+            this.Controls.Add(this.ImportFromCSV);
             this.Controls.Add(this.groupBoxDB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -94,6 +118,8 @@
 
         private System.Windows.Forms.DataGridView dataGridViewDB;
         private System.Windows.Forms.GroupBox groupBoxDB;
-        private System.Windows.Forms.Button AddDataToDB;
+        private System.Windows.Forms.Button ImportFromCSV;
+        private System.Windows.Forms.Button DataExportFromDB;
+        private System.Windows.Forms.Button LoadDataIntoDB;
     }
 }

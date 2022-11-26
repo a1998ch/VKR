@@ -36,7 +36,6 @@ namespace ViewGUI
             this.SystemDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ConnectDB = new System.Windows.Forms.ToolStripMenuItem();
             this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
-            this.DatabaseDataImport = new System.Windows.Forms.ToolStripMenuItem();
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
             this.бДРВОИКСК11ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.расчётнаяМодельRastrWin3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,8 +86,7 @@ namespace ViewGUI
             // 
             this.SystemDB.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectDB,
-            this.AddEditDataDB,
-            this.DatabaseDataImport});
+            this.AddEditDataDB});
             this.SystemDB.Name = "SystemDB";
             this.SystemDB.Size = new System.Drawing.Size(176, 24);
             this.SystemDB.Text = "База данных Системы";
@@ -106,13 +104,6 @@ namespace ViewGUI
             this.AddEditDataDB.Size = new System.Drawing.Size(359, 26);
             this.AddEditDataDB.Text = "Добавить/Редактировать данные в БД";
             this.AddEditDataDB.Click += new System.EventHandler(this.AddEditDataDBClick);
-            // 
-            // DatabaseDataImport
-            // 
-            this.DatabaseDataImport.Name = "DatabaseDataImport";
-            this.DatabaseDataImport.Size = new System.Drawing.Size(359, 26);
-            this.DatabaseDataImport.Text = "Импорт данных БД";
-            this.DatabaseDataImport.Click += new System.EventHandler(this.DatabaseDataImportClick);
             // 
             // ExternalSystems
             // 
@@ -200,7 +191,6 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem AboutProg;
         private System.Windows.Forms.ToolStripMenuItem Manual;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ToolStripMenuItem DatabaseDataImport;
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
         private System.Windows.Forms.ToolStripMenuItem бДРВОИКСК11ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem расчётнаяМодельRastrWin3ToolStripMenuItem;

@@ -46,45 +46,11 @@ namespace ViewGUI
             textBox1.Text = P.ToString();
         }
 
-        /// <summary>
-        /// Сохранение/загрузка данных
-        /// </summary>
-        /// <param name="saveOpenFile">saveFileDialog or openFileDialog</param>
-        /// <returns>Путь для сохранения/загрузки</returns>
-        private string WorkWithCSV(FileDialog saveOpenFile)
-        {
-            saveOpenFile.Filter = "Файл csv (*.csv)|*.csv";
-            saveOpenFile.ShowDialog();
-            string path = saveOpenFile.FileName;
-            return path;
-        }
-
-        private void DatabaseDataImportClick(object sender, EventArgs e)
-        {
-            var saveFile = new SaveFileDialog();
-            string path = WorkWithCSV(saveFile);
-
-            if (string.IsNullOrEmpty(path)) { return; }
-
-            try
-            {
-                var save = new WorkingWithDatabase();
-                save.SaveToCSV(_sqlConnection, path);
-                MessageBox.Show("Сохранение успешно", "Сообщение", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch(Exception ex)
-            {
-                ExeptionMessage(ex);
-            }
-        }
-
         private void AddEditDataDBClick(object sender, EventArgs e)
         {
             this.Hide();
-            DatabaseEditorForm databaseEditor = new DatabaseEditorForm();
+            DatabaseEditorForm databaseEditor = new DatabaseEditorForm(_sqlConnection);
             databaseEditor.CloseForm += OtherCloseForm;
-            databaseEditor.PullData(_sqlConnection, DataBaseQuerys.QueryAllData);
             databaseEditor.ShowDialog();
         }
 
