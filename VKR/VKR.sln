@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewGUI", "ViewGUI\ViewGUI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculationModel", "CalculationModel\CalculationModel.csproj", "{664DEDC9-923C-4485-99A4-38F7558FE7D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseModel", "DataBaseModel\DataBaseModel.csproj", "{250051F0-D6DD-47A6-8112-1C7819552912}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{664DEDC9-923C-4485-99A4-38F7558FE7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{664DEDC9-923C-4485-99A4-38F7558FE7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{664DEDC9-923C-4485-99A4-38F7558FE7D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{250051F0-D6DD-47A6-8112-1C7819552912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{250051F0-D6DD-47A6-8112-1C7819552912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{250051F0-D6DD-47A6-8112-1C7819552912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{250051F0-D6DD-47A6-8112-1C7819552912}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

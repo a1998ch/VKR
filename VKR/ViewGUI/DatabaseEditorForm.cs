@@ -1,5 +1,6 @@
-﻿using CalculationModel;
+﻿using DataBaseModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +22,8 @@ namespace ViewGUI
 
         private DataTable _dataTable = new DataTable();
 
+        private DataTable _dataTableAll = new DataTable();
+
         private readonly string _connectionString;
 
         public DatabaseEditorForm(string connectionString)
@@ -31,8 +34,9 @@ namespace ViewGUI
 
         private void DatabaseEditorFormLoad(object sender, EventArgs e)
         {
-            PullData(_dataTable, DataBaseQuerys.QueryAllData);
-            dataGridViewDB.DataSource = _dataTable;
+            var db = new WorkingWithDatabase();
+            db.PullData(_connectionString, _dataTableAll, DataBaseQuerys.QueryAllData);
+            dataGridViewDB.DataSource = _dataTableAll;
             dataGridViewDB.AutoResizeColumns();
         }
 
@@ -62,37 +66,104 @@ namespace ViewGUI
             if (string.IsNullOrEmpty(path)) { return; }
 
             var db = new WorkingWithDatabase();
-            dataGridViewDB.DataSource = db.ConvertToDataTable(path);
-            dataGridViewDB.AutoResizeColumns();
-
             _dataTable = db.ConvertToDataTable(path);
+            dataGridViewDB.DataSource = _dataTable;
+            dataGridViewDB.AutoResizeColumns();
         }
 
         private void AutoGenId(string sqlQuery)
         {
-            var dtFromAllData = new DataTable();
-            PullData(dtFromAllData, sqlQuery);
+            var dt = new DataTable();
+            var db = new WorkingWithDatabase();
+            int id = db.SearchLastId(_connectionString, "Energy_object", "Energy_object_id");
 
-            foreach (DataColumn col1 in dtFromAllData.Columns)
+            List<string> colNameList = db.ColumnName<string>(_connectionString, DataBaseQuerys.QueryForEnObj);
+
+            foreach (var col in colNameList)
             {
-                foreach (DataColumn col2 in _dataTable.Columns)
-                {
-                    if (col1.ColumnName == col2.ColumnName)
-                    {
+                dt.Columns.Add(col);
+            }
 
+            Dictionary<string, List<object>> dict = db.DataDict<object>(_connectionString, DataBaseQuerys.QueryAllData);
+
+            // Заполнение столбца - "Energy_object_name"
+            foreach (DataRow row in _dataTableAll.Rows)
+            {
+                var dtRow = dt.Rows.Add();
+                foreach (DataColumn column in _dataTableAll.Columns)
+                {
+                    if (colNameList.Contains(column.ColumnName))
+                    {
+                        dtRow[column.ColumnName] = row[column.ColumnName];
                     }
                 }
             }
 
-            foreach (DataRow row in dtFromAllData.Rows)
+            foreach (DataRow row in _dataTableAll.Rows)
             {
-                foreach (DataColumn column in dtFromAllData.Columns)
-                {
-
-                }
+                //row["Energy_object_id"];
             }
 
-            var db = new WorkingWithDatabase();
+            //// Заполнение столбца - "Energy_object_id"
+            //int i = 1;
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    foreach (DataColumn column in dt.Columns)
+            //    {
+            //        row["Energy_object_id"] = id + i;
+            //    }
+            //    i++;
+            //}
+
+            //// Заполнение столбца - "Energy_object_number"
+            //List<int> valueList = 
+            //    db.Data<int>(_connectionString, DataBaseQuerys.QueryForColumn("Energy_object", "Energy_object_number"));
+            //bool flag = false;
+            //foreach (DataRow row in _dataTable.Rows)
+            //{
+            //    foreach (DataColumn column in _dataTable.Columns)
+            //    {
+            //        if (valueList[valueList.Count - 1] != (int)row["Energy_object_number"])
+            //        {
+            //            flag = true;
+            //        }
+            //    }
+            //}
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    foreach (DataColumn column in dt.Columns)
+            //    {
+            //        if (flag) { row["Energy_object_number"] = valueList[valueList.Count - 1] + 1; }
+            //        else { row["Energy_object_number"] = valueList[valueList.Count - 1]; }
+            //    }
+            //}
+
+            dataGridViewDB.DataSource = dt;
+
+            /*using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand comand = new SqlCommand(sqlQuery, sqlConnection);
+                SqlDataReader dataReader = comand.ExecuteReader();
+
+                var db = new WorkingWithDatabase();
+                db.GetDataFromDB(dataReader, columnName, false);
+
+                foreach (var col in columnName)
+                {
+                    if (col == "Energy_object_id") { continue; }
+                    dt.Columns.Add(col);
+                }
+
+                foreach (DataRow row in _dataTable.Rows)
+                {
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        dt.Rows.Add(row[col]);
+                    }
+                }
+                dataGridViewDB.DataSource = dt;
+            }*/
         }
 
         private void LoadDataIntoDBClick(object sender, EventArgs e)
@@ -120,6 +191,7 @@ namespace ViewGUI
             {
                 var save = new WorkingWithDatabase();
                 save.SaveToCSV(_connectionString, DataBaseQuerys.QueryData, path);
+                
                 MessageBox.Show("Сохранение успешно", "Сообщение",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -127,17 +199,6 @@ namespace ViewGUI
             {
                 MessageBox.Show(ex.Message, "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void PullData(DataTable dataTable, string query)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand sqlCommand = new SqlCommand(query, connection);
-                SqlDataAdapter sqlAdapret = new SqlDataAdapter(sqlCommand);
-                sqlAdapret.Fill(dataTable);
-                sqlAdapret.Dispose();
             }
         }
     }

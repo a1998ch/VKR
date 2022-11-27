@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculationModel
+namespace DataBaseModel
 {
     public static class DataBaseQuerys
     {
@@ -55,14 +55,26 @@ namespace CalculationModel
                    $"e.Value_id = p.Value_id ";
         }
 
-        public static string QueryForEnObj
+
+        public static string LastId(string tableName, string columnName)
         {
-            get => 
+            return $"SELECT TOP 1 {columnName} " +
+                   $"FROM {tableName} " +
+                   $"ORDER BY {columnName} DESC";
+        }
+        /*public static string QueryForEnObj
+        {
+            get =>
                     "SELECT e.Energy_object_id, e.Energy_object_number, e.Energy_object_name " +
                     "FROM Energy_object e";
 
-            /*return "INSERT INTO[CharacteristicsDB].[dbo].[Energy_object](Energy_object_number, Energy_object_number) " +
-                   "VALUES(1, 'ВНС')";*/
-        }
+            return "INSERT INTO[CharacteristicsDB].[dbo].[Energy_object](Energy_object_number, Energy_object_number) " +
+                   "VALUES(1, 'ВНС')";
+        }*/
+
+        public static string QueryForEnObj => "SELECT * FROM Energy_object e";
+
+        public static string QueryForColumn(string tableName, 
+            string columnName) => $"SELECT {columnName} FROM {tableName}";
     }
 }

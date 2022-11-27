@@ -102,6 +102,10 @@
       <Project>{664dedc9-923c-4485-99a4-38f7558fe7d9}</Project>
       <Name>CalculationModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataBaseModel\DataBaseModel.csproj">
+      <Project>{250051f0-d6dd-47a6-8112-1c7819552912}</Project>
+      <Name>DataBaseModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
