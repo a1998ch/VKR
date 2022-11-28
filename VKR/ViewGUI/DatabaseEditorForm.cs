@@ -99,6 +99,29 @@ namespace ViewGUI
             }
         }
 
+        private void DataAdd(string connectionString, string query)
+        {
+            var db = new WorkingWithDatabase();
+            var dictDataDB = db.DataDict<object>(_connectionString, DataBaseQuerys.QueryForEnObj);
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand comand = new SqlCommand(DataBaseQuerys.QueryForEnObj, sqlConnection);
+
+                foreach (var key in dictDataDB.Keys)
+                {
+                    foreach (DataColumn col in _dataTable.Columns)
+                    {
+                        if (key == col.ColumnName)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
         private void AutoGenId()
         {
             var dt = new DataTable();
