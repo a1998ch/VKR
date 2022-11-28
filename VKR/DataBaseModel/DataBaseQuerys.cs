@@ -72,7 +72,11 @@ namespace DataBaseModel
                    "VALUES(1, 'ВНС')";
         }*/
 
-        public static string QueryForEnObj => "SELECT * FROM Energy_object e";
+        public static string QueryForEnObj => "SELECT * FROM Energy_object";
+
+        public static string QueryForScheme => "SELECT * FROM Scheme";
+
+        public static string QueryForReg => "SELECT * FROM Regulation";
 
         public static string QueryForColumn(string tableName, 
             string columnName) => $"SELECT {columnName} FROM {tableName}";
