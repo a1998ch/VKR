@@ -43,6 +43,7 @@ namespace ViewGUI
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@ namespace ViewGUI
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(570, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(570, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -67,7 +68,7 @@ namespace ViewGUI
             this.StartSystem,
             this.StopSystem});
             this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(69, 24);
+            this.Start.Size = new System.Drawing.Size(69, 26);
             this.Start.Text = "Запуск";
             // 
             // StartSystem
@@ -89,7 +90,7 @@ namespace ViewGUI
             this.ConnectDB,
             this.AddEditDataDB});
             this.SystemDB.Name = "SystemDB";
-            this.SystemDB.Size = new System.Drawing.Size(176, 24);
+            this.SystemDB.Size = new System.Drawing.Size(176, 26);
             this.SystemDB.Text = "База данных Системы";
             // 
             // ConnectDB
@@ -110,9 +111,10 @@ namespace ViewGUI
             // 
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectCK11,
+            this.OikDB,
             this.CalcRastrWin3});
             this.ExternalSystems.Name = "ExternalSystems";
-            this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
+            this.ExternalSystems.Size = new System.Drawing.Size(152, 26);
             this.ExternalSystems.Text = "Внешние Системы";
             // 
             // ConnectCK11
@@ -134,7 +136,7 @@ namespace ViewGUI
             this.AboutProg,
             this.Manual});
             this.Documentation.Name = "Documentation";
-            this.Documentation.Size = new System.Drawing.Size(81, 24);
+            this.Documentation.Size = new System.Drawing.Size(81, 26);
             this.Documentation.Text = "Справка";
             // 
             // AboutProg
@@ -156,6 +158,13 @@ namespace ViewGUI
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(543, 355);
             this.textBox1.TabIndex = 1;
+            // 
+            // OikDB
+            // 
+            this.OikDB.Name = "OikDB";
+            this.OikDB.Size = new System.Drawing.Size(289, 26);
+            this.OikDB.Text = "БД ОИК \"СК-11\"";
+            this.OikDB.Click += new System.EventHandler(this.OikDBClick);
             // 
             // MainForm
             // 
@@ -194,6 +203,7 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
         private System.Windows.Forms.ToolStripMenuItem ConnectCK11;
         private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
+        private System.Windows.Forms.ToolStripMenuItem OikDB;
     }
 }
 

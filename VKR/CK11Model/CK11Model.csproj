@@ -49,8 +49,47 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Monitel.CIM.Ext.Common">
+      <HintPath>..\Monitel\Monitel.CIM.Ext.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.CIM.Ext.EMS">
+      <HintPath>..\Monitel\Monitel.CIM.Ext.EMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.DataContext.Tools">
+      <HintPath>..\Monitel\Monitel.DataContext.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.DirectoryClient">
+      <HintPath>..\Monitel\Monitel.DirectoryClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.Mal">
+      <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.Mal.Context.CIM16">
+      <HintPath>..\Monitel\Monitel.Mal.Context.CIM16.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.Mal.SharedMemory">
+      <HintPath>..\Monitel\Monitel.Mal.SharedMemory.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.ObjectDb.Client">
+      <HintPath>..\Monitel\Monitel.ObjectDb.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.PlatformInfrastructure">
+      <HintPath>..\Monitel\Monitel.PlatformInfrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Monitel.Rtdb.Api">
       <HintPath>..\Monitel\Monitel.Rtdb.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.Supervisor.Infrastructure">
+      <HintPath>..\Monitel\Monitel.Supervisor.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.UI.Infrastructure">
+      <HintPath>..\Monitel\Monitel.UI.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Monitel\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\Monitel\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,7 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectCK11.cs" />
+    <Compile Include="WorkingWithCK11.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

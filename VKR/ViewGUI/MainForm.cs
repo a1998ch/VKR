@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using CK = Monitel.Rtdb.Api;
 using CK11Model;
+using Monitel.Mal.Context.CIM16;
 
 namespace ViewGUI
 {
@@ -91,7 +92,7 @@ namespace ViewGUI
         {
             Guid[] arr = new Guid[1] { Guid.Parse("6C72BF14-A296-4AF5-9C15-4ED3E48F7121") };
 
-            var dataRequest = new ConnectCK11(_connectionStringToRtdb);
+            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
 
             var data = dataRequest.GetSignals(arr);
 
@@ -99,6 +100,15 @@ namespace ViewGUI
             {
                 textBox1.Text += item.Value.AnalogValue.ToString();
             }
+        }
+
+        private void OikDBClick(object sender, EventArgs e)
+        {
+            var dbConnect = new WorkingWithCK11(_serverPort);
+
+            textBox1.Text = dbConnect.GetUids<string>();
+
+
         }
     }
 }

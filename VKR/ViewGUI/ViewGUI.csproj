@@ -54,6 +54,13 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Monitel.Mal, Version=11.5.9.930, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
+    </Reference>
+    <Reference Include="Monitel.Mal.Context.CIM16">
+      <HintPath>..\Monitel\Monitel.Mal.Context.CIM16.dll</HintPath>
+    </Reference>
     <Reference Include="Monitel.Rtdb.Api, Version=3.0.7082.28397, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Monitel\Monitel.Rtdb.Api.dll</HintPath>
