@@ -37,8 +37,8 @@ namespace ViewGUI
             this.ConnectDB = new System.Windows.Forms.ToolStripMenuItem();
             this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
-            this.бДРВОИКСК11ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.расчётнаяМодельRastrWin3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConnectCK11 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CalcRastrWin3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +56,8 @@ namespace ViewGUI
             this.Documentation});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(760, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(570, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -108,23 +109,24 @@ namespace ViewGUI
             // ExternalSystems
             // 
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.бДРВОИКСК11ToolStripMenuItem,
-            this.расчётнаяМодельRastrWin3ToolStripMenuItem});
+            this.ConnectCK11,
+            this.CalcRastrWin3});
             this.ExternalSystems.Name = "ExternalSystems";
             this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
             this.ExternalSystems.Text = "Внешние Системы";
             // 
-            // бДРВОИКСК11ToolStripMenuItem
+            // ConnectCK11
             // 
-            this.бДРВОИКСК11ToolStripMenuItem.Name = "бДРВОИКСК11ToolStripMenuItem";
-            this.бДРВОИКСК11ToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.бДРВОИКСК11ToolStripMenuItem.Text = "БДРВ ОИК \"СК-11\"";
+            this.ConnectCK11.Name = "ConnectCK11";
+            this.ConnectCK11.Size = new System.Drawing.Size(289, 26);
+            this.ConnectCK11.Text = "БДРВ ОИК \"СК-11\"";
+            this.ConnectCK11.Click += new System.EventHandler(this.ConnectCK11Click);
             // 
-            // расчётнаяМодельRastrWin3ToolStripMenuItem
+            // CalcRastrWin3
             // 
-            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Name = "расчётнаяМодельRastrWin3ToolStripMenuItem";
-            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Size = new System.Drawing.Size(289, 26);
-            this.расчётнаяМодельRastrWin3ToolStripMenuItem.Text = "Расчётная модель RastrWin3";
+            this.CalcRastrWin3.Name = "CalcRastrWin3";
+            this.CalcRastrWin3.Size = new System.Drawing.Size(289, 26);
+            this.CalcRastrWin3.Text = "Расчётная модель RastrWin3";
             // 
             // Documentation
             // 
@@ -149,23 +151,21 @@ namespace ViewGUI
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(24, 45);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(18, 37);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(723, 436);
+            this.textBox1.Size = new System.Drawing.Size(543, 355);
             this.textBox1.TabIndex = 1;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 518);
+            this.ClientSize = new System.Drawing.Size(570, 421);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -192,8 +192,8 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem Manual;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
-        private System.Windows.Forms.ToolStripMenuItem бДРВОИКСК11ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem расчётнаяМодельRastrWin3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ConnectCK11;
+        private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
     }
 }
 
