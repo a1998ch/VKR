@@ -79,14 +79,14 @@ namespace CK11Model
             {
                 OdbServerName = contextparams.OdbServerName,
                 OdbInstanseName = contextparams.OdbInstanseName,
-                OdbModelVersionId = 91,
+                OdbModelVersionId = 92,
             };
 
             // mode — способ подключения к контексту данных(Open(открыть),
             // moduleInfo — имя подключаемого модуля, передаётся сервису мал
             // для идентификации подключившейся программы.
             // port — номер порта, на котором работает мал сервис.
-            var defaultProvaider = new MalProvider(contextparams, MalContextMode.Open, _connectionStringToCk, _port);
+            var defaultProvaider = new MalProvider(context, MalContextMode.Open, _connectionStringToCk, _port);
 
             // Создание объекта ModelImage
             var modelImage = new ModelImage(defaultProvaider);
