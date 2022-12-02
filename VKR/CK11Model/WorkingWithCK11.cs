@@ -15,19 +15,34 @@ using CK = Monitel.Rtdb.Api;
 
 namespace CK11Model
 {
+    /// <summary>
+    /// Класс для взаимодействия с СК-11
+    /// </summary>
     public class WorkingWithCK11
     {
+        /// <summary>
+        /// Строка подключения к CK-11
+        /// </summary>
         private readonly string _connectionStringToCk;
 
+        /// <summary>
+        /// Порт для подключения к CK-11
+        /// </summary>
         private readonly int _port;
 
-        public WorkingWithCK11() { }
-
+        /// <summary>
+        /// Конструктор класса WorkingWithCK11
+        /// </summary>
+        /// <param name="connectionStringToCk">Строка подключения к CK-11</param>
         public WorkingWithCK11(string connectionStringToCk)
         {
             _connectionStringToCk = connectionStringToCk;
         }
 
+        /// <summary>
+        /// Конструктор класса WorkingWithCK11
+        /// </summary>
+        /// <param name="port">Порт для подключения к CK-11</param>
         public WorkingWithCK11(int port)
         {
             _port = port;
@@ -57,8 +72,8 @@ namespace CK11Model
         /// <summary>
         /// Получение доступа к MAL API
         /// </summary>
-        /// <returns>объект ModelImage</returns>
-        private ModelImage AccessingTheMalApi()
+        /// <returns>Модель СК-11</returns>
+        public ModelImage AccessingTheMalApi()
         {
             // Соединение с супервизором текущего домена АИП
             var supervisor = new Monitel.Supervisor.Infrastructure.Rpc.SupervisorConnection(null);
@@ -95,10 +110,17 @@ namespace CK11Model
             return modelImage;
         }
 
-        public IEnumerable<T> GetUids<T>(Guid uidParentObj) where T : class, IdentifiedObject
+        /// <summary>
+        /// Запрос объектов из СК-11
+        /// </summary>
+        /// <typeparam name="T">Тип объектов для перечисления</typeparam>
+        /// <param name="modelImage">Модель СК-11</param>
+        /// <param name="uidParentObj">Uid родительского объекта</param>
+        /// <returns>Перечисление объектов различных типов, 
+        /// принадлежащих родительскому объекту</returns>
+        private IEnumerable<T> ChoiceObject<T>(ModelImage modelImage, Guid uidParentObj) where T : class, IdentifiedObject
         {
-            var modelImage = AccessingTheMalApi();
-            var filter = modelImage.GetObjects<T>().Where(
+            var enumObjects = modelImage.GetObjects<T>().Where(
                 obj =>
                 {
                     var parent = obj.ParentObject;
@@ -113,7 +135,27 @@ namespace CK11Model
                     return false;
                 }
             );
-            return filter;
+            return enumObjects;
+        }
+
+        /// <summary>
+        /// Запрос uids из СК-11
+        /// </summary>
+        /// <typeparam name="T">Тип объектов для перечисления</typeparam>
+        /// <param name="modelImage">Модель СК-11</param>
+        /// <param name="uidParentObj">Uid родительского объекта</param>
+        /// <returns>Перечисление uids заданных объектов</returns>
+        public Guid[] GetUids<T>(ModelImage modelImage, Guid uidParentObj) where T : class, IdentifiedObject
+        {
+            var enumUid = ChoiceObject<T>(modelImage, uidParentObj);
+
+            Guid[] uidsArray = new Guid[enumUid.Count()];
+            
+            foreach(var uid in enumUid)
+            {
+                uidsArray.Append(uid.Uid);
+            }
+            return uidsArray;
         }
     }
 }

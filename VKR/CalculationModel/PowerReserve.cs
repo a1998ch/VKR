@@ -10,10 +10,25 @@ using DataBaseModel;
 
 namespace CalculationModel
 {
+    /// <summary>
+    /// Класс для расчёта резервов
+    /// </summary>
     public class PowerReserve
     {
+        /// <summary>
+        /// Конструктор класса PowerReserve
+        /// </summary>
         public PowerReserve() { }
 
+        /// <summary>
+        /// Запрос характеристик из базы данных
+        /// </summary>
+        /// <param name="eoName">Наименование объекта энергетики</param>
+        /// <param name="schemeName">Наименование схемно-режимной ситуации</param>
+        /// <param name="connectionString">Строка подключения к базе данных</param>
+        /// <param name="regulationType">Тип регулирования</param>
+        /// <param name="voltageLevel">Уровень напряжения</param>
+        /// <returns>Словарь зависимостей P(K2U); Key = K2U, Value = P</returns>
         private Dictionary<double, double> DatabaseDataLoading(string eoName, string schemeName, string connectionString, 
                                                                 string regulationType, int voltageLevel)
         {
@@ -34,6 +49,15 @@ namespace CalculationModel
             }
         }
 
+        /// <summary>
+        /// Расчёт предельной мощности
+        /// </summary>
+        /// <param name="eoName">Наименование объекта энергетики</param>
+        /// <param name="schemeName">Наименование схемно-режимной ситуации</param>
+        /// <param name="connectionString">Строка подключения к базе данных</param>
+        /// <param name="listVoltage">Список междуфазных напряжений</param>
+        /// <returns>Предельную мощность</returns>
+        /// <exception cref="ArgumentException">Некорректный уровень напряжения</exception>
         public double LimitFlow(string eoName, string schemeName, string connectionString, List<double> listVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
@@ -68,6 +92,12 @@ namespace CalculationModel
             }
         }
 
+        /// <summary>
+        /// Определение величины активной мощности для текущего K2U
+        /// </summary>
+        /// <param name="listVoltage">Список междуфазных напряжений</param>
+        /// <param name="dict">Словарь зависимостей P(K2U)</param>
+        /// <returns>Словарь P(K2U)</returns>
         private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, Dictionary<double, double> dict)
         {
             var K2U = AsymmetryCoefficientCalc(listVoltage);
@@ -85,6 +115,13 @@ namespace CalculationModel
             return dictResult;
         }
 
+        /// <summary>
+        /// Интерполяция
+        /// </summary>
+        /// <param name="dict">Словарь P(K2U)</param>
+        /// <param name="listVoltage">Список междуфазных напряжений</param>
+        /// <param name="flag">bool</param>
+        /// <returns>Уточнённые величины мощности и напряжения</returns>
         private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {
             var K2U = AsymmetryCoefficientCalc(listVoltage);
@@ -101,6 +138,11 @@ namespace CalculationModel
             }
         }
 
+        /// <summary>
+        /// Расчёт величины K2U
+        /// </summary>
+        /// <param name="listVoltage">Список междуфазных напряжений</param>
+        /// <returns>Величину K2U</returns>
         private double AsymmetryCoefficientCalc(List<double> listVoltage)
         {
             double Uab = listVoltage[0];
@@ -118,6 +160,11 @@ namespace CalculationModel
             return K2U;
         }
 
+        /// <summary>
+        /// Расчёт среднего напряжения
+        /// </summary>
+        /// <param name="listVoltage">Список междуфазных напряжений</param>
+        /// <returns>Среднее напряжение</returns>
         private double MeanVoltage(List<double> listVoltage)
         {
             return (listVoltage[0] + listVoltage[1] + listVoltage[2]) / listVoltage.Count;
