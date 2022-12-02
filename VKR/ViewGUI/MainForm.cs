@@ -36,6 +36,8 @@ namespace ViewGUI
         /// </summary>
         private const int _ioa = 100;
 
+        private Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
+
         private string _sqlConnection;
 
         private readonly List<double> _listVoltage = new List<double>(3); 
@@ -106,9 +108,12 @@ namespace ViewGUI
         {
             var dbConnect = new WorkingWithCK11(_serverPort);
 
-            textBox1.Text = dbConnect.GetUids<string>();
+            var uids = dbConnect.GetUids<RemoteAnalogValue>(_observableObjectUid);
 
-
+            foreach (var uid in uids)
+            {
+                textBox1.Text += uid.name + " ";
+            }
         }
     }
 }

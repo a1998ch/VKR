@@ -4,6 +4,7 @@ using Monitel.Mal.Context.CIM16;
 using Monitel.Mal.Providers;
 using Monitel.Mal.Providers.Mal;
 using Monitel.ObjectDb.Client;
+using Monitel.Supervisor.Infrastructure.AutoUpdateCommon.Wcf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,28 +95,25 @@ namespace CK11Model
             return modelImage;
         }
 
-        public string GetUids<T>() //where T : class, IdentifiedObject
+        public IEnumerable<T> GetUids<T>(Guid uidParentObj) where T : class, IdentifiedObject
         {
-            string a = "";
-            //List<T> list = new List<T>();
             var modelImage = AccessingTheMalApi();
-            foreach (var sourceValue in modelImage.GetObjects<AnalogValue>())
-            {
-                a += sourceValue.name + " ";
-            }
-            return a;
+            var filter = modelImage.GetObjects<T>().Where(
+                obj =>
+                {
+                    var parent = obj.ParentObject;
+                    while (parent.Uid != modelImage.GetRootObject().Uid)
+                    {
+                        if (parent.Uid == uidParentObj)
+                        {
+                            return true;
+                        }
+                        parent = parent.ParentObject;
+                    }
+                    return false;
+                }
+            );
+            return filter;
         }
-
-        /*public string GetUids() //where T : class, Monitel.Mal.Context.CIM16.IdentifiedObject
-        {
-            var modelImage = AccessingTheMalApi();
-            string a = String.Empty;
-            foreach (var sourceValue in modelImage.GetObjects<AnalogValue>())
-            {
-                a += sourceValue.name.ToString() + " ";
-            }
-
-            return String.Empty;
-        }*/
     }
 }
