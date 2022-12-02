@@ -149,13 +149,13 @@ namespace CK11Model
         {
             var enumUid = ChoiceObject<T>(modelImage, uidParentObj);
 
-            Guid[] uidsArray = new Guid[enumUid.Count()];
-            
-            foreach(var uid in enumUid)
+            List<Guid> uidsArray = new List<Guid>();
+
+            foreach (var uid in enumUid)
             {
-                uidsArray.Append(uid.Uid);
+                uidsArray.Add(uid.Uid);
             }
-            return uidsArray;
+            return uidsArray.ToArray();
         }
     }
 }

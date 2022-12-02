@@ -171,7 +171,7 @@ namespace ViewGUI
 
             foreach (var uid in uids)
             {
-                textBox1.Text += uid.ToString() + " ";
+                textBox1.Text += uid + " ";
             }
         }
     }
