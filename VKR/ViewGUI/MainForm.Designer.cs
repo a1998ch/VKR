@@ -38,12 +38,13 @@ namespace ViewGUI
             this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
             this.ConnectCK11 = new System.Windows.Forms.ToolStripMenuItem();
+            this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
             this.CalcRastrWin3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.SendToCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,6 +113,7 @@ namespace ViewGUI
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectCK11,
             this.OikDB,
+            this.SendToCK11,
             this.CalcRastrWin3});
             this.ExternalSystems.Name = "ExternalSystems";
             this.ExternalSystems.Size = new System.Drawing.Size(152, 26);
@@ -123,6 +125,13 @@ namespace ViewGUI
             this.ConnectCK11.Size = new System.Drawing.Size(289, 26);
             this.ConnectCK11.Text = "БДРВ ОИК \"СК-11\"";
             this.ConnectCK11.Click += new System.EventHandler(this.ConnectCK11Click);
+            // 
+            // OikDB
+            // 
+            this.OikDB.Name = "OikDB";
+            this.OikDB.Size = new System.Drawing.Size(289, 26);
+            this.OikDB.Text = "БД ОИК \"СК-11\"";
+            this.OikDB.Click += new System.EventHandler(this.OikDBClick);
             // 
             // CalcRastrWin3
             // 
@@ -159,12 +168,12 @@ namespace ViewGUI
             this.textBox1.Size = new System.Drawing.Size(543, 355);
             this.textBox1.TabIndex = 1;
             // 
-            // OikDB
+            // SendToCK11
             // 
-            this.OikDB.Name = "OikDB";
-            this.OikDB.Size = new System.Drawing.Size(289, 26);
-            this.OikDB.Text = "БД ОИК \"СК-11\"";
-            this.OikDB.Click += new System.EventHandler(this.OikDBClick);
+            this.SendToCK11.Name = "SendToCK11";
+            this.SendToCK11.Size = new System.Drawing.Size(289, 26);
+            this.SendToCK11.Text = "Отправка данных в СК-11";
+            this.SendToCK11.Click += new System.EventHandler(this.SendToCK11Click);
             // 
             // MainForm
             // 
@@ -204,6 +213,7 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem ConnectCK11;
         private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
         private System.Windows.Forms.ToolStripMenuItem OikDB;
+        private System.Windows.Forms.ToolStripMenuItem SendToCK11;
     }
 }
 

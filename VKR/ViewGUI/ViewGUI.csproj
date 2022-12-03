@@ -143,6 +143,10 @@
       <Project>{250051f0-d6dd-47a6-8112-1c7819552912}</Project>
       <Name>DataBaseModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\lib60870\lib60870.csproj">
+      <Project>{f604286a-1afc-4355-8c2c-a998cfcee979}</Project>
+      <Name>lib60870</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

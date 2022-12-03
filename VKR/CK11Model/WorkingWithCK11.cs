@@ -118,7 +118,7 @@ namespace CK11Model
         /// <param name="uidParentObj">Uid родительского объекта</param>
         /// <returns>Перечисление объектов различных типов, 
         /// принадлежащих родительскому объекту</returns>
-        private IEnumerable<T> ChoiceObject<T>(ModelImage modelImage, Guid uidParentObj) where T : class, IdentifiedObject
+        public IEnumerable<T> GetSpecificObject<T>(ModelImage modelImage, Guid uidParentObj) where T : class, IdentifiedObject
         {
             var enumObjects = modelImage.GetObjects<T>().Where(
                 obj =>
@@ -142,13 +142,10 @@ namespace CK11Model
         /// Запрос uids из СК-11
         /// </summary>
         /// <typeparam name="T">Тип объектов для перечисления</typeparam>
-        /// <param name="modelImage">Модель СК-11</param>
-        /// <param name="uidParentObj">Uid родительского объекта</param>
-        /// <returns>Перечисление uids заданных объектов</returns>
-        public Guid[] GetUids<T>(ModelImage modelImage, Guid uidParentObj) where T : class, IdentifiedObject
+        /// <param name="enumUid">Перечисление объектов СК-11</param>
+        /// <returns>Массив uids</returns>
+        public Guid[] GetUids<T>(IEnumerable<T> enumUid) where T : class, IdentifiedObject
         {
-            var enumUid = ChoiceObject<T>(modelImage, uidParentObj);
-
             List<Guid> uidsArray = new List<Guid>();
 
             foreach (var uid in enumUid)

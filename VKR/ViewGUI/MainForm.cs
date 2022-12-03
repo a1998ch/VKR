@@ -7,6 +7,7 @@ using CK = Monitel.Rtdb.Api;
 using CK11Model;
 using Monitel.Mal.Context.CIM16;
 using Monitel.Mal;
+using lib60870;
 
 namespace ViewGUI
 {
@@ -21,6 +22,11 @@ namespace ViewGUI
         /// Адрес сервера передачи ТИ
         /// </summary>
         private const string _serverAddress = "10.221.3.57";
+
+        /// <summary>
+        /// Сервер СК-11
+        /// </summary>
+        private Server _server;
 
         /// <summary>
         /// Порт для приняти ТИ
@@ -76,6 +82,12 @@ namespace ViewGUI
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
             _listVoltage.Add(Uca);
+
+            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            modelImage = ConnectCK11.AccessingTheMalApi();
+
+            var sendCK11 = new DataTransferToCK11();
+            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -144,15 +156,16 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void ConnectCK11Click(object sender, EventArgs e)
         {
-            Guid[] arr = new Guid[1] { Guid.Parse("6C72BF14-A296-4AF5-9C15-4ED3E48F7121") };
+            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            var objects = ConnectCK11.GetSpecificObject<RemoteAnalogValue>(modelImage, _observableObjectUid);
+            Guid[] uids = ConnectCK11.GetUids(objects);
 
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
-
-            var data = dataRequest.GetSignals(arr);
+            var data = dataRequest.GetSignals(uids);
 
             foreach (var item in data)
             {
-                textBox1.Text += item.Value.AnalogValue.ToString();
+                textBox1.Text += item.Value.AnalogValue.ToString() + " ";
             }
         }
 
@@ -164,15 +177,23 @@ namespace ViewGUI
         private void OikDBClick(object sender, EventArgs e)
         {
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
-
-            modelImage = ConnectCK11.AccessingTheMalApi();
-
-            var uids = ConnectCK11.GetUids<RemoteAnalogValue>(modelImage, _observableObjectUid);
+            var objects = ConnectCK11.GetSpecificObject<RemoteAnalogValue>(modelImage, _observableObjectUid);
+            var uids = ConnectCK11.GetUids(objects);
 
             foreach (var uid in uids)
             {
                 textBox1.Text += uid + " ";
             }
+        }
+
+        private void SendToCK11Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+
+            var value = random.Next(100, 1000);
+
+            var sendCK11 = new DataTransferToCK11();
+            sendCK11.DataTransfer(_server, _coa, _ioa, value);
         }
     }
 }
