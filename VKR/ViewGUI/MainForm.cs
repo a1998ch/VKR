@@ -8,6 +8,7 @@ using CK11Model;
 using Monitel.Mal.Context.CIM16;
 using Monitel.Mal;
 using lib60870;
+using System.Linq;
 
 namespace ViewGUI
 {
@@ -46,12 +47,17 @@ namespace ViewGUI
         /// <summary>
         /// Модель СК-11
         /// </summary>
-        private ModelImage modelImage;
+        private ModelImage _modelImage;
 
         /// <summary>
         /// Uid контролируемого объекта энергетики
         /// </summary>
         private Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
+
+        /// <summary>
+        /// Uid типа значения - "Напряжение"
+        /// </summary>
+        private Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
 
         /// <summary>
         /// Строка подключения к базе данных
@@ -78,14 +84,16 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            double Uab = 215, Ubc = 243.7, Uca = 223;
+            /*double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
-            _listVoltage.Add(Uca);
+            _listVoltage.Add(Uca);*/
 
+            // Подключение к модели
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            modelImage = ConnectCK11.AccessingTheMalApi();
+            _modelImage = ConnectCK11.AccessingTheMalApi();
 
+            // Подключение к скрверу для передачи данных в БДРВ
             var sendCK11 = new DataTransferToCK11();
             _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
@@ -157,14 +165,18 @@ namespace ViewGUI
         private void ConnectCK11Click(object sender, EventArgs e)
         {
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            var objects = ConnectCK11.GetSpecificObject<RemoteAnalogValue>(modelImage, _observableObjectUid);
-            Guid[] uids = ConnectCK11.GetUids(objects);
+
+            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
+            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
+            var child = ConnectCK11.GetChildObject(voltageEnum);
+            Guid[] uids = ConnectCK11.GetUids(child);
 
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
             var data = dataRequest.GetSignals(uids);
 
             foreach (var item in data)
             {
+                _listVoltage.Add(item.Value.AnalogValue);
                 textBox1.Text += item.Value.AnalogValue.ToString() + " ";
             }
         }
@@ -177,9 +189,12 @@ namespace ViewGUI
         private void OikDBClick(object sender, EventArgs e)
         {
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            var objects = ConnectCK11.GetSpecificObject<RemoteAnalogValue>(modelImage, _observableObjectUid);
-            var uids = ConnectCK11.GetUids(objects);
 
+            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
+            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
+            var child = ConnectCK11.GetChildObject(voltageEnum);   
+
+            var uids = ConnectCK11.GetUids(child);
             foreach (var uid in uids)
             {
                 textBox1.Text += uid + " ";

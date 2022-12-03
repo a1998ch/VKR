@@ -95,7 +95,7 @@ namespace CK11Model
             {
                 OdbServerName = contextparams.OdbServerName,
                 OdbInstanseName = contextparams.OdbInstanseName,
-                OdbModelVersionId = 92,
+                OdbModelVersionId = 103,
             };
 
             // mode — способ подключения к контексту данных(Open(открыть),
@@ -139,16 +139,44 @@ namespace CK11Model
         }
 
         /// <summary>
+        /// Фильтрация объектов по типу измерений
+        /// </summary>
+        /// <typeparam name="T">Тип объектов для перечисления</typeparam>
+        /// <param name="enumObjects">Перечисление объектов СК-11</param>
+        /// <param name="uidMeasType">Uid типа измерения</param>
+        /// <returns>Перечисление объектов СК-11 с заданным типом</returns>
+        public IEnumerable<T> GetFilterObject<T>(IEnumerable<T> enumObjects, Guid uidMeasType) where T : class, Measurement
+        {
+            return enumObjects.Where(obj => obj.MeasurementType.Uid == uidMeasType);
+        }
+
+        /// <summary>
+        /// Получение дочерних объектов на основе родительских
+        /// </summary>
+        /// <typeparam name="T">Тип объектов для перечисления</typeparam>
+        /// <param name="enumObjects">Перечисление объектов СК-11</param>
+        /// <returns>Перечисление объектов СК-11</returns>
+        public IEnumerable<IdentifiedObject> GetChildObject<T>(IEnumerable<T> enumObjects) where T : class, IdentifiedObject
+        {
+            List<IdentifiedObject> listChildObj = new List<IdentifiedObject>();
+            foreach (var item in enumObjects)
+            {
+                listChildObj.Add(item.ChildObjects.FirstOrDefault());
+            }
+            return listChildObj;
+        }
+
+        /// <summary>
         /// Запрос uids из СК-11
         /// </summary>
         /// <typeparam name="T">Тип объектов для перечисления</typeparam>
-        /// <param name="enumUid">Перечисление объектов СК-11</param>
+        /// <param name="enumObjects">Перечисление объектов СК-11</param>
         /// <returns>Массив uids</returns>
-        public Guid[] GetUids<T>(IEnumerable<T> enumUid) where T : class, IdentifiedObject
+        public Guid[] GetUids<T>(IEnumerable<T> enumObjects) where T : class, IdentifiedObject
         {
             List<Guid> uidsArray = new List<Guid>();
 
-            foreach (var uid in enumUid)
+            foreach (var uid in enumObjects)
             {
                 uidsArray.Add(uid.Uid);
             }
