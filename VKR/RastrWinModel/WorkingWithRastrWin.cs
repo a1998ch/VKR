@@ -10,7 +10,6 @@ namespace RastrWinModel
 {
     public class WorkingWithRastrWin
     {
-
         public string GetPowerValue(string pathFile)
         {
             IRastr rastr = new Rastr();

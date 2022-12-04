@@ -87,18 +87,18 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            double Uab = 215, Ubc = 243.7, Uca = 223;
-            _listVoltage.Add(Uab);
-            _listVoltage.Add(Ubc);
-            _listVoltage.Add(Uca);
+            //double Uab = 215, Ubc = 243.7, Uca = 223;
+            //_listVoltage.Add(Uab);
+            //_listVoltage.Add(Ubc);
+            //_listVoltage.Add(Uca);
 
-            //// Подключение к модели
-            //var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            //_modelImage = ConnectCK11.AccessingTheMalApi();
+            // Подключение к модели
+            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            _modelImage = ConnectCK11.AccessingTheMalApi();
 
-            //// Подключение к скрверу для передачи данных в БДРВ
-            //var sendCK11 = new DataTransferToCK11();
-            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            // Подключение к скрверу для передачи данных в БДРВ
+            var sendCK11 = new DataTransferToCK11();
+            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -207,8 +207,10 @@ namespace ViewGUI
 
         private void CalcRastrWin3Click(object sender, EventArgs e)
         {
-            var openFile = new OpenFileDialog();
-            openFile.Filter = "Файл rg2 (*.rg2)|*.rg2";
+            var openFile = new OpenFileDialog
+            {
+                Filter = "Файл rg2 (*.rg2)|*.rg2"
+            };
             openFile.ShowDialog();
             string path = openFile.FileName;;
 
