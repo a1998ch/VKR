@@ -9,6 +9,9 @@ using Monitel.Mal.Context.CIM16;
 using Monitel.Mal;
 using lib60870;
 using System.Linq;
+using DataBaseModel;
+using System.Data;
+using RastrWinModel;
 
 namespace ViewGUI
 {
@@ -52,7 +55,7 @@ namespace ViewGUI
         /// <summary>
         /// Uid контролируемого объекта энергетики
         /// </summary>
-        private Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
+        private readonly Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
 
         /// <summary>
         /// Uid типа значения - "Напряжение"
@@ -84,18 +87,18 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            /*double Uab = 215, Ubc = 243.7, Uca = 223;
+            double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
-            _listVoltage.Add(Uca);*/
+            _listVoltage.Add(Uca);
 
-            // Подключение к модели
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            _modelImage = ConnectCK11.AccessingTheMalApi();
+            //// Подключение к модели
+            //var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            //_modelImage = ConnectCK11.AccessingTheMalApi();
 
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11 = new DataTransferToCK11();
-            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            //// Подключение к скрверу для передачи данных в БДРВ
+            //var sendCK11 = new DataTransferToCK11();
+            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -200,6 +203,23 @@ namespace ViewGUI
 
             var sendCK11 = new DataTransferToCK11();
             sendCK11.DataTransfer(_server, _coa, _ioa, value);
+        }
+
+        private void CalcRastrWin3Click(object sender, EventArgs e)
+        {
+            var openFile = new OpenFileDialog();
+            openFile.Filter = "Файл rg2 (*.rg2)|*.rg2";
+            openFile.ShowDialog();
+            string path = openFile.FileName;;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException("Не найден файл \"*.rg2\"");
+            }
+
+            var rastr = new WorkingWithRastrWin();
+
+            rastr.GetPowerValue(path);
         }
     }
 }

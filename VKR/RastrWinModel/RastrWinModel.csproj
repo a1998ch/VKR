@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1E719293-0CCC-49CD-AF9B-19F6C89BF8F1}</ProjectGuid>
+    <ProjectGuid>{B6377385-4F1F-465A-9A85-389C99BFCA74}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CK11Model</RootNamespace>
-    <AssemblyName>CK11Model</AssemblyName>
+    <RootNamespace>RastrWinModel</RootNamespace>
+    <AssemblyName>RastrWinModel</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,51 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="lib60870, Version=1.0.8373.32719, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib60870\bin\Debug\lib60870.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.CIM.Ext.Common">
-      <HintPath>..\Monitel\Monitel.CIM.Ext.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.CIM.Ext.EMS">
-      <HintPath>..\Monitel\Monitel.CIM.Ext.EMS.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.DataContext.Tools">
-      <HintPath>..\Monitel\Monitel.DataContext.Tools.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.DirectoryClient">
-      <HintPath>..\Monitel\Monitel.DirectoryClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.Mal">
-      <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.Mal.Context.CIM16">
-      <HintPath>..\Monitel\Monitel.Mal.Context.CIM16.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.Mal.SharedMemory">
-      <HintPath>..\Monitel\Monitel.Mal.SharedMemory.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.ObjectDb.Client">
-      <HintPath>..\Monitel\Monitel.ObjectDb.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.PlatformInfrastructure">
-      <HintPath>..\Monitel\Monitel.PlatformInfrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.Rtdb.Api">
-      <HintPath>..\Monitel\Monitel.Rtdb.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.Supervisor.Infrastructure">
-      <HintPath>..\Monitel\Monitel.Supervisor.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Monitel.UI.Infrastructure">
-      <HintPath>..\Monitel\Monitel.UI.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Monitel\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\Monitel\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="ASTRALib">
+      <HintPath>..\AstraLib\ASTRALib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,8 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTransferToCK11.cs" />
-    <Compile Include="WorkingWithCK11.cs" />
+    <Compile Include="WorkingWithRastrWin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

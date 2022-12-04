@@ -39,12 +39,12 @@ namespace ViewGUI
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
             this.ConnectCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.SendToCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.CalcRastrWin3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SendToCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,8 +58,8 @@ namespace ViewGUI
             this.Documentation});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(570, 30);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(760, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -69,7 +69,7 @@ namespace ViewGUI
             this.StartSystem,
             this.StopSystem});
             this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(69, 26);
+            this.Start.Size = new System.Drawing.Size(69, 24);
             this.Start.Text = "Запуск";
             // 
             // StartSystem
@@ -91,7 +91,7 @@ namespace ViewGUI
             this.ConnectDB,
             this.AddEditDataDB});
             this.SystemDB.Name = "SystemDB";
-            this.SystemDB.Size = new System.Drawing.Size(176, 26);
+            this.SystemDB.Size = new System.Drawing.Size(176, 24);
             this.SystemDB.Text = "База данных Системы";
             // 
             // ConnectDB
@@ -116,7 +116,7 @@ namespace ViewGUI
             this.SendToCK11,
             this.CalcRastrWin3});
             this.ExternalSystems.Name = "ExternalSystems";
-            this.ExternalSystems.Size = new System.Drawing.Size(152, 26);
+            this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
             this.ExternalSystems.Text = "Внешние Системы";
             // 
             // ConnectCK11
@@ -133,11 +133,19 @@ namespace ViewGUI
             this.OikDB.Text = "БД ОИК \"СК-11\"";
             this.OikDB.Click += new System.EventHandler(this.OikDBClick);
             // 
+            // SendToCK11
+            // 
+            this.SendToCK11.Name = "SendToCK11";
+            this.SendToCK11.Size = new System.Drawing.Size(289, 26);
+            this.SendToCK11.Text = "Отправка данных в СК-11";
+            this.SendToCK11.Click += new System.EventHandler(this.SendToCK11Click);
+            // 
             // CalcRastrWin3
             // 
             this.CalcRastrWin3.Name = "CalcRastrWin3";
             this.CalcRastrWin3.Size = new System.Drawing.Size(289, 26);
             this.CalcRastrWin3.Text = "Расчётная модель RastrWin3";
+            this.CalcRastrWin3.Click += new System.EventHandler(this.CalcRastrWin3Click);
             // 
             // Documentation
             // 
@@ -145,7 +153,7 @@ namespace ViewGUI
             this.AboutProg,
             this.Manual});
             this.Documentation.Name = "Documentation";
-            this.Documentation.Size = new System.Drawing.Size(81, 26);
+            this.Documentation.Size = new System.Drawing.Size(81, 24);
             this.Documentation.Text = "Справка";
             // 
             // AboutProg
@@ -162,28 +170,23 @@ namespace ViewGUI
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(18, 37);
+            this.textBox1.Location = new System.Drawing.Point(24, 46);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(543, 355);
+            this.textBox1.Size = new System.Drawing.Size(723, 436);
             this.textBox1.TabIndex = 1;
-            // 
-            // SendToCK11
-            // 
-            this.SendToCK11.Name = "SendToCK11";
-            this.SendToCK11.Size = new System.Drawing.Size(289, 26);
-            this.SendToCK11.Text = "Отправка данных в СК-11";
-            this.SendToCK11.Click += new System.EventHandler(this.SendToCK11Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(570, 421);
+            this.ClientSize = new System.Drawing.Size(760, 518);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
