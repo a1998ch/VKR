@@ -212,7 +212,7 @@ namespace ViewGUI
                 Filter = "Файл rg2 (*.rg2)|*.rg2"
             };
             openFile.ShowDialog();
-            string path = openFile.FileName;;
+            string path = openFile.FileName;
 
             if (string.IsNullOrEmpty(path))
             {
