@@ -57,7 +57,7 @@ namespace ViewGUI
         /// <summary>
         /// Uid типа значения - "Напряжение"
         /// </summary>
-        private Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
+        private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
 
         /// <summary>
         /// Строка подключения к базе данных
@@ -158,7 +158,7 @@ namespace ViewGUI
         }
 
         /// <summary>
-        /// Подключение к БДРВ ОИК "СК-11"
+        /// Подключение к БДРВ ОИК "СК-11" / Запрос начальных данных
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
@@ -188,19 +188,10 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void OikDBClick(object sender, EventArgs e)
         {
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
 
-            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
-            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
-            var child = ConnectCK11.GetChildObject(voltageEnum);   
-
-            var uids = ConnectCK11.GetUids(child);
-            foreach (var uid in uids)
-            {
-                textBox1.Text += uid + " ";
-            }
         }
 
+        // Тестирование отправки данных в БДРВ СК-11
         private void SendToCK11Click(object sender, EventArgs e)
         {
             Random random = new Random();
