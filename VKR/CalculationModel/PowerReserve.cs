@@ -70,8 +70,8 @@ namespace CalculationModel
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
                         eoName, schemeName, connectionString, "Симметричное", 220)), listVoltage);
-                dict.Add(220, two);
                 dict.Add(240, one);
+                dict.Add(220, two);
                 return Interpolation(dict, listVoltage, true);
             }
             else if (MeanVoltage(listVoltage) < 220)
@@ -82,8 +82,8 @@ namespace CalculationModel
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
                         eoName, schemeName, connectionString, "Симметричное", 200)), listVoltage);
-                dict.Add(200, two);
                 dict.Add(220, one);
+                dict.Add(200, two);
                 return Interpolation(dict, listVoltage, true);
             }
             else
@@ -107,8 +107,8 @@ namespace CalculationModel
             {
                 if (dict.Keys.ElementAt(i) > K2U)
                 {
+                    dictResult.Add(dict.Keys.ElementAt(i - 1), dict.Values.ElementAt(i - 1));
                     dictResult.Add(dict.Keys.ElementAt(i), dict.Values.ElementAt(i));
-                    dictResult.Add(dict.Keys.ElementAt(i + 1), dict.Values.ElementAt(i + 1));
                     break;
                 }
             }
@@ -125,16 +125,16 @@ namespace CalculationModel
         private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {
             var K2U = AsymmetryCoefficientCalc(listVoltage);
-            var pathEquations = ((dict.Values.ElementAt(0) - dict.Values.ElementAt(1)) /
-                                (dict.Keys.ElementAt(0) - dict.Keys.ElementAt(1)));
+            var pathEquations = ((dict.Values.ElementAt(1) - dict.Values.ElementAt(0)) /
+                                (dict.Keys.ElementAt(1) - dict.Keys.ElementAt(0)));
 
             if (!flag)
             {
-                return pathEquations * K2U + (dict.Values.ElementAt(1) - pathEquations * dict.Keys.ElementAt(1));
+                return pathEquations * K2U + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(0));
             }
             else
             {
-                return pathEquations * MeanVoltage(listVoltage) + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(1));
+                return pathEquations * MeanVoltage(listVoltage) + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(0));
             }
         }
 

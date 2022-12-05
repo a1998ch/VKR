@@ -167,6 +167,8 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void ConnectCK11Click(object sender, EventArgs e)
         {
+            _listVoltage.Clear();
+
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
 
             var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
@@ -199,11 +201,13 @@ namespace ViewGUI
         {
             Random random = new Random();
 
-            var value = random.Next(100, 1000);
-
             var sendCK11 = new DataTransferToCK11();
-            sendCK11.DataTransfer(_server, _coa, _ioa, value);
+            sendCK11.DataTransfer(_server, _coa, 101, GetRandomVoltageValue(random));
+            sendCK11.DataTransfer(_server, _coa, 102, GetRandomVoltageValue(random));
+            sendCK11.DataTransfer(_server, _coa, 103, GetRandomVoltageValue(random));
         }
+
+        private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
 
         private void CalcRastrWin3Click(object sender, EventArgs e)
         {
