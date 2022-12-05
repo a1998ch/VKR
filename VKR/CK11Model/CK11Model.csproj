@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,10 +50,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="lib60870, Version=1.0.8373.32719, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib60870\bin\Debug\lib60870.dll</HintPath>
-    </Reference>
     <Reference Include="Monitel.CIM.Ext.Common">
       <HintPath>..\Monitel\Monitel.CIM.Ext.Common.dll</HintPath>
     </Reference>
@@ -108,6 +105,12 @@
     <Compile Include="DataTransferToCK11.cs" />
     <Compile Include="WorkingWithCK11.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib60870\lib60870.csproj">
+      <Project>{f604286a-1afc-4355-8c2c-a998cfcee979}</Project>
+      <Name>lib60870</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

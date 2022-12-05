@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,11 +54,27 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="lib60870, Version=1.0.8373.32719, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib60870\bin\Debug\lib60870.dll</HintPath>
-    </Reference>
     <Reference Include="Monitel.Mal, Version=11.5.9.930, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
@@ -146,6 +163,10 @@
     <ProjectReference Include="..\DataBaseModel\DataBaseModel.csproj">
       <Project>{250051f0-d6dd-47a6-8112-1c7819552912}</Project>
       <Name>DataBaseModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib60870\lib60870.csproj">
+      <Project>{f604286a-1afc-4355-8c2c-a998cfcee979}</Project>
+      <Name>lib60870</Name>
     </ProjectReference>
     <ProjectReference Include="..\RastrWinModel\RastrWinModel.csproj">
       <Project>{b6377385-4f1f-465a-9a85-389c99bfca74}</Project>
