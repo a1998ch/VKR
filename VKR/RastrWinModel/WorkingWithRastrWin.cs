@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ASTRALib;
 
@@ -12,16 +13,25 @@ namespace RastrWinModel
     {
         public string GetPowerValue(string pathFile)
         {
+            Regex pattern = new Regex(@"(\w*(могоча.*сш)\w*)|(\w*(сш.*могоча)\w*)", RegexOptions.IgnoreCase);
+
             IRastr rastr = new Rastr();
             rastr.Load(RG_KOD.RG_REPL, pathFile, "");
 
-            var tables = rastr.Tables;
+            ITable node = rastr.Tables.Item("node");
+            ICol ny = node.Cols.Item("ny");
+            ICol name = node.Cols.Item("name");
+            ICol baseVoltage = node.Cols.Item("uhom");
 
-            foreach (var item in tables) 
+            var result = String.Empty;
+            for (int i = 0; i < node.Count; i++)
             {
-                var a = item;
+                if (pattern.IsMatch(name.get_Z(i)) && baseVoltage.get_Z(i) == 220)
+                {
+                    result += ny.get_Z(i).ToString();
+                }
             }
-            return String.Empty;
+            return result;
             //ITable node = rastr.Tables.Item("node");
             //ICol pn = rastr.Tables.Item("node").Cols.Item("pn");
             //ICol ny = rastr.Tables.Item("node").Cols.Item("ny");
