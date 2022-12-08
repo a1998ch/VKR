@@ -78,6 +78,10 @@ namespace DataBaseModel
 
         public static string QueryForReg => "SELECT * FROM Regulation";
 
+        public static string QueryForValue => "SELECT * FROM Value_param";
+
+        public static string QueryForVoltage => "SELECT * FROM Voltage_level";
+
         public static string QueryForColumn(string tableName, 
             string columnName) => $"SELECT {columnName} FROM {tableName}";
     }

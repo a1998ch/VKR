@@ -23,9 +23,9 @@ namespace DataBaseModel
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        public List<T> ColumnName<T>(string connectionString, string query)
+        public List<string> GetColumnName(string connectionString, string query)
         {
-            List<T> listNameCol = new List<T>();
+            List<string> listNameCol = new List<string>();
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
@@ -34,15 +34,15 @@ namespace DataBaseModel
 
                 for (int i = 0; i < dataReader.FieldCount; i++)
                 {
-                    listNameCol.Add(GetValue<T>(dataReader.GetName(i)));
+                    listNameCol.Add(dataReader.GetName(i));
                 }
                 return listNameCol;
             }
         }
 
-        public List<T> Data<T>(string connectionString, string query)
+        public List<string> GetData(string connectionString, string query)
         {
-            List<T> listData = new List<T>();
+            List<string> listData = new List<string>();
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
@@ -53,59 +53,32 @@ namespace DataBaseModel
                 {
                     for (int i = 0; i < dataReader.FieldCount; i++)
                     {
-                        listData.Add(dataReader.GetFieldValue<T>(i));
+                        string item = dataReader.GetFieldValue<object>(i).ToString();
+                        listData.Add(item);
                     }
                 }
                 return listData;
             }
         }
 
-        public Dictionary<string, List<T>> DataDict<T>(string connectionString, string query)
-        {
-            Dictionary<string, List<T>> dictData = new Dictionary<string, List<T>>();
-            List<T> listData = new List<T>();
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                SqlCommand comand = new SqlCommand(query, sqlConnection);
-                SqlDataReader dataReader = comand.ExecuteReader();
-
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    while (dataReader.Read())
-                    {
-                        listData.Add(dataReader.GetFieldValue<T>(i));
-                    }
-                    dictData.Add(dataReader.GetName(i), listData);
-                }
-            }
-            return dictData;
-        }
-
-        public List<T> AllData<T>(string connectionString, string query)
-        {
-            List<T> listData = ColumnName<T>(connectionString, query);
-            listData.AddRange(Data<T>(connectionString, query));
-            return listData;
-        }
-
         public void SaveToCSV(string connectionString, string query, string path)
         {
-            List<object> data = AllData<object>(connectionString, query);
-            int ColumnCount = ColumnName<string>(connectionString, query).Count;
+            List<string> listData = GetColumnName(connectionString, query);
+            listData.AddRange(GetData(connectionString, query));
+            int columnCount = GetColumnName(connectionString, query).Count;
 
             using (var writer = new StreamWriter(path, false, Encoding.Default))
             {
-                for (int i = 0, j = 1; i < data.Count; i++, j++)
+                for (int i = 0, j = 1; i < listData.Count; i++, j++)
                 {
-                    if (j == ColumnCount) 
+                    if (j == columnCount) 
                     { 
-                        writer.Write(data[i].ToString() + "\n"); 
+                        writer.Write(listData[i].ToString() + "\n"); 
                         j = 0; 
                     }
                     else 
                     { 
-                        writer.Write(data[i].ToString() + ";"); 
+                        writer.Write(listData[i].ToString() + ";"); 
                     }
                 }
             }
@@ -135,8 +108,9 @@ namespace DataBaseModel
             return dataTable;
         }
 
-        public void PullData(string connectionString, DataTable dataTable, string query)
+        public DataTable PullData(string connectionString, string query)
         {
+            DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand(query, connection);
@@ -144,6 +118,7 @@ namespace DataBaseModel
                 sqlAdapret.Fill(dataTable);
                 sqlAdapret.Dispose();
             }
+            return dataTable;
         }
 
         public int SearchLastId(DataTable dataTable, string columnName)

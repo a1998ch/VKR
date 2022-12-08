@@ -1,4 +1,5 @@
 ﻿using DataBaseModel;
+using Monitel.Mal.Context.CIM16;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace ViewGUI
         private void DatabaseEditorFormLoad(object sender, EventArgs e)
         {
             var db = new WorkingWithDatabase();
-            db.PullData(_connectionString, _dataTableAll, DataBaseQuerys.QueryAllData);
+            _dataTableAll = db.PullData(_connectionString, DataBaseQuerys.QueryAllData);
             dataGridViewDB.DataSource = _dataTableAll;
             dataGridViewDB.AutoResizeColumns();
         }
@@ -71,212 +72,60 @@ namespace ViewGUI
             dataGridViewDB.AutoResizeColumns();
         }
 
-        private void DataTableAdd(DataTable dataTable, string query)
+        private DataTable AddTableToDb(string query, string tableName = "", string columnName = "")
         {
+            DataTable dt = new DataTable();
             var db = new WorkingWithDatabase();
-            List<string> colNameList = db.ColumnName<string>(_connectionString, query);
 
+            List<string> colNameList = db.GetColumnName(_connectionString, query);
             foreach (var col in colNameList)
             {
-                dataTable.Columns.Add(col);
+                dt.Columns.Add(col);
             }
 
-            var dict = db.DataDict<object>(_connectionString, query);
+            List<string> dataList = new List<string>();
+            if (tableName != String.Empty || columnName != String.Empty)
+            {
+                dataList = db.GetData(_connectionString, DataBaseQuerys.QueryForColumn(tableName, columnName));
+            }
 
             foreach (DataRow row in _dataTable.Rows)
             {
-                var dtRow = dataTable.Rows.Add();
-                foreach (DataColumn column in _dataTable.Columns)
+                var dtRow = dt.Rows.Add();
+                foreach (DataColumn col in _dataTable.Columns)
                 {
-                    foreach (var item in dict.Keys)
+                    if (colNameList.Contains(col.ColumnName))
                     {
-                        if (column.ColumnName == item)
-                        {
-                            dtRow[column.ColumnName] = row[column.ColumnName];
-                        }
+                        if (dataList.Contains(row[col.ColumnName])) { continue; }
+                        dtRow[col.ColumnName] = row[col.ColumnName];
                     }
                 }
             }
-        }
-
-        private void DataAdd(string connectionString, string query)
-        {
-            var db = new WorkingWithDatabase();
-            var dictDataDB = db.DataDict<object>(_connectionString, DataBaseQuerys.QueryForEnObj);
-
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                SqlCommand comand = new SqlCommand(DataBaseQuerys.QueryForEnObj, sqlConnection);
-
-                foreach (var key in dictDataDB.Keys)
-                {
-                    foreach (DataColumn col in _dataTable.Columns)
-                    {
-                        if (key == col.ColumnName)
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-
-        private void AutoGenId()
-        {
-            var dt = new DataTable();
-            var db = new WorkingWithDatabase();
-            int id = db.SearchLastId(_connectionString, "Scheme", "Scheme_id");
-
-            DataTableAdd(dt, DataBaseQuerys.QueryAllData);
-
-            // Генерация id для Scheme
-            var dict = db.DataDict<object>(_connectionString, DataBaseQuerys.QueryForScheme);
-
-            foreach (var key in dict.Keys)
-            {
-                if (key == "Scheme_name")
-                {
-                    foreach (var value in dict.Values)
-                    {
-                        if (value[0].ToString() != dt.Rows[0].Field<string>("Scheme_name"))
-                        {
-                            foreach (DataRow row in dt.Rows)
-                            {
-                                row["Scheme_id"] = id + 1;
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            //// Генерация id для Regulation
-            //var dict2 = db.DataDict<object>(_connectionString, DataBaseQuerys.QueryForReg);
-
-            //foreach (var key in dict.Keys)
-            //{
-            //    if (key == "Regulation_type")
-            //    {
-            //        foreach (var value in dict.Values)
-            //        {
-            //            int i = 0;
-            //            if (value[0].ToString() != dt.Rows[i].Field<string>("Regulation_type"))
-            //            {
-            //                foreach (DataRow row in dt.Rows)
-            //                {
-            //                    row["Scheme_id"] = id + 1;
-            //                }
-            //            }
-            //        }
-
-            //    }
-            //}
-
-
-
-
-
-
-
-
-
-
-
             dataGridViewDB.DataSource = dt;
-
-            //// Заполнение столбца - "Energy_object_name"
-            //foreach (DataRow row in _dataTableAll.Rows)
-            //{
-            //    var dtRow = dt.Rows.Add();
-            //    foreach (DataColumn column in _dataTableAll.Columns)
-            //    {
-            //        if (colNameList.Contains(column.ColumnName))
-            //        {
-            //            dtRow[column.ColumnName] = row[column.ColumnName];
-            //        }
-            //    }
-            //}
-
-            //foreach (DataRow row in _dataTableAll.Rows)
-            //{
-            //    //row["Energy_object_id"];
-            //}
-
-            //// Заполнение столбца - "Energy_object_id"
-            //int i = 1;
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    foreach (DataColumn column in dt.Columns)
-            //    {
-            //        row["Energy_object_id"] = id + i;
-            //    }
-            //    i++;
-            //}
-
-            //// Заполнение столбца - "Energy_object_number"
-            //List<int> valueList = 
-            //    db.Data<int>(_connectionString, DataBaseQuerys.QueryForColumn("Energy_object", "Energy_object_number"));
-            //bool flag = false;
-            //foreach (DataRow row in _dataTable.Rows)
-            //{
-            //    foreach (DataColumn column in _dataTable.Columns)
-            //    {
-            //        if (valueList[valueList.Count - 1] != (int)row["Energy_object_number"])
-            //        {
-            //            flag = true;
-            //        }
-            //    }
-            //}
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    foreach (DataColumn column in dt.Columns)
-            //    {
-            //        if (flag) { row["Energy_object_number"] = valueList[valueList.Count - 1] + 1; }
-            //        else { row["Energy_object_number"] = valueList[valueList.Count - 1]; }
-            //    }
-            //}
-
-
-
-            /*using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                SqlCommand comand = new SqlCommand(sqlQuery, sqlConnection);
-                SqlDataReader dataReader = comand.ExecuteReader();
-
-                var db = new WorkingWithDatabase();
-                db.GetDataFromDB(dataReader, columnName, false);
-
-                foreach (var col in columnName)
-                {
-                    if (col == "Energy_object_id") { continue; }
-                    dt.Columns.Add(col);
-                }
-
-                foreach (DataRow row in _dataTable.Rows)
-                {
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        dt.Rows.Add(row[col]);
-                    }
-                }
-                dataGridViewDB.DataSource = dt;
-            }*/
+            return dt;
         }
 
         private void LoadDataIntoDBClick(object sender, EventArgs e)
         {
-            AutoGenId();
+            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForValue);
+            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForScheme, "Scheme", "Scheme_name");
+            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForReg, "Regulation", "Regulation_type");
+            DataTable dt = AddTableToDb(DataBaseQuerys.QueryForVoltage, "Voltage_level", "Voltage_value");
 
-            /*string sql = "SELECT * FROM Value_param";
+            for (int i = 0, j = 0; i < dt.Columns.Count; i++)
+            {
+                if (string.IsNullOrEmpty(dt.Rows[0][i].ToString())) { j++; }
+                if (j == dt.Columns.Count) { return; }
+            }
+
+            string sql = DataBaseQuerys.QueryForVoltage;
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var adapter = new SqlDataAdapter(sql, connection);
                 var commandBuilder = new SqlCommandBuilder(adapter);
-                adapter.Update(_dataTable);
-            }*/
+                adapter.Update(dt);
+            }
         }
 
         private void DataExportFromDBClick(object sender, EventArgs e)
