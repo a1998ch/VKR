@@ -72,10 +72,14 @@ namespace ViewGUI
             var db = new WorkingWithDatabase();
             try
             {
-                db.AddDataToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
-                db.AddDataToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
+                db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
+                db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
 
                 MessageBox.Show("Запись данных в БД выполнена", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

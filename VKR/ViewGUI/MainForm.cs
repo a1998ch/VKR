@@ -87,10 +87,10 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            //double Uab = 215, Ubc = 243.7, Uca = 223;
-            //_listVoltage.Add(Uab);
-            //_listVoltage.Add(Ubc);
-            //_listVoltage.Add(Uca);
+            double Uab = 215, Ubc = 243.7, Uca = 223;
+            _listVoltage.Add(Uab);
+            _listVoltage.Add(Ubc);
+            _listVoltage.Add(Uca);
 
             //// Подключение к модели
             //var ConnectCK11 = new WorkingWithCK11(_serverPort);

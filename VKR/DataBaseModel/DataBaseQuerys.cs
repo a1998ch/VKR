@@ -32,8 +32,8 @@ namespace DataBaseModel
 
         public static string QueryForCalc(string eoName, string schemeName, string regulationType, int voltageLevel)
         {
-            return $"SELECT s.Scheme_name, s.Regulation_type, s.Voltage_value, " +
-                            $"s.K2U_Value, s.Power_Value, e.Energy_object_name " +
+            return $"SELECT s.K2U_Value, s.Power_Value, s.Scheme_name, " +
+                            $"s.Regulation_type, s.Voltage_value, e.Energy_object_name " +
                    $"FROM Schema_data s, Energy_object e " +
                    $"WHERE e.Scheme_id = s.Scheme_id AND " +
                            $"Energy_object_name = '{eoName}' AND " +

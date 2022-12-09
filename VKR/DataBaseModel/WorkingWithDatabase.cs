@@ -121,7 +121,7 @@ namespace DataBaseModel
             return dataTable;
         }
 
-        private DataTable AddTableToDataTable(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
+        public DataTable AddTableToDataTable(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
         {
             DataTable dt = new DataTable();
 
@@ -153,9 +153,35 @@ namespace DataBaseModel
             return dt;
         }
 
-        public void AddDataToDb(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
+        public void AddTableToDb(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
         {
+            int checkResult = 0;
             DataTable dt = AddTableToDataTable(connectionString, query, dataTable, autoGenId);
+            DataTable dtCheck = PullData(connectionString, query);
+
+            for (int item = 0; item < dt.Rows.Count; item++)
+            {
+                for (int i = 0; i < dtCheck.Rows.Count; i++)
+                {
+                    int check = 0;
+                    for (int j = 0; j < dtCheck.Columns.Count; j++)
+                    {
+                        if (dtCheck.Rows[i][j].ToString() == dt.Rows[item][j].ToString())
+                        {
+                            check++;
+                        }
+                    }
+                    if (check == dtCheck.Columns.Count - 1)
+                    {
+                        checkResult++;
+                    }
+                    if (checkResult > 1)
+                    {
+                        throw new ArgumentException("Нельзя добавить уже существующие данные");
+                    }
+                }
+            }
+
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
