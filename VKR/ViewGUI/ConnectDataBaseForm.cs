@@ -25,7 +25,7 @@ namespace ViewGUI
         private void ConnectDataBaseLoad(object sender, EventArgs e)
         {
             NameServer.Text = @"DESKTOP-M77O4Q0\SQLEXPRESS";
-            NameDB.Text = "CharacteristicsDB";
+            NameDB.Text = "DataBase";
         }
 
         private void ConnectDataBaseClosing(object sender, FormClosingEventArgs e)

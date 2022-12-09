@@ -23,8 +23,6 @@ namespace ViewGUI
 
         private DataTable _dataTable = new DataTable();
 
-        private DataTable _dataTableAll = new DataTable();
-
         private readonly string _connectionString;
 
         public DatabaseEditorForm(string connectionString)
@@ -35,10 +33,7 @@ namespace ViewGUI
 
         private void DatabaseEditorFormLoad(object sender, EventArgs e)
         {
-            var db = new WorkingWithDatabase();
-            _dataTableAll = db.PullData(_connectionString, DataBaseQuerys.QueryAllData);
-            dataGridViewDB.DataSource = _dataTableAll;
-            dataGridViewDB.AutoResizeColumns();
+
         }
 
         private void DatabaseEditorFormClosing(object sender, FormClosingEventArgs e)
@@ -72,59 +67,19 @@ namespace ViewGUI
             dataGridViewDB.AutoResizeColumns();
         }
 
-        private DataTable AddTableToDb(string query, string tableName = "", string columnName = "")
-        {
-            DataTable dt = new DataTable();
-            var db = new WorkingWithDatabase();
-
-            List<string> colNameList = db.GetColumnName(_connectionString, query);
-            foreach (var col in colNameList)
-            {
-                dt.Columns.Add(col);
-            }
-
-            List<string> dataList = new List<string>();
-            if (tableName != String.Empty || columnName != String.Empty)
-            {
-                dataList = db.GetData(_connectionString, DataBaseQuerys.QueryForColumn(tableName, columnName));
-            }
-
-            foreach (DataRow row in _dataTable.Rows)
-            {
-                var dtRow = dt.Rows.Add();
-                foreach (DataColumn col in _dataTable.Columns)
-                {
-                    if (colNameList.Contains(col.ColumnName))
-                    {
-                        if (dataList.Contains(row[col.ColumnName])) { continue; }
-                        dtRow[col.ColumnName] = row[col.ColumnName];
-                    }
-                }
-            }
-            dataGridViewDB.DataSource = dt;
-            return dt;
-        }
-
         private void LoadDataIntoDBClick(object sender, EventArgs e)
         {
-            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForValue);
-            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForScheme, "Scheme", "Scheme_name");
-            //DataTable dt = AddTableToDb(DataBaseQuerys.QueryForReg, "Regulation", "Regulation_type");
-            DataTable dt = AddTableToDb(DataBaseQuerys.QueryForVoltage, "Voltage_level", "Voltage_value");
-
-            for (int i = 0, j = 0; i < dt.Columns.Count; i++)
+            var db = new WorkingWithDatabase();
+            try
             {
-                if (string.IsNullOrEmpty(dt.Rows[0][i].ToString())) { j++; }
-                if (j == dt.Columns.Count) { return; }
+                db.AddDataToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
+                db.AddDataToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
+
+                MessageBox.Show("Запись данных в БД выполнена", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            string sql = DataBaseQuerys.QueryForVoltage;
-            using (var connection = new SqlConnection(_connectionString))
+            catch (Exception ex)
             {
-                connection.Open();
-                var adapter = new SqlDataAdapter(sql, connection);
-                var commandBuilder = new SqlCommandBuilder(adapter);
-                adapter.Update(dt);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

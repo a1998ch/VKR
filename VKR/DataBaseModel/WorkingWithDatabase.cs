@@ -71,14 +71,14 @@ namespace DataBaseModel
             {
                 for (int i = 0, j = 1; i < listData.Count; i++, j++)
                 {
-                    if (j == columnCount) 
-                    { 
-                        writer.Write(listData[i].ToString() + "\n"); 
-                        j = 0; 
+                    if (j == columnCount)
+                    {
+                        writer.Write(listData[i].ToString() + "\n");
+                        j = 0;
                     }
-                    else 
-                    { 
-                        writer.Write(listData[i].ToString() + ";"); 
+                    else
+                    {
+                        writer.Write(listData[i].ToString() + ";");
                     }
                 }
             }
@@ -121,11 +121,48 @@ namespace DataBaseModel
             return dataTable;
         }
 
-        public int SearchLastId(DataTable dataTable, string columnName)
+        private DataTable AddTableToDataTable(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
         {
-            DataRow lastRow = dataTable.Rows[dataTable.Rows.Count - 1];
-            int id = (int)lastRow[columnName];
-            return id;
+            DataTable dt = new DataTable();
+
+            int idIncrease = 0;
+            int lastId = SearchLastId(connectionString, "Schema_data", "Scheme_id");
+
+            List<string> colNameList = GetColumnName(connectionString, query);
+            foreach (var col in colNameList)
+            {
+                dt.Columns.Add(col);
+            }
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                var dtRow = dt.Rows.Add();
+                idIncrease++;
+                foreach (DataColumn col in dataTable.Columns)
+                {
+                    if (colNameList.Contains(col.ColumnName))
+                    {
+                        if (autoGenId)
+                        {
+                            dtRow["Scheme_id"] = lastId + idIncrease - dataTable.Rows.Count;
+                        }
+                        dtRow[col.ColumnName] = row[col.ColumnName];
+                    }
+                }
+            }
+            return dt;
+        }
+
+        public void AddDataToDb(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
+        {
+            DataTable dt = AddTableToDataTable(connectionString, query, dataTable, autoGenId);
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var adapter = new SqlDataAdapter(query, connection);
+                var commandBuilder = new SqlCommandBuilder(adapter);
+                adapter.Update(dt);
+            }
         }
 
         public int SearchLastId(string connectionString, string tableName, string columnName)
