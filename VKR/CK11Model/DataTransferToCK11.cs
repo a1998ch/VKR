@@ -25,7 +25,7 @@ namespace CK11Model
             return server;
         }
 
-        public void DataTransfer(Server server, int coa, int ioa, int data)
+        public void DataTransfer(Server server, int coa, int ioa, float data)
         {
             ASDU newAsdu = new ASDU(server.GetConnectionParameters(), CauseOfTransmission.PERIODIC, false, false, 1, coa, false);
             InformationObject io = new MeasuredValueShort(ioa, data, new QualityDescriptor());

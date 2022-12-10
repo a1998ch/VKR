@@ -12,6 +12,7 @@ using System.Linq;
 using DataBaseModel;
 using System.Data;
 using RastrWinModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ViewGUI
 {
@@ -135,6 +136,9 @@ namespace ViewGUI
             PowerReserve power = new PowerReserve();
             var P = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
             textBox1.Text = P.ToString();
+
+            var sendCK11 = new DataTransferToCK11();
+            sendCK11.DataTransfer(_server, _coa, 200, (float)P);
         }
 
         /// <summary>
@@ -200,14 +204,22 @@ namespace ViewGUI
         private void SendToCK11Click(object sender, EventArgs e)
         {
             Random random = new Random();
+            var Uab = GetRandomVoltageValue(random);
+            var Ubc = GetRandomVoltageValue(random);
+            var Uca = GetRandomVoltageValue(random);
+            var U = (Uab + Ubc + Uca) / 3;
 
             var sendCK11 = new DataTransferToCK11();
-            sendCK11.DataTransfer(_server, _coa, 101, GetRandomVoltageValue(random));
-            sendCK11.DataTransfer(_server, _coa, 102, GetRandomVoltageValue(random));
-            sendCK11.DataTransfer(_server, _coa, 103, GetRandomVoltageValue(random));
+            sendCK11.DataTransfer(_server, _coa, 100, Uab);
+            sendCK11.DataTransfer(_server, _coa, 101, Ubc);
+            sendCK11.DataTransfer(_server, _coa, 102, Uca);
+            sendCK11.DataTransfer(_server, _coa, 103, U);
+            sendCK11.DataTransfer(_server, _coa, 104, GetRandomPowerValue(random));
         }
 
         private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
+
+        private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 200);
 
         private void CalcRastrWin3Click(object sender, EventArgs e)
         {
