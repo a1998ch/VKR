@@ -92,15 +92,6 @@ namespace DataBaseModel
                    $"FROM {tableName} " +
                    $"ORDER BY {columnName} DESC";
         }
-        /*public static string QueryForEnObj
-        {
-            get =>
-                    "SELECT e.Energy_object_id, e.Energy_object_number, e.Energy_object_name " +
-                    "FROM Energy_object e";
-
-            return "INSERT INTO[CharacteristicsDB].[dbo].[Energy_object](Energy_object_number, Energy_object_number) " +
-                   "VALUES(1, 'ВНС')";
-        }*/
 
         public static string QueryForEnObj => "SELECT * FROM Energy_object";
 

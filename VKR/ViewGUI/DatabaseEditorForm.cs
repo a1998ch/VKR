@@ -41,6 +41,13 @@ namespace ViewGUI
             CloseForm?.Invoke(sender, e);
         }
 
+        private void LoadDataFromDbClick(object sender, EventArgs e)
+        {
+            var wdb = new WorkingWithDatabase();
+            dataGridViewDB.DataSource = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
+            dataGridViewDB.AutoResizeColumns();
+        }
+
         /// <summary>
         /// Сохранение/загрузка данных
         /// </summary>
