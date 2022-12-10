@@ -150,6 +150,22 @@ namespace CK11Model
             return enumObjects.Where(obj => obj.MeasurementType.Uid == uidMeasType);
         }
 
+        public IEnumerable<T> GetFilterVoltage<T>(IEnumerable<T> enumObjects) where T : class, Measurement
+        {
+            return enumObjects.Where(
+                obj =>
+                {
+                    if (obj.phases.Value == PhaseCode.AB ||
+                        obj.phases.Value == PhaseCode.BC ||
+                        obj.phases.Value == PhaseCode.AC)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+        }
+
         /// <summary>
         /// Получение дочерних объектов на основе родительских
         /// </summary>

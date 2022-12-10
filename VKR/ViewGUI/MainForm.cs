@@ -177,7 +177,8 @@ namespace ViewGUI
 
             var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
             var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
-            var child = ConnectCK11.GetChildObject(voltageEnum);
+            var voltageEnumPhase = ConnectCK11.GetFilterVoltage(voltageEnum);
+            var child = ConnectCK11.GetChildObject(voltageEnumPhase);
             Guid[] uids = ConnectCK11.GetUids(child);
 
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
@@ -210,10 +211,10 @@ namespace ViewGUI
             var U = (Uab + Ubc + Uca) / 3;
 
             var sendCK11 = new DataTransferToCK11();
-            sendCK11.DataTransfer(_server, _coa, 100, Uab);
-            sendCK11.DataTransfer(_server, _coa, 101, Ubc);
-            sendCK11.DataTransfer(_server, _coa, 102, Uca);
-            sendCK11.DataTransfer(_server, _coa, 103, U);
+            sendCK11.DataTransfer(_server, _coa, 100, U);
+            sendCK11.DataTransfer(_server, _coa, 101, Uab);
+            sendCK11.DataTransfer(_server, _coa, 102, Ubc);
+            sendCK11.DataTransfer(_server, _coa, 103, Uca);
             sendCK11.DataTransfer(_server, _coa, 104, GetRandomPowerValue(random));
         }
 
