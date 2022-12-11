@@ -62,7 +62,7 @@ namespace CalculationModel
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
 
-            if (MeanVoltage(listVoltage) > 220)
+            if (MeanVoltage(listVoltage) >= 220)
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(

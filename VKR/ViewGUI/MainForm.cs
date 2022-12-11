@@ -61,7 +61,7 @@ namespace ViewGUI
         /// <summary>
         /// Uid активной мощности контролируемого объекта энергетики
         /// </summary>
-        private readonly Guid[] _activePowerUid = new Guid[1] { Guid.Parse("52664A1A-EA9F-45B2-9073-E1E303131762") };
+        private readonly Guid[] _activePowerUid = new Guid[1] { Guid.Parse("1267F451-6150-4F66-B530-22DDF9186936") };
 
         /// <summary>
         /// Uid типа значения - "Напряжение"
@@ -103,10 +103,10 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            //double Uab = 215, Ubc = 243.7, Uca = 223;
-            //_listVoltage.Add(Uab);
-            //_listVoltage.Add(Ubc);
-            //_listVoltage.Add(Uca);
+            double Uab = 215, Ubc = 243.7, Uca = 223;
+            _listVoltage.Add(Uab);
+            _listVoltage.Add(Ubc);
+            _listVoltage.Add(Uca);
 
             // Подключение к модели
             var ConnectCK11 = new WorkingWithCK11(_serverPort);
@@ -157,7 +157,7 @@ namespace ViewGUI
                 GetActivePower();
                 GetVoltage();
                 var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
-                textBox1.Text = limitingActivePower.ToString();
+                //textBox1.Text = limitingActivePower.ToString();
 
                 float activePowerReserve = (float)limitingActivePower - _activePower;
                 sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
@@ -292,7 +292,7 @@ namespace ViewGUI
 
         private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
 
-        private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 200);
+        private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 100);
 
         private void CalcRastrWin3Click(object sender, EventArgs e)
         {
