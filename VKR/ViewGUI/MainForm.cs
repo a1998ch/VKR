@@ -153,6 +153,7 @@ namespace ViewGUI
 
             while (_false)
             {
+                SetValueToCK11();
                 GetActivePower();
                 GetVoltage();
                 var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
@@ -165,14 +166,14 @@ namespace ViewGUI
 
         private void StopSystemClick(object sender, EventArgs e)
         {
-            _false= false;
+            _false = false;
         }
 
         private void GetActivePower()
         {
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
             var data = dataRequest.GetSignals(_activePowerUid);
-            _activePower = (float)Convert.ToDouble(data[0]);
+            _activePower = (float)Convert.ToDouble(data[0].Value.AnalogValue);
         }
 
         private void GetVoltage()
@@ -194,6 +195,22 @@ namespace ViewGUI
             {
                 _listVoltage.Add(item.Value.AnalogValue);
             }
+        }
+
+        private void SetValueToCK11()
+        {
+            Random random = new Random();
+            var Uab = GetRandomVoltageValue(random);
+            var Ubc = GetRandomVoltageValue(random);
+            var Uca = GetRandomVoltageValue(random);
+            var U = (Uab + Ubc + Uca) / 3;
+
+            var sendCK11 = new DataTransferToCK11();
+            sendCK11.DataTransfer(_server, _coa, 100, U);
+            sendCK11.DataTransfer(_server, _coa, 101, Uab);
+            sendCK11.DataTransfer(_server, _coa, 102, Ubc);
+            sendCK11.DataTransfer(_server, _coa, 103, Uca);
+            sendCK11.DataTransfer(_server, _coa, 104, GetRandomPowerValue(random));
         }
 
         /// <summary>
