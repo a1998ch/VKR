@@ -155,6 +155,7 @@ namespace CK11Model
             return enumObjects.Where(
                 obj =>
                 {
+                    if (obj?.phases == null) { return false; }
                     if (obj.phases.Value == PhaseCode.AB ||
                         obj.phases.Value == PhaseCode.BC ||
                         obj.phases.Value == PhaseCode.AC)
