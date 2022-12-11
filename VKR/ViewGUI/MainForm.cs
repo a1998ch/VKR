@@ -13,6 +13,7 @@ using DataBaseModel;
 using System.Data;
 using RastrWinModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Threading.Tasks;
 
 namespace ViewGUI
 {
@@ -146,8 +147,15 @@ namespace ViewGUI
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
-        private void StartSystemClick(object sender, EventArgs e)
+        private async void StartSystemClick(object sender, EventArgs e)
         {
+            await Task.Run(() => Calc());
+        }
+
+        private void Calc()
+        {
+            _false = true;
+
             PowerReserve power = new PowerReserve();
             var sendCK11 = new DataTransferToCK11();
 
@@ -156,9 +164,8 @@ namespace ViewGUI
                 SetValueToCK11();
                 GetActivePower();
                 GetVoltage();
-                var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
-                //textBox1.Text = limitingActivePower.ToString();
 
+                var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
                 float activePowerReserve = (float)limitingActivePower - _activePower;
                 sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
             }
