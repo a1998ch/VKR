@@ -14,6 +14,7 @@ using System.Data;
 using RastrWinModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ViewGUI
 {
@@ -168,6 +169,8 @@ namespace ViewGUI
                 var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
                 float activePowerReserve = (float)limitingActivePower - _activePower;
                 sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                Thread.Sleep(5000);
             }
         }
 
