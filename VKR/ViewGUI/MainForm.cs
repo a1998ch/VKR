@@ -59,6 +59,11 @@ namespace ViewGUI
         private readonly Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
 
         /// <summary>
+        /// Uid активной мощности контролируемого объекта энергетики
+        /// </summary>
+        private readonly Guid[] _activePowerUid = new Guid[1] { Guid.Parse("52664A1A-EA9F-45B2-9073-E1E303131762") };
+
+        /// <summary>
         /// Uid типа значения - "Напряжение"
         /// </summary>
         private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
@@ -72,6 +77,16 @@ namespace ViewGUI
         /// Список междуфазных напряжений
         /// </summary>
         private readonly List<double> _listVoltage = new List<double>(3);
+
+        /// <summary>
+        /// Активная мощность ОЭ
+        /// </summary>
+        private float _activePower;
+
+        /// <summary>
+        /// Остановить расчёт
+        /// </summary>
+        private bool _false = true;
 
         /// <summary>
         /// Конструктор класса MainForm
@@ -134,11 +149,51 @@ namespace ViewGUI
         private void StartSystemClick(object sender, EventArgs e)
         {
             PowerReserve power = new PowerReserve();
-            var P = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
-            textBox1.Text = P.ToString();
-
             var sendCK11 = new DataTransferToCK11();
-            sendCK11.DataTransfer(_server, _coa, 200, (float)P);
+
+            while (_false)
+            {
+                GetActivePower();
+                GetVoltage();
+                var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
+                textBox1.Text = limitingActivePower.ToString();
+
+                float activePowerReserve = (float)limitingActivePower - _activePower;
+                sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+            }
+        }
+
+        private void StopSystemClick(object sender, EventArgs e)
+        {
+            _false= false;
+        }
+
+        private void GetActivePower()
+        {
+            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
+            var data = dataRequest.GetSignals(_activePowerUid);
+            _activePower = (float)Convert.ToDouble(data[0]);
+        }
+
+        private void GetVoltage()
+        {
+            _listVoltage.Clear();
+
+            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+
+            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
+            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
+            var voltageEnumPhase = ConnectCK11.GetFilterVoltage(voltageEnum);
+            var child = ConnectCK11.GetChildObject(voltageEnumPhase);
+            Guid[] uids = ConnectCK11.GetUids(child);
+
+            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
+            var data = dataRequest.GetSignals(uids);
+
+            foreach (var item in data)
+            {
+                _listVoltage.Add(item.Value.AnalogValue);
+            }
         }
 
         /// <summary>
