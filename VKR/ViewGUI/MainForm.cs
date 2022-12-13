@@ -162,28 +162,33 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private async void StartSystemClick(object sender, EventArgs e)
         {
-            await Task.Run(() => Calc());
-        }
-
-        private void Calc()
-        {
-            _false = true;
-
-            PowerReserve power = new PowerReserve();
-            var sendCK11 = new DataTransferToCK11();
-
-            while (_false)
+            await Task.Run(() =>
             {
-                SetValueToCK11();
-                GetActivePower();
-                GetVoltage();
+                int i = 1;
+                double j = 0;
+                _false = true;
 
-                var limitingActivePower = power.LimitFlow("ВНС", _schemeName, _sqlConnection, _listVoltage);
-                float activePowerReserve = (float)limitingActivePower - _activePower;
-                sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+                PowerReserve power = new PowerReserve();
+                var sendCK11 = new DataTransferToCK11();
 
-                Thread.Sleep(5000);
+                ChoiseObject();
+
+                while (_false)
+                {
+                    i += 5;
+                    j += 0.5;
+                    SetValueToCK11(i, j);
+                    GetActivePower();
+                    GetVoltage();
+
+                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _sqlConnection, _listVoltage);
+                    float activePowerReserve = (float)limitingActivePower - _activePower;
+                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                    Thread.Sleep(5000);
+                }
             }
+            );
         }
 
         private void StopSystemClick(object sender, EventArgs e)
@@ -219,20 +224,21 @@ namespace ViewGUI
             }
         }
 
-        private void SetValueToCK11()
+        private void SetValueToCK11(int i, double j)
         {
             Random random = new Random();
-            var Uab = GetRandomVoltageValue(random);
-            var Ubc = GetRandomVoltageValue(random);
-            var Uca = GetRandomVoltageValue(random);
-            var U = (Uab + Ubc + Uca) / 3;
+            float Uab = (float)(215 - j);
+            float Ubc = (float)(243.7 - j);
+            float Uca = (float)(223 - j);
+            float U = (Uab + Ubc + Uca) / 3;
+            float P = 50 + i;
 
             var sendCK11 = new DataTransferToCK11();
             sendCK11.DataTransfer(_server, _coa, 100, U);
             sendCK11.DataTransfer(_server, _coa, 101, Uab);
             sendCK11.DataTransfer(_server, _coa, 102, Ubc);
             sendCK11.DataTransfer(_server, _coa, 103, Uca);
-            sendCK11.DataTransfer(_server, _coa, 104, GetRandomPowerValue(random));
+            sendCK11.DataTransfer(_server, _coa, 104, P);
         }
 
         /// <summary>
@@ -345,11 +351,15 @@ namespace ViewGUI
             }
         }
 
-        private void CheckedListBoxEnObjSelectedIndexChanged(object sender, EventArgs e)
+        private void ChoiseObject()
         {
             foreach (var item in CheckedListBoxEnObj.CheckedItems)
             {
-                _objectName = item;
+                _objectName = item.ToString();
+            }
+            if (_objectName == "Объект электроэнергетики")
+            {
+                _objectName = "ВНС";
             }
         }
     }

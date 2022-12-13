@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.OK = new System.Windows.Forms.Button();
-            this.Close = new System.Windows.Forms.Button();
+            this.ButtonClose = new System.Windows.Forms.Button();
             this.comboBoxScheme = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
@@ -45,15 +45,15 @@
             this.OK.UseVisualStyleBackColor = true;
             this.OK.Click += new System.EventHandler(this.OKClick);
             // 
-            // Close
+            // ButtonClose
             // 
-            this.Close.Location = new System.Drawing.Point(179, 139);
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(127, 42);
-            this.Close.TabIndex = 1;
-            this.Close.Text = "Отмена";
-            this.Close.UseVisualStyleBackColor = true;
-            this.Close.Click += new System.EventHandler(this.CloseClick);
+            this.ButtonClose.Location = new System.Drawing.Point(179, 139);
+            this.ButtonClose.Name = "ButtonClose";
+            this.ButtonClose.Size = new System.Drawing.Size(127, 42);
+            this.ButtonClose.TabIndex = 1;
+            this.ButtonClose.Text = "Отмена";
+            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // comboBoxScheme
             // 
@@ -79,7 +79,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 199);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Close);
+            this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.OK);
             this.MaximizeBox = false;
             this.Name = "ChoiceOfSchemaForm";
@@ -95,7 +95,7 @@
         #endregion
 
         private System.Windows.Forms.Button OK;
-        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button ButtonClose;
         private System.Windows.Forms.ComboBox comboBoxScheme;
         private System.Windows.Forms.GroupBox groupBox1;
     }

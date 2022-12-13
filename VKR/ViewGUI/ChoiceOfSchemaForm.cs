@@ -47,7 +47,7 @@ namespace ViewGUI
             CloseForm?.Invoke(sender, e);
         }
 
-        private void CloseClick(object sender, EventArgs e)
+        private void ButtonCloseClick(object sender, EventArgs e)
         {
             this.Close();
         }

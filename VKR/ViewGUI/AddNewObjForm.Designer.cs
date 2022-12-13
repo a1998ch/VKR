@@ -31,7 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBoxAddObj = new System.Windows.Forms.TextBox();
             this.AddElement = new System.Windows.Forms.Button();
-            this.Close = new System.Windows.Forms.Button();
+            this.ButtonClose = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,22 +62,22 @@
             this.AddElement.UseVisualStyleBackColor = true;
             this.AddElement.Click += new System.EventHandler(this.AddElementClick);
             // 
-            // Close
+            // ButtonClose
             // 
-            this.Close.Location = new System.Drawing.Point(249, 111);
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(171, 37);
-            this.Close.TabIndex = 2;
-            this.Close.Text = "Отмена";
-            this.Close.UseVisualStyleBackColor = true;
-            this.Close.Click += new System.EventHandler(this.CloseClick);
+            this.ButtonClose.Location = new System.Drawing.Point(249, 111);
+            this.ButtonClose.Name = "ButtonClose";
+            this.ButtonClose.Size = new System.Drawing.Size(171, 37);
+            this.ButtonClose.TabIndex = 2;
+            this.ButtonClose.Text = "Отмена";
+            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // AddNewObjForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(438, 161);
-            this.Controls.Add(this.Close);
+            this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.AddElement);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
@@ -96,6 +96,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBoxAddObj;
         private System.Windows.Forms.Button AddElement;
-        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button ButtonClose;
     }
 }

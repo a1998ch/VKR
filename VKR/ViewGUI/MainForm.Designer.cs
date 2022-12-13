@@ -162,7 +162,6 @@ namespace ViewGUI
             this.CheckedListBoxEnObj.Size = new System.Drawing.Size(316, 364);
             this.CheckedListBoxEnObj.TabIndex = 2;
             this.CheckedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxEnObjItemCheck);
-            this.CheckedListBoxEnObj.SelectedIndexChanged += new System.EventHandler(this.CheckedListBoxEnObjSelectedIndexChanged);
             // 
             // AddEnObjButton
             // 

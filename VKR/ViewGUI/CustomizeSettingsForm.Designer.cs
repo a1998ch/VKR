@@ -30,7 +30,7 @@
         {
             this.treeViewObj = new System.Windows.Forms.TreeView();
             this.ButtonOK = new System.Windows.Forms.Button();
-            this.Close = new System.Windows.Forms.Button();
+            this.ButtonClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeViewObj
@@ -50,22 +50,22 @@
             this.ButtonOK.UseVisualStyleBackColor = true;
             this.ButtonOK.Click += new System.EventHandler(this.ButtonOKClick);
             // 
-            // Close
+            // ButtonClose
             // 
-            this.Close.Location = new System.Drawing.Point(176, 382);
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(135, 35);
-            this.Close.TabIndex = 4;
-            this.Close.Text = "Отмена";
-            this.Close.UseVisualStyleBackColor = true;
-            this.Close.Click += new System.EventHandler(this.CloseClick);
+            this.ButtonClose.Location = new System.Drawing.Point(176, 382);
+            this.ButtonClose.Name = "ButtonClose";
+            this.ButtonClose.Size = new System.Drawing.Size(135, 35);
+            this.ButtonClose.TabIndex = 4;
+            this.ButtonClose.Text = "Отмена";
+            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // CustomizeSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(323, 429);
-            this.Controls.Add(this.Close);
+            this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.treeViewObj);
             this.MaximizeBox = false;
@@ -82,6 +82,6 @@
 
         internal System.Windows.Forms.TreeView treeViewObj;
         private System.Windows.Forms.Button ButtonOK;
-        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button ButtonClose;
     }
 }
