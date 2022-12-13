@@ -42,9 +42,10 @@ namespace ViewGUI
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkedListBoxEnObj = new System.Windows.Forms.CheckedListBox();
+            this.CheckedListBoxEnObj = new System.Windows.Forms.CheckedListBox();
             this.AddEnObjButton = new System.Windows.Forms.Button();
-            this.CustomizeSettingsObj = new System.Windows.Forms.Button();
+            this.SelectionOfRequestedData = new System.Windows.Forms.Button();
+            this.ChoiceOfSchema = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -153,14 +154,15 @@ namespace ViewGUI
             this.Manual.Size = new System.Drawing.Size(278, 26);
             this.Manual.Text = "Руководство пользователя";
             // 
-            // checkedListBoxEnObj
+            // CheckedListBoxEnObj
             // 
-            this.checkedListBoxEnObj.FormattingEnabled = true;
-            this.checkedListBoxEnObj.Location = new System.Drawing.Point(12, 42);
-            this.checkedListBoxEnObj.Name = "checkedListBoxEnObj";
-            this.checkedListBoxEnObj.Size = new System.Drawing.Size(316, 364);
-            this.checkedListBoxEnObj.TabIndex = 2;
-            this.checkedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxEnObjItemCheck);
+            this.CheckedListBoxEnObj.FormattingEnabled = true;
+            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(12, 42);
+            this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
+            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(316, 364);
+            this.CheckedListBoxEnObj.TabIndex = 2;
+            this.CheckedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxEnObjItemCheck);
+            this.CheckedListBoxEnObj.SelectedIndexChanged += new System.EventHandler(this.CheckedListBoxEnObjSelectedIndexChanged);
             // 
             // AddEnObjButton
             // 
@@ -172,24 +174,35 @@ namespace ViewGUI
             this.AddEnObjButton.UseVisualStyleBackColor = true;
             this.AddEnObjButton.Click += new System.EventHandler(this.AddEnObjButtonClick);
             // 
-            // CustomizeSettingsObj
+            // SelectionOfRequestedData
             // 
-            this.CustomizeSettingsObj.Location = new System.Drawing.Point(362, 116);
-            this.CustomizeSettingsObj.Name = "CustomizeSettingsObj";
-            this.CustomizeSettingsObj.Size = new System.Drawing.Size(171, 54);
-            this.CustomizeSettingsObj.TabIndex = 4;
-            this.CustomizeSettingsObj.Text = "Настроить параметры объекта";
-            this.CustomizeSettingsObj.UseVisualStyleBackColor = true;
-            this.CustomizeSettingsObj.Click += new System.EventHandler(this.CustomizeSettingsObjClick);
+            this.SelectionOfRequestedData.Location = new System.Drawing.Point(362, 116);
+            this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
+            this.SelectionOfRequestedData.Size = new System.Drawing.Size(171, 54);
+            this.SelectionOfRequestedData.TabIndex = 4;
+            this.SelectionOfRequestedData.Text = "Выбор запрашиваемых данных";
+            this.SelectionOfRequestedData.UseVisualStyleBackColor = true;
+            this.SelectionOfRequestedData.Click += new System.EventHandler(this.SelectionOfRequestedDataClick);
+            // 
+            // ChoiceOfSchema
+            // 
+            this.ChoiceOfSchema.Location = new System.Drawing.Point(362, 195);
+            this.ChoiceOfSchema.Name = "ChoiceOfSchema";
+            this.ChoiceOfSchema.Size = new System.Drawing.Size(171, 51);
+            this.ChoiceOfSchema.TabIndex = 5;
+            this.ChoiceOfSchema.Text = "Выбор схемно-режимной ситуации";
+            this.ChoiceOfSchema.UseVisualStyleBackColor = true;
+            this.ChoiceOfSchema.Click += new System.EventHandler(this.ChoiceOfSchemaClick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 421);
-            this.Controls.Add(this.CustomizeSettingsObj);
+            this.Controls.Add(this.ChoiceOfSchema);
+            this.Controls.Add(this.SelectionOfRequestedData);
             this.Controls.Add(this.AddEnObjButton);
-            this.Controls.Add(this.checkedListBoxEnObj);
+            this.Controls.Add(this.CheckedListBoxEnObj);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
@@ -219,9 +232,10 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
         private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
         private System.Windows.Forms.ToolStripMenuItem OikDB;
-        private System.Windows.Forms.CheckedListBox checkedListBoxEnObj;
+        private System.Windows.Forms.CheckedListBox CheckedListBoxEnObj;
         private System.Windows.Forms.Button AddEnObjButton;
-        private System.Windows.Forms.Button CustomizeSettingsObj;
+        private System.Windows.Forms.Button SelectionOfRequestedData;
+        private System.Windows.Forms.Button ChoiceOfSchema;
     }
 }
 

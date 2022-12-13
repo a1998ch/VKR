@@ -105,6 +105,8 @@ namespace DataBaseModel
 
         public static string QueryForSchemaData => "SELECT * FROM Schema_data";
 
+        public static string QueryForSchemaName => "SELECT Scheme_name FROM Schema_data";
+
         //public static string QueryForColumn(string tableName, 
         //    string columnName) => $"SELECT {columnName} FROM {tableName}";
     }

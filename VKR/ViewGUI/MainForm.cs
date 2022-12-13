@@ -69,6 +69,16 @@ namespace ViewGUI
         /// Uid типа значения - "Напряжение"
         /// </summary>
         private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
+        
+        /// <summary>
+        /// Наименование объекта энергетики
+        /// </summary>
+        private string _objectName;
+
+        /// <summary>
+        /// Наименование С-РС
+        /// </summary>
+        private string _schemeName;
 
         /// <summary>
         /// Строка подключения к базе данных
@@ -105,7 +115,7 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            checkedListBoxEnObj.Items.Add("Объект электроэнергетики");
+            CheckedListBoxEnObj.Items.Add("Объект электроэнергетики");
 
             double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
@@ -168,7 +178,7 @@ namespace ViewGUI
                 GetActivePower();
                 GetVoltage();
 
-                var limitingActivePower = power.LimitFlow("ВНС", "Нормальная схема", _sqlConnection, _listVoltage);
+                var limitingActivePower = power.LimitFlow("ВНС", _schemeName, _sqlConnection, _listVoltage);
                 float activePowerReserve = (float)limitingActivePower - _activePower;
                 sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
 
@@ -288,31 +298,59 @@ namespace ViewGUI
             this.Hide();
             AddNewObjForm addNewObjForm = new AddNewObjForm();
             addNewObjForm.CloseForm += OtherCloseForm;
-            addNewObjForm.AddObjEvent += (o, args) => checkedListBoxEnObj.Items.Add(args);
+            addNewObjForm.AddObjEvent += (o, args) => CheckedListBoxEnObj.Items.Add(args);
             addNewObjForm.ShowDialog();
         }
 
-        private void checkedListBoxEnObjItemCheck(object sender, ItemCheckEventArgs e)
+        private void CheckedListBoxEnObjItemCheck(object sender, ItemCheckEventArgs e)
         {
-            for (int ix = 0; ix < checkedListBoxEnObj.Items.Count; ++ix)
+            for (int ix = 0; ix < CheckedListBoxEnObj.Items.Count; ++ix)
             {
-                if (ix != e.Index) checkedListBoxEnObj.SetItemChecked(ix, false);
+                if (ix != e.Index) CheckedListBoxEnObj.SetItemChecked(ix, false);
             }
         }
 
-        private void CustomizeSettingsObjClick(object sender, EventArgs e)
+        private void SelectionOfRequestedDataClick(object sender, EventArgs e)
         {
-            if (checkedListBoxEnObj.SelectedIndex < 0) 
-            { 
-                MessageBox.Show("Выбирете объект электроэнергетики", 
-                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            if (!CheckObj) { return; }
 
             this.Hide();
             CustomizeSettingsForm customizeSettingsForm = new CustomizeSettingsForm(_serverPort);
             customizeSettingsForm.CloseForm += OtherCloseForm;
             customizeSettingsForm.ShowDialog();
+        }
+
+        private void ChoiceOfSchemaClick(object sender, EventArgs e)
+        {
+            if (!CheckObj) { return; }
+
+            this.Hide();
+            ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection);
+            choiceOfSchemaForm.CloseForm += OtherCloseForm;
+            choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
+            choiceOfSchemaForm.ShowDialog();
+        }
+
+        private bool CheckObj
+        {
+            get
+            {
+                if (CheckedListBoxEnObj.CheckedItems.Count == 0)
+                {
+                    MessageBox.Show("Выбирете объект электроэнергетики",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private void CheckedListBoxEnObjSelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (var item in CheckedListBoxEnObj.CheckedItems)
+            {
+                _objectName = item;
+            }
         }
     }
 }

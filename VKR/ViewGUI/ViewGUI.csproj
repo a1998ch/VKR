@@ -105,6 +105,12 @@
     <Compile Include="AddNewObjForm.Designer.cs">
       <DependentUpon>AddNewObjForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChoiceOfSchemaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoiceOfSchemaForm.Designer.cs">
+      <DependentUpon>ChoiceOfSchemaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectDataBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddNewObjForm.resx">
       <DependentUpon>AddNewObjForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChoiceOfSchemaForm.resx">
+      <DependentUpon>ChoiceOfSchemaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectDataBaseForm.resx">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
