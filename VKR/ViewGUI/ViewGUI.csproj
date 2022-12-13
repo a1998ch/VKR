@@ -99,11 +99,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddNewObjForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddNewObjForm.Designer.cs">
+      <DependentUpon>AddNewObjForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectDataBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectDataBaseForm.Designer.cs">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomizeSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomizeSettingsForm.Designer.cs">
+      <DependentUpon>CustomizeSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEditorForm.cs">
       <SubType>Form</SubType>
@@ -119,8 +131,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddNewObjForm.resx">
+      <DependentUpon>AddNewObjForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectDataBaseForm.resx">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomizeSettingsForm.resx">
+      <DependentUpon>CustomizeSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatabaseEditorForm.resx">
       <DependentUpon>DatabaseEditorForm.cs</DependentUpon>

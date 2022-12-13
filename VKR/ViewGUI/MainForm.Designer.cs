@@ -37,14 +37,14 @@ namespace ViewGUI
             this.ConnectDB = new System.Windows.Forms.ToolStripMenuItem();
             this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
-            this.ConnectCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
-            this.SendToCK11 = new System.Windows.Forms.ToolStripMenuItem();
             this.CalcRastrWin3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.checkedListBoxEnObj = new System.Windows.Forms.CheckedListBox();
+            this.AddEnObjButton = new System.Windows.Forms.Button();
+            this.CustomizeSettingsObj = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,20 +112,11 @@ namespace ViewGUI
             // ExternalSystems
             // 
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ConnectCK11,
             this.OikDB,
-            this.SendToCK11,
             this.CalcRastrWin3});
             this.ExternalSystems.Name = "ExternalSystems";
             this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
             this.ExternalSystems.Text = "Внешние Системы";
-            // 
-            // ConnectCK11
-            // 
-            this.ConnectCK11.Name = "ConnectCK11";
-            this.ConnectCK11.Size = new System.Drawing.Size(289, 26);
-            this.ConnectCK11.Text = "БДРВ ОИК \"СК-11\"";
-            this.ConnectCK11.Click += new System.EventHandler(this.ConnectCK11Click);
             // 
             // OikDB
             // 
@@ -133,13 +124,6 @@ namespace ViewGUI
             this.OikDB.Size = new System.Drawing.Size(289, 26);
             this.OikDB.Text = "БД ОИК \"СК-11\"";
             this.OikDB.Click += new System.EventHandler(this.OikDBClick);
-            // 
-            // SendToCK11
-            // 
-            this.SendToCK11.Name = "SendToCK11";
-            this.SendToCK11.Size = new System.Drawing.Size(289, 26);
-            this.SendToCK11.Text = "Отправка данных в СК-11";
-            this.SendToCK11.Click += new System.EventHandler(this.SendToCK11Click);
             // 
             // CalcRastrWin3
             // 
@@ -169,23 +153,43 @@ namespace ViewGUI
             this.Manual.Size = new System.Drawing.Size(278, 26);
             this.Manual.Text = "Руководство пользователя";
             // 
-            // textBox1
+            // checkedListBoxEnObj
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(18, 37);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(543, 355);
-            this.textBox1.TabIndex = 1;
+            this.checkedListBoxEnObj.FormattingEnabled = true;
+            this.checkedListBoxEnObj.Location = new System.Drawing.Point(12, 42);
+            this.checkedListBoxEnObj.Name = "checkedListBoxEnObj";
+            this.checkedListBoxEnObj.Size = new System.Drawing.Size(316, 364);
+            this.checkedListBoxEnObj.TabIndex = 2;
+            this.checkedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxEnObjItemCheck);
+            // 
+            // AddEnObjButton
+            // 
+            this.AddEnObjButton.Location = new System.Drawing.Point(362, 42);
+            this.AddEnObjButton.Name = "AddEnObjButton";
+            this.AddEnObjButton.Size = new System.Drawing.Size(171, 47);
+            this.AddEnObjButton.TabIndex = 3;
+            this.AddEnObjButton.Text = "Добавить объект электроэнергетики";
+            this.AddEnObjButton.UseVisualStyleBackColor = true;
+            this.AddEnObjButton.Click += new System.EventHandler(this.AddEnObjButtonClick);
+            // 
+            // CustomizeSettingsObj
+            // 
+            this.CustomizeSettingsObj.Location = new System.Drawing.Point(362, 116);
+            this.CustomizeSettingsObj.Name = "CustomizeSettingsObj";
+            this.CustomizeSettingsObj.Size = new System.Drawing.Size(171, 54);
+            this.CustomizeSettingsObj.TabIndex = 4;
+            this.CustomizeSettingsObj.Text = "Настроить параметры объекта";
+            this.CustomizeSettingsObj.UseVisualStyleBackColor = true;
+            this.CustomizeSettingsObj.Click += new System.EventHandler(this.CustomizeSettingsObjClick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 421);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.CustomizeSettingsObj);
+            this.Controls.Add(this.AddEnObjButton);
+            this.Controls.Add(this.checkedListBoxEnObj);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
@@ -212,12 +216,12 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem Documentation;
         private System.Windows.Forms.ToolStripMenuItem AboutProg;
         private System.Windows.Forms.ToolStripMenuItem Manual;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
-        private System.Windows.Forms.ToolStripMenuItem ConnectCK11;
         private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
         private System.Windows.Forms.ToolStripMenuItem OikDB;
-        private System.Windows.Forms.ToolStripMenuItem SendToCK11;
+        private System.Windows.Forms.CheckedListBox checkedListBoxEnObj;
+        private System.Windows.Forms.Button AddEnObjButton;
+        private System.Windows.Forms.Button CustomizeSettingsObj;
     }
 }
 

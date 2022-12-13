@@ -48,6 +48,8 @@ namespace CK11Model
             _port = port;
         }
 
+        public WorkingWithCK11() { }
+
         /// <summary>
         /// Запрос данных из БДРВ
         /// </summary>
@@ -124,6 +126,7 @@ namespace CK11Model
                 obj =>
                 {
                     var parent = obj.ParentObject;
+                    if (parent?.Uid == null) { return false; }
                     while (parent.Uid != modelImage.GetRootObject().Uid)
                     {
                         if (parent.Uid == uidParentObj)
@@ -180,6 +183,13 @@ namespace CK11Model
             {
                 listChildObj.Add(item.ChildObjects.FirstOrDefault());
             }
+            return listChildObj;
+        }
+
+        public IEnumerable<IdentifiedObject> GetChildObject(IdentifiedObject obj)
+        {
+            IdentifiedObject[] listChildObj = new IdentifiedObject[obj.ChildObjects.Length];
+            listChildObj = obj.ChildObjects;
             return listChildObj;
         }
 

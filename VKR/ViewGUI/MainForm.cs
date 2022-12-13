@@ -105,6 +105,8 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
+            checkedListBoxEnObj.Items.Add("Объект электроэнергетики");
+
             double Uab = 215, Ubc = 243.7, Uca = 223;
             _listVoltage.Add(Uab);
             _listVoltage.Add(Ubc);
@@ -247,57 +249,15 @@ namespace ViewGUI
         }
 
         /// <summary>
-        /// Подключение к БДРВ ОИК "СК-11" / Запрос начальных данных
-        /// </summary>
-        /// <param name="sender">Объект</param>
-        /// <param name="e">Данные события</param>
-        private void ConnectCK11Click(object sender, EventArgs e)
-        {
-            _listVoltage.Clear();
-
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
-
-            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
-            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
-            var voltageEnumPhase = ConnectCK11.GetFilterVoltage(voltageEnum);
-            var child = ConnectCK11.GetChildObject(voltageEnumPhase);
-            Guid[] uids = ConnectCK11.GetUids(child);
-
-            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
-            var data = dataRequest.GetSignals(uids);
-
-            foreach (var item in data)
-            {
-                _listVoltage.Add(item.Value.AnalogValue);
-                textBox1.Text += item.Value.AnalogValue.ToString() + " ";
-            }
-        }
-
-        /// <summary>
         /// Подключение к БД СК-11
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
         private void OikDBClick(object sender, EventArgs e)
         {
-
-        }
-
-        // Тестирование отправки данных в БДРВ СК-11
-        private void SendToCK11Click(object sender, EventArgs e)
-        {
-            Random random = new Random();
-            var Uab = GetRandomVoltageValue(random);
-            var Ubc = GetRandomVoltageValue(random);
-            var Uca = GetRandomVoltageValue(random);
-            var U = (Uab + Ubc + Uca) / 3;
-
-            var sendCK11 = new DataTransferToCK11();
-            sendCK11.DataTransfer(_server, _coa, 100, U);
-            sendCK11.DataTransfer(_server, _coa, 101, Uab);
-            sendCK11.DataTransfer(_server, _coa, 102, Ubc);
-            sendCK11.DataTransfer(_server, _coa, 103, Uca);
-            sendCK11.DataTransfer(_server, _coa, 104, GetRandomPowerValue(random));
+            // Подключение к модели
+            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            _modelImage = ConnectCK11.AccessingTheMalApi();
         }
 
         private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
@@ -320,7 +280,39 @@ namespace ViewGUI
 
             var rastr = new WorkingWithRastrWin();
 
-            textBox1.Text = rastr.GetPowerValue(path);
+            //textBox1.Text = rastr.GetPowerValue(path);
+        }
+
+        private void AddEnObjButtonClick(object sender, EventArgs e)
+        {
+            this.Hide();
+            AddNewObjForm addNewObjForm = new AddNewObjForm();
+            addNewObjForm.CloseForm += OtherCloseForm;
+            addNewObjForm.AddObjEvent += (o, args) => checkedListBoxEnObj.Items.Add(args);
+            addNewObjForm.ShowDialog();
+        }
+
+        private void checkedListBoxEnObjItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            for (int ix = 0; ix < checkedListBoxEnObj.Items.Count; ++ix)
+            {
+                if (ix != e.Index) checkedListBoxEnObj.SetItemChecked(ix, false);
+            }
+        }
+
+        private void CustomizeSettingsObjClick(object sender, EventArgs e)
+        {
+            if (checkedListBoxEnObj.SelectedIndex < 0) 
+            { 
+                MessageBox.Show("Выбирете объект электроэнергетики", 
+                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            this.Hide();
+            CustomizeSettingsForm customizeSettingsForm = new CustomizeSettingsForm(_serverPort);
+            customizeSettingsForm.CloseForm += OtherCloseForm;
+            customizeSettingsForm.ShowDialog();
         }
     }
 }
