@@ -97,7 +97,7 @@ namespace CK11Model
             {
                 OdbServerName = contextparams.OdbServerName,
                 OdbInstanseName = contextparams.OdbInstanseName,
-                //OdbModelVersionId = 182,
+                OdbModelVersionId = 192,
             };
 
             // mode — способ подключения к контексту данных(Open(открыть),

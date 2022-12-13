@@ -73,7 +73,7 @@ namespace ViewGUI
 
                 TrNode rootNode = new TrNode();
                 rootNode.Name = parent.Uid.ToString();
-                rootNode.Text = parent.name;
+                rootNode.Text = parent.name + $"   Type: ({ parent.GetType().Name.Substring(14) })";
 
                 treeViewObj.Nodes.Add(rootNode);
                 var arrayChild = ConnectCK11.GetChildObject(parent);
@@ -84,7 +84,7 @@ namespace ViewGUI
 
                     TrNode childNode = new TrNode();
                     childNode.Name = child.Uid.ToString();
-                    childNode.Text = child.name;
+                    childNode.Text = child.name + $"   Type: ({child.GetType().Name.Substring(14) })";
 
                     rootNode.Nodes.Add(childNode);
 
@@ -96,7 +96,7 @@ namespace ViewGUI
 
                         TrNode childsNodeTwo = new TrNode();
                         childsNodeTwo.Name = childTwo.Uid.ToString();
-                        childsNodeTwo.Text = childTwo.name;
+                        childsNodeTwo.Text = childTwo.name + $"   Type: ({childTwo.GetType().Name.Substring(14) })";
 
                         childNode.Nodes.Add(childsNodeTwo);
                     }
