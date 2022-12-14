@@ -186,11 +186,21 @@ namespace CK11Model
             return listChildObj;
         }
 
-        public IEnumerable<IdentifiedObject> GetChildObject(IdentifiedObject obj)
+        public IEnumerable<IdentifiedObject> GetChildObject(IdentifiedObject obj) => obj.ChildObjects;
+
+        public IEnumerable<IdentifiedObject> GetParentObject<T>(IEnumerable<T> enumObjects) where T : class, IdentifiedObject
         {
-            IdentifiedObject[] listChildObj = new IdentifiedObject[obj.ChildObjects.Length];
-            listChildObj = obj.ChildObjects;
-            return listChildObj;
+            List<IdentifiedObject> listParentObj = new List<IdentifiedObject>();
+            foreach (var item in enumObjects)
+            {
+                listParentObj.Add(item.ParentObject);
+            }
+            return listParentObj;
+        }
+
+        public IEnumerable<T> GetObjectByUid<T>(ModelImage modelImage, List<Guid> listGuid) where T : class, Measurement
+        {
+            return modelImage.GetObjects<T>().Where(obj => listGuid.Contains(obj.MeasurementType.Uid));
         }
 
         /// <summary>

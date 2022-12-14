@@ -30,19 +30,49 @@ namespace ViewGUI
         private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
 
         /// <summary>
-        /// Uid типа значения - "Генерация активной мощности"
+        /// Uid типа значения - "Переток активной мощности"
         /// </summary>
-        private readonly Guid _measurementTypePower = Guid.Parse("10000849-0000-0000-C000-0000006D746C");
+        private readonly Guid _measurementTypeActivePower = Guid.Parse("10000849-0000-0000-C000-0000006D746C");
+
+        /// <summary>
+        /// Uid типа значения - "Переток реактивной мощности"
+        /// </summary>
+        private readonly Guid _measurementTypeReactivePower = Guid.Parse("10000B3B-0000-0000-C000-0000006D746C");
 
         /// <summary>
         /// Uid контролируемого объекта энергетики
         /// </summary>
         private readonly Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
 
-        public CustomizeSettingsForm(int serverPort)
+        /// <summary>
+        /// Строка подключения к СК-11, для запроса данных
+        /// </summary>
+        private const string _connectionStringToRtdb = "10.221.3.29:900";
+
+        /// <summary>
+        /// Список междуфазных напряжений
+        /// </summary>
+        private readonly List<double> _listVoltage = new List<double>(3);
+
+        /// <summary>
+        /// Активная мощность ОЭ
+        /// </summary>
+        private float _activePower;
+
+        public float GetActivePower => _activePower;
+
+        /// <summary>
+        /// Реактивная мощность ОЭ
+        /// </summary>
+        private float _reactivePower;
+
+        public float GetReactivePower => _reactivePower;
+
+        public CustomizeSettingsForm(int serverPort, List<double> listVoltage)
         {
             InitializeComponent();
             _serverPort = serverPort;
+            _listVoltage = listVoltage;
         }
 
         public CustomizeSettingsForm() 
@@ -71,9 +101,11 @@ namespace ViewGUI
             {
                 if (parent.name == null) { continue; }
 
-                TrNode rootNode = new TrNode();
-                rootNode.Name = parent.Uid.ToString();
-                rootNode.Text = parent.name + $"   Type: ({ parent.GetType().Name.Substring(14) })";
+                TrNode rootNode = new TrNode
+                {
+                    Name = parent.Uid.ToString(),
+                    Text = parent.name + $"   Type: ({parent.GetType().Name.Substring(14)})"
+                };
 
                 treeViewObj.Nodes.Add(rootNode);
                 var arrayChild = ConnectCK11.GetChildObject(parent);
@@ -82,9 +114,11 @@ namespace ViewGUI
                 {
                     if (child.name == null) { continue; }
 
-                    TrNode childNode = new TrNode();
-                    childNode.Name = child.Uid.ToString();
-                    childNode.Text = child.name + $"   Type: ({child.GetType().Name.Substring(14) })";
+                    TrNode childNode = new TrNode
+                    {
+                        Name = child.Uid.ToString(),
+                        Text = child.name + $"   Type: ({child.GetType().Name.Substring(14)})"
+                    };
 
                     rootNode.Nodes.Add(childNode);
 
@@ -94,9 +128,11 @@ namespace ViewGUI
                     {
                         if (childTwo.name == null) { continue; }
 
-                        TrNode childsNodeTwo = new TrNode();
-                        childsNodeTwo.Name = childTwo.Uid.ToString();
-                        childsNodeTwo.Text = childTwo.name + $"   Type: ({childTwo.GetType().Name.Substring(14) })";
+                        TrNode childsNodeTwo = new TrNode
+                        {
+                            Name = childTwo.ParentObject.Uid.ToString(),
+                            Text = childTwo.name + $"   Type: ({childTwo.GetType().Name.Substring(14)})"
+                        };
 
                         childNode.Nodes.Add(childsNodeTwo);
                     }
@@ -135,10 +171,47 @@ namespace ViewGUI
 
         private void ButtonOKClick(object sender, EventArgs e)
         {
-            var wwck = new WorkingWithCK11();
+            var wwck = new WorkingWithCK11(_serverPort);
             var list = GetUids();
 
-            //wwck.GetFilterObject<IdentifiedObject>(list, _measurementTypeVoltage);
+            var obj = wwck.GetObjectByUid<Analog>(_modelImage, list);
+
+            var voltage = wwck.GetFilterObject(obj, _measurementTypeVoltage);
+            var childVoltage = wwck.GetChildObject(voltage);
+
+            var activePower = wwck.GetFilterObject(obj, _measurementTypeActivePower);
+            var childActivePower = wwck.GetChildObject(activePower);
+
+            var reactivePower = wwck.GetFilterObject(obj, _measurementTypeReactivePower);
+            var childReactivePower = wwck.GetChildObject(reactivePower);
+
+            Guid[] uids = wwck.GetUids(childVoltage);
+
+            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
+            var data = dataRequest.GetSignals(uids);
+
+            foreach (var item in data)
+            {
+                _listVoltage.Add(item.Value.AnalogValue);
+            }
+
+            Guid[] uidsActive = wwck.GetUids(childActivePower);
+
+            var dataActive = dataRequest.GetSignals(uidsActive);
+
+            foreach (var item in dataActive)
+            {
+                _activePower = (float)item.Value.AnalogValue;
+            }
+
+            Guid[] uidsReactive = wwck.GetUids(childReactivePower);
+
+            var dataReactive = dataRequest.GetSignals(uidsReactive);
+
+            foreach (var item in dataReactive)
+            {
+                _reactivePower = (float)item.Value.AnalogValue;
+            }
         }
     }
 }

@@ -69,7 +69,17 @@ namespace ViewGUI
         /// Uid типа значения - "Напряжение"
         /// </summary>
         private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
-        
+
+        /// <summary>
+        /// Uid типа значения - "Переток активной мощности"
+        /// </summary>
+        private readonly Guid _measurementTypeActivePower = Guid.Parse("10000849-0000-0000-C000-0000006D746C");
+
+        /// <summary>
+        /// Uid типа значения - "Переток реактивной мощности"
+        /// </summary>
+        private readonly Guid _measurementTypeReactivePower = Guid.Parse("10000B3B-0000-0000-C000-0000006D746C");
+
         /// <summary>
         /// Наименование объекта энергетики
         /// </summary>
@@ -94,6 +104,11 @@ namespace ViewGUI
         /// Активная мощность ОЭ
         /// </summary>
         private float _activePower;
+
+        /// <summary>
+        /// Реактивная мощность ОЭ
+        /// </summary>
+        private float _reactivePower;
 
         /// <summary>
         /// Остановить расчёт
@@ -321,7 +336,9 @@ namespace ViewGUI
             if (!CheckObj) { return; }
 
             this.Hide();
-            CustomizeSettingsForm customizeSettingsForm = new CustomizeSettingsForm(_serverPort);
+            CustomizeSettingsForm customizeSettingsForm = new CustomizeSettingsForm(_serverPort, _listVoltage);
+            _activePower = customizeSettingsForm.GetActivePower;
+            _reactivePower = customizeSettingsForm.GetReactivePower;
             customizeSettingsForm.CloseForm += OtherCloseForm;
             customizeSettingsForm.ShowDialog();
         }
