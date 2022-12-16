@@ -200,7 +200,7 @@ namespace CK11Model
 
         public IEnumerable<T> GetObjectByUid<T>(ModelImage modelImage, List<Guid> listGuid) where T : class, Measurement
         {
-            return modelImage.GetObjects<T>().Where(obj => listGuid.Contains(obj.MeasurementType.Uid));
+            return modelImage.GetObjects<T>().Where(obj => listGuid.Contains(obj.Uid));
         }
 
         /// <summary>

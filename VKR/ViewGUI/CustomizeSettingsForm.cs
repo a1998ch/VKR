@@ -177,7 +177,8 @@ namespace ViewGUI
             var obj = wwck.GetObjectByUid<Analog>(_modelImage, list);
 
             var voltage = wwck.GetFilterObject(obj, _measurementTypeVoltage);
-            var childVoltage = wwck.GetChildObject(voltage);
+            var voltageEnumPhase = wwck.GetFilterVoltage(voltage);
+            var childVoltage = wwck.GetChildObject(voltageEnumPhase);
 
             var activePower = wwck.GetFilterObject(obj, _measurementTypeActivePower);
             var childActivePower = wwck.GetChildObject(activePower);
@@ -188,29 +189,45 @@ namespace ViewGUI
             Guid[] uids = wwck.GetUids(childVoltage);
 
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
-            var data = dataRequest.GetSignals(uids);
-
-            foreach (var item in data)
+            try
             {
-                _listVoltage.Add(item.Value.AnalogValue);
+                var dataVoltage = dataRequest.GetSignals(uids);
+                foreach (var item in dataVoltage)
+                {
+                    _listVoltage.Add(item.Value.AnalogValue);
+                }
+            }
+            catch
+            {
+                throw new ArgumentException("Неверно выбраны значения междуфазных напряжений");
             }
 
             Guid[] uidsActive = wwck.GetUids(childActivePower);
-
-            var dataActive = dataRequest.GetSignals(uidsActive);
-
-            foreach (var item in dataActive)
+            try
             {
-                _activePower = (float)item.Value.AnalogValue;
+                var dataActive = dataRequest.GetSignals(uidsActive);
+                foreach (var item in dataActive)
+                {
+                    _activePower = (float)item.Value.AnalogValue;
+                }
+            }
+            catch
+            {
+                throw new ArgumentException("Неверно выбрано значение активной мощности");
             }
 
             Guid[] uidsReactive = wwck.GetUids(childReactivePower);
-
-            var dataReactive = dataRequest.GetSignals(uidsReactive);
-
-            foreach (var item in dataReactive)
+            try
             {
-                _reactivePower = (float)item.Value.AnalogValue;
+                var dataReactive = dataRequest.GetSignals(uidsReactive);
+                foreach (var item in dataReactive)
+                {
+                    _reactivePower = (float)item.Value.AnalogValue;
+                }
+            }
+            catch
+            {
+                throw new ArgumentException("Неверно выбрано значение реактивной мощности");
             }
         }
     }
