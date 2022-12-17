@@ -109,6 +109,10 @@ namespace DataBaseModel
                                                                    $"FROM Schema_data, Energy_object " +
                                                                    $"WHERE Energy_object_name = '{objName}'";
 
+        public static string QueryForRegType(string objName) => $"SELECT Regulation_type " +
+                                                                $"FROM Schema_data, Energy_object " +
+                                                                $"WHERE Energy_object_name = '{objName}'";
+
         //public static string QueryForColumn(string tableName, 
         //    string columnName) => $"SELECT {columnName} FROM {tableName}";
     }

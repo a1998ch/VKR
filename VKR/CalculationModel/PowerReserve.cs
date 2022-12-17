@@ -58,7 +58,8 @@ namespace CalculationModel
         /// <param name="listVoltage">Список междуфазных напряжений</param>
         /// <returns>Предельную мощность</returns>
         /// <exception cref="ArgumentException">Некорректный уровень напряжения</exception>
-        public double LimitFlow(string eoName, string schemeName, string connectionString, List<double> listVoltage)
+        public double LimitFlow(string eoName, string schemeName, 
+                                string regulationType, string connectionString, List<double> listVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
 
@@ -66,10 +67,10 @@ namespace CalculationModel
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        eoName, schemeName, connectionString, "Симметричное", 240)), listVoltage);
+                        eoName, schemeName, connectionString, regulationType, 240)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        eoName, schemeName, connectionString, "Симметричное", 220)), listVoltage);
+                        eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
                 dict.Add(240, one);
                 dict.Add(220, two);
                 return Interpolation(dict, listVoltage, true);
@@ -78,10 +79,10 @@ namespace CalculationModel
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        eoName, schemeName, connectionString, "Симметричное", 220)), listVoltage);
+                        eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
-                        eoName, schemeName, connectionString, "Симметричное", 200)), listVoltage);
+                        eoName, schemeName, connectionString, regulationType, 200)), listVoltage);
                 dict.Add(220, one);
                 dict.Add(200, two);
                 return Interpolation(dict, listVoltage, true);

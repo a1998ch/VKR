@@ -85,6 +85,11 @@ namespace ViewGUI
         private string _schemeName;
 
         /// <summary>
+        /// Тип регулирования
+        /// </summary>
+        private string _regulationType;
+
+        /// <summary>
         /// Строка подключения к базе данных
         /// </summary>
         private string _sqlConnection;
@@ -124,12 +129,12 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            CheckedListBoxEnObj.Items.Add("Объект электроэнергетики");
+            //CheckedListBoxEnObj.Items.Add("Объект электроэнергетики");
 
-            double Uab = 215, Ubc = 243.7, Uca = 223;
-            _listVoltage.Add(Uab);
-            _listVoltage.Add(Ubc);
-            _listVoltage.Add(Uca);
+            //double Uab = 215, Ubc = 243.7, Uca = 223;
+            //_listVoltage.Add(Uab);
+            //_listVoltage.Add(Ubc);
+            //_listVoltage.Add(Uca);
 
             // Подключение к модели
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
@@ -187,7 +192,7 @@ namespace ViewGUI
                     GetActivePower();
                     GetVoltage();
 
-                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _sqlConnection, _listVoltage);
+                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType, _sqlConnection, _listVoltage);
                     float activePowerReserve = (float)limitingActivePower - _activePower;
                     sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
 
@@ -349,6 +354,7 @@ namespace ViewGUI
             ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
+            choiceOfSchemaForm.RegulationTypeEvent += (o, args) => _regulationType = args;
             choiceOfSchemaForm.ShowDialog();
         }
 
