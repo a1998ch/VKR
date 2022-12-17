@@ -53,26 +53,26 @@ namespace ViewGUI
         /// <summary>
         /// Список междуфазных напряжений
         /// </summary>
-        private readonly List<double> _listVoltage = new List<double>(3);
+        private List<Guid> _listVoltageUid = new List<Guid>(3);
 
         /// <summary>
-        /// Активная мощность ОЭ
+        /// Uid активной мощности контролируемого объекта энергетики
         /// </summary>
-        private float _activePower;
-
-        public float GetActivePower => _activePower;
+        private Guid[] _activePowerUid = new Guid[1];
 
         /// <summary>
-        /// Реактивная мощность ОЭ
+        /// Uid реактивной мощности контролируемого объекта энергетики
         /// </summary>
-        private float _reactivePower;
+        private Guid[] _reactivePowerUid = new Guid[1];
 
-        public float GetReactivePower => _reactivePower;
+        public Guid[] GetActivePowerUid => _activePowerUid;
 
-        public CustomizeSettingsForm(List<double> listVoltage, ModelImage modelImage, Guid observableObjectUid)
+        public Guid[] GetReactivePowerUid => _reactivePowerUid;
+
+        public CustomizeSettingsForm(List<Guid> listVoltageUid, ModelImage modelImage, Guid observableObjectUid)
         {
             InitializeComponent();
-            _listVoltage = listVoltage;
+            _listVoltageUid = listVoltageUid;
             _modelImage = modelImage;
             _observableObjectUid = observableObjectUid;
         }
@@ -92,9 +92,9 @@ namespace ViewGUI
 
         private void GetElemnt<T>() where T : class, IdentifiedObject
         {
-            var ConnectCK11 = new WorkingWithCK11();
+            var wwck = new WorkingWithCK11();
 
-            var objects = ConnectCK11.GetSpecificObject<T>(_modelImage, _observableObjectUid);
+            var objects = wwck.GetSpecificObject<T>(_modelImage, _observableObjectUid);
             foreach (var parent in objects)
             {
                 if (parent.name == null) { continue; }
@@ -106,7 +106,7 @@ namespace ViewGUI
                 };
 
                 treeViewObj.Nodes.Add(rootNode);
-                var arrayChild = ConnectCK11.GetChildObject(parent);
+                var arrayChild = wwck.GetChildObject(parent);
 
                 foreach (var child in arrayChild)
                 {
@@ -120,7 +120,7 @@ namespace ViewGUI
 
                     rootNode.Nodes.Add(childNode);
 
-                    var arrayChildTwo = ConnectCK11.GetChildObject(child);
+                    var arrayChildTwo = wwck.GetChildObject(child);
 
                     foreach (var childTwo in arrayChildTwo)
                     {
@@ -177,56 +177,49 @@ namespace ViewGUI
             var voltage = wwck.GetFilterObject(obj, _measurementTypeVoltage);
             var voltageEnumPhase = wwck.GetFilterVoltage(voltage);
             var childVoltage = wwck.GetChildObject(voltageEnumPhase);
+            try
+            {
+                foreach (var item in childVoltage)
+                {
+                    _listVoltageUid.Add(item.Uid);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Неверно выбраны значения междуфазных напряжений",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             var activePower = wwck.GetFilterObject(obj, _measurementTypeActivePower);
             var childActivePower = wwck.GetChildObject(activePower);
+            try
+            {
+                foreach (var item in childActivePower)
+                {
+                    _activePowerUid[0] = item.Uid;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Неверно выбрано значение активной мощности",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             var reactivePower = wwck.GetFilterObject(obj, _measurementTypeReactivePower);
             var childReactivePower = wwck.GetChildObject(reactivePower);
-
-            Guid[] uids = wwck.GetUids(childVoltage);
-
-            var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
             try
             {
-                var dataVoltage = dataRequest.GetSignals(uids);
-                foreach (var item in dataVoltage)
+                foreach (var item in childReactivePower)
                 {
-                    _listVoltage.Add(item.Value.AnalogValue);
+                    _reactivePowerUid[0] = item.Uid;
                 }
             }
             catch
             {
-                throw new ArgumentException("Неверно выбраны значения междуфазных напряжений");
+                MessageBox.Show("Неверно выбрано значение реактивной мощности",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            Guid[] uidsActive = wwck.GetUids(childActivePower);
-            try
-            {
-                var dataActive = dataRequest.GetSignals(uidsActive);
-                foreach (var item in dataActive)
-                {
-                    _activePower = (float)item.Value.AnalogValue;
-                }
-            }
-            catch
-            {
-                throw new ArgumentException("Неверно выбрано значение активной мощности");
-            }
-
-            Guid[] uidsReactive = wwck.GetUids(childReactivePower);
-            try
-            {
-                var dataReactive = dataRequest.GetSignals(uidsReactive);
-                foreach (var item in dataReactive)
-                {
-                    _reactivePower = (float)item.Value.AnalogValue;
-                }
-            }
-            catch
-            {
-                throw new ArgumentException("Неверно выбрано значение реактивной мощности");
-            }
+            this.Close();
         }
     }
 }

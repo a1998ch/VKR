@@ -57,7 +57,12 @@ namespace ViewGUI
         /// <summary>
         /// Uid активной мощности контролируемого объекта энергетики
         /// </summary>
-        private readonly Guid[] _activePowerUid = new Guid[1] { Guid.Parse("1267F451-6150-4F66-B530-22DDF9186936") };
+        private Guid[] _activePowerUid = new Guid[1];
+
+        /// <summary>
+        /// Uid реактивной мощности контролируемого объекта энергетики
+        /// </summary>
+        private Guid[] _reactivePowerUid = new Guid[1];
 
         /// <summary>
         /// Uid типа значения - "Напряжение"
@@ -98,6 +103,11 @@ namespace ViewGUI
         /// Список междуфазных напряжений
         /// </summary>
         private readonly List<double> _listVoltage = new List<double>(3);
+
+        /// <summary>
+        /// Список uids междуфазных напряжений
+        /// </summary>
+        private readonly List<Guid> _listVoltageUid = new List<Guid>(3);
 
         /// <summary>
         /// Активная мощность ОЭ
@@ -219,15 +229,8 @@ namespace ViewGUI
             _listVoltage.Clear();
 
             var ConnectCK11 = new WorkingWithCK11();
-
-            var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
-            var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
-            var voltageEnumPhase = ConnectCK11.GetFilterVoltage(voltageEnum);
-            var child = ConnectCK11.GetChildObject(voltageEnumPhase);
-            Guid[] uids = ConnectCK11.GetUids(child);
-
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
-            var data = dataRequest.GetSignals(uids);
+            var data = dataRequest.GetSignals(_listVoltageUid.ToArray());
 
             foreach (var item in data)
             {
@@ -286,10 +289,6 @@ namespace ViewGUI
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
         }
 
-        private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
-
-        private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 100);
-
         private void GetUidObj()
         {
             foreach (var item in CheckedListBoxEnObj.CheckedItems) 
@@ -339,9 +338,9 @@ namespace ViewGUI
 
             this.Hide();
             var customizeSettingsForm = 
-                new CustomizeSettingsForm(_listVoltage, _modelImage, _observableObjectUid);
-            _activePower = customizeSettingsForm.GetActivePower;
-            _reactivePower = customizeSettingsForm.GetReactivePower;
+                new CustomizeSettingsForm(_listVoltageUid, _modelImage, _observableObjectUid);
+            _activePowerUid = customizeSettingsForm.GetActivePowerUid;
+            _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
             customizeSettingsForm.CloseForm += OtherCloseForm;
             customizeSettingsForm.ShowDialog();
         }
