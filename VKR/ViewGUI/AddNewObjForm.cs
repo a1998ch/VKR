@@ -1,4 +1,5 @@
 ﻿using DataBaseModel;
+using Monitel.Mal.Context.CIM16;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CK11Model;
+using Monitel.Mal;
+using TrNode = System.Windows.Forms.TreeNode;
 
 namespace ViewGUI
 {
@@ -15,11 +19,23 @@ namespace ViewGUI
     {
         internal event EventHandler CloseForm;
 
-        internal event EventHandler<string> AddObjEvent;
+        internal event EventHandler<List<string>> AddObjEvent;
 
-        public AddNewObjForm()
+        /// <summary>
+        /// Модель СК-11
+        /// </summary>
+        private readonly ModelImage _modelImage;
+
+        public AddNewObjForm(ModelImage modelImage)
         {
             InitializeComponent();
+            _modelImage = modelImage;
+        }
+
+        private void AddNewObjFormLoad(object sender, EventArgs e)
+        {
+            treeViewObj.CheckBoxes = true;
+            GetObject();
         }
 
         private void AddNewObjFormFormClosing(object sender, FormClosingEventArgs e)
@@ -32,16 +48,33 @@ namespace ViewGUI
             this.Close();
         }
 
+        private void GetObject()
+        {
+            var CK11 = new WorkingWithCK11();
+
+            var objects = CK11.GetObjectCK11<Substation>(_modelImage);
+            foreach (var obj in objects)
+            {
+                TrNode rootNode = new TrNode
+                {
+                    Name = obj.Uid.ToString(),
+                    Text = obj.name
+                };
+                treeViewObj.Nodes.Add(rootNode);
+            }
+        }
+
         private void AddElementClick(object sender, EventArgs e)
         {
-            if (textBoxAddObj.Text == String.Empty) 
+            List<string> listObj = new List<string>();
+            foreach (TrNode node in treeViewObj.Nodes)
             {
-                MessageBox.Show("Введите наименование", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; 
+                if (node.Checked)
+                {
+                    listObj.Add(node.Text.Trim());
+                }
             }
-
-            string newObj = textBoxAddObj.Text;
-            AddObjEvent.Invoke(this, newObj);
+            AddObjEvent?.Invoke(this, listObj);
             this.Close();
         }
     }

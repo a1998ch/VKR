@@ -3,14 +3,9 @@ using Monitel.Mal;
 using Monitel.Mal.Context.CIM16;
 using Monitel.Mal.Providers;
 using Monitel.Mal.Providers.Mal;
-using Monitel.ObjectDb.Client;
-using Monitel.Supervisor.Infrastructure.AutoUpdateCommon.Wcf;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CK = Monitel.Rtdb.Api;
 
 namespace CK11Model
@@ -21,14 +16,30 @@ namespace CK11Model
     public class WorkingWithCK11
     {
         /// <summary>
-        /// Строка подключения к CK-11
+        /// Строка подключения к БДРВ CK-11
         /// </summary>
-        private readonly string _connectionStringToCk;
+        private string _connectionStringToCk;
 
         /// <summary>
-        /// Порт для подключения к CK-11
+        /// Порт для подключения к ИМ CK-11
         /// </summary>
-        private readonly int _port;
+        private int _port;
+
+        /// <summary>
+        /// Свойство для строки подключения к БДРВ СК-11
+        /// </summary>
+        private string ConnectionStringToCk 
+        { 
+            set => _connectionStringToCk = value; 
+        }
+
+        /// <summary>
+        /// Свойство для порта для подключения к ИМ СК-11
+        /// </summary>
+        private int Port
+        {
+            set => _port = value;
+        }
 
         /// <summary>
         /// Конструктор класса WorkingWithCK11
@@ -36,7 +47,7 @@ namespace CK11Model
         /// <param name="connectionStringToCk">Строка подключения к CK-11</param>
         public WorkingWithCK11(string connectionStringToCk)
         {
-            _connectionStringToCk = connectionStringToCk;
+            ConnectionStringToCk = connectionStringToCk;
         }
 
         /// <summary>
@@ -45,9 +56,12 @@ namespace CK11Model
         /// <param name="port">Порт для подключения к CK-11</param>
         public WorkingWithCK11(int port)
         {
-            _port = port;
+            Port = port;
         }
 
+        /// <summary>
+        /// Конструктор класса WorkingWithCK11
+        /// </summary>
         public WorkingWithCK11() { }
 
         /// <summary>
@@ -110,6 +124,11 @@ namespace CK11Model
             var modelImage = new ModelImage(defaultProvaider);
 
             return modelImage;
+        }
+
+        public IEnumerable<T> GetObjectCK11<T>(ModelImage modelImage) where T : class, IdentifiedObject
+        {
+            return modelImage.GetObjects<T>();
         }
 
         /// <summary>
@@ -201,6 +220,12 @@ namespace CK11Model
         public IEnumerable<T> GetObjectByUid<T>(ModelImage modelImage, List<Guid> listGuid) where T : class, Measurement
         {
             return modelImage.GetObjects<T>().Where(obj => listGuid.Contains(obj.Uid));
+        }
+
+        public Guid GetUidObjectByName<T>(ModelImage modelImage, string name) where T : class, IdentifiedObject
+        {
+            var objects = modelImage.GetObjects<T>().Where(obj => obj.name == name);
+            return objects.First().Uid;
         }
 
         /// <summary>

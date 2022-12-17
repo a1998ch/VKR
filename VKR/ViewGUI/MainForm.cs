@@ -45,11 +45,6 @@ namespace ViewGUI
         private const int _coa = 5;
 
         /// <summary>
-        /// Адрес объекта информации
-        /// </summary>
-        private const int _ioa = 100;
-
-        /// <summary>
         /// Модель СК-11
         /// </summary>
         private ModelImage _modelImage;
@@ -57,7 +52,7 @@ namespace ViewGUI
         /// <summary>
         /// Uid контролируемого объекта энергетики
         /// </summary>
-        private readonly Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
+        private Guid _observableObjectUid;
 
         /// <summary>
         /// Uid активной мощности контролируемого объекта энергетики
@@ -137,8 +132,7 @@ namespace ViewGUI
             _listVoltage.Add(Uca);
 
             // Подключение к модели
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            _modelImage = ConnectCK11.AccessingTheMalApi();
+            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
             // Подключение к скрверу для передачи данных в БДРВ
             var sendCK11 = new DataTransferToCK11();
@@ -185,8 +179,6 @@ namespace ViewGUI
                 PowerReserve power = new PowerReserve();
                 var sendCK11 = new DataTransferToCK11();
 
-                ChoiseObject();
-
                 while (_false)
                 {
                     i += 5;
@@ -221,7 +213,7 @@ namespace ViewGUI
         {
             _listVoltage.Clear();
 
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            var ConnectCK11 = new WorkingWithCK11();
 
             var objects = ConnectCK11.GetSpecificObject<Analog>(_modelImage, _observableObjectUid);
             var voltageEnum = ConnectCK11.GetFilterObject(objects, _measurementTypeVoltage);
@@ -286,20 +278,43 @@ namespace ViewGUI
         private void OikDBClick(object sender, EventArgs e)
         {
             // Подключение к модели
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            _modelImage = ConnectCK11.AccessingTheMalApi();
+            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
         }
 
         private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
 
         private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 100);
 
+        private void GetUidObj()
+        {
+            foreach (var item in CheckedListBoxEnObj.CheckedItems) 
+            {
+                _observableObjectUid = new WorkingWithCK11().GetUidObjectByName<Substation>(_modelImage, item.ToString());
+            }
+        }
+
         private void AddEnObjButtonClick(object sender, EventArgs e)
         {
             this.Hide();
-            AddNewObjForm addNewObjForm = new AddNewObjForm();
+            AddNewObjForm addNewObjForm = new AddNewObjForm(_modelImage);
             addNewObjForm.CloseForm += OtherCloseForm;
-            addNewObjForm.AddObjEvent += (o, args) => CheckedListBoxEnObj.Items.Add(args);
+            addNewObjForm.AddObjEvent += (o, args) =>
+            {
+                foreach (var item in args.ToList())
+                {
+                    foreach (var jtem in CheckedListBoxEnObj.Items)
+                    {
+                        if (item == jtem.ToString())
+                        {
+                            args.Remove(item);
+                        }
+                    }
+                }
+                foreach (var item in args)
+                {
+                    CheckedListBoxEnObj.Items.Add(item);
+                }
+            };
             addNewObjForm.ShowDialog();
         }
 
@@ -315,8 +330,11 @@ namespace ViewGUI
         {
             if (!CheckObj) { return; }
 
+            GetUidObj();
+
             this.Hide();
-            CustomizeSettingsForm customizeSettingsForm = new CustomizeSettingsForm(_serverPort, _listVoltage);
+            var customizeSettingsForm = 
+                new CustomizeSettingsForm(_listVoltage, _modelImage, _observableObjectUid);
             _activePower = customizeSettingsForm.GetActivePower;
             _reactivePower = customizeSettingsForm.GetReactivePower;
             customizeSettingsForm.CloseForm += OtherCloseForm;
@@ -328,7 +346,7 @@ namespace ViewGUI
             if (!CheckObj) { return; }
 
             this.Hide();
-            ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection);
+            ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
             choiceOfSchemaForm.ShowDialog();
@@ -344,19 +362,14 @@ namespace ViewGUI
                                     "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }
+                else
+                {
+                    foreach (var item in CheckedListBoxEnObj.CheckedItems)
+                    {
+                        _objectName = item.ToString();
+                    }
+                }
                 return true;
-            }
-        }
-
-        private void ChoiseObject()
-        {
-            foreach (var item in CheckedListBoxEnObj.CheckedItems)
-            {
-                _objectName = item.ToString();
-            }
-            if (_objectName == "Объект электроэнергетики")
-            {
-                _objectName = "ВНС";
             }
         }
     }

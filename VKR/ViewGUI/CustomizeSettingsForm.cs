@@ -20,10 +20,6 @@ namespace ViewGUI
     {
         internal event EventHandler CloseForm;
 
-        private readonly int _serverPort;
-
-        private ModelImage _modelImage;
-
         /// <summary>
         /// Uid типа значения - "Напряжение"
         /// </summary>
@@ -38,11 +34,16 @@ namespace ViewGUI
         /// Uid типа значения - "Переток реактивной мощности"
         /// </summary>
         private readonly Guid _measurementTypeReactivePower = Guid.Parse("10000B3B-0000-0000-C000-0000006D746C");
+        
+        /// <summary>
+        /// Модель СК-11
+        /// </summary>
+        private readonly ModelImage _modelImage;
 
         /// <summary>
         /// Uid контролируемого объекта энергетики
         /// </summary>
-        private readonly Guid _observableObjectUid = Guid.Parse("0904FE7A-A7F8-4649-AF02-CEC613C55624");
+        private readonly Guid _observableObjectUid;
 
         /// <summary>
         /// Строка подключения к СК-11, для запроса данных
@@ -68,11 +69,12 @@ namespace ViewGUI
 
         public float GetReactivePower => _reactivePower;
 
-        public CustomizeSettingsForm(int serverPort, List<double> listVoltage)
+        public CustomizeSettingsForm(List<double> listVoltage, ModelImage modelImage, Guid observableObjectUid)
         {
             InitializeComponent();
-            _serverPort = serverPort;
             _listVoltage = listVoltage;
+            _modelImage = modelImage;
+            _observableObjectUid = observableObjectUid;
         }
 
         public CustomizeSettingsForm() 
@@ -84,17 +86,13 @@ namespace ViewGUI
         {
             treeViewObj.CheckBoxes = true;
 
-            // Подключение к модели
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
-            _modelImage = ConnectCK11.AccessingTheMalApi();
-
             GetElemnt<BusbarSection>();
             GetElemnt<PowerTransformer>();
         }
 
         private void GetElemnt<T>() where T : class, IdentifiedObject
         {
-            var ConnectCK11 = new WorkingWithCK11(_serverPort);
+            var ConnectCK11 = new WorkingWithCK11();
 
             var objects = ConnectCK11.GetSpecificObject<T>(_modelImage, _observableObjectUid);
             foreach (var parent in objects)
@@ -171,7 +169,7 @@ namespace ViewGUI
 
         private void ButtonOKClick(object sender, EventArgs e)
         {
-            var wwck = new WorkingWithCK11(_serverPort);
+            var wwck = new WorkingWithCK11();
             var list = GetUids();
 
             var obj = wwck.GetObjectByUid<Analog>(_modelImage, list);

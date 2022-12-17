@@ -20,15 +20,13 @@ namespace ViewGUI
 
         private readonly string _connectionString;
 
-        public ChoiceOfSchemaForm()
-        {
-            InitializeComponent();
-        }
+        private readonly string _objName;
 
-        public ChoiceOfSchemaForm(string connectionString)
+        public ChoiceOfSchemaForm(string connectionString, string objName)
         {
             InitializeComponent();
             _connectionString = connectionString;
+            _objName = objName;
         }
 
         private void ChoiceOfSchemaFormLoad(object sender, EventArgs e)
@@ -36,7 +34,7 @@ namespace ViewGUI
             comboBoxScheme.DropDownStyle = ComboBoxStyle.DropDownList;
 
             var wdb = new WorkingWithDatabase();
-            var listScheme = wdb.GetData(_connectionString, DataBaseQuerys.QueryForSchemaName);
+            var listScheme = wdb.GetData(_connectionString, DataBaseQuerys.QueryForSchemaName(_objName));
             var noDupes = listScheme.Distinct().ToArray();
 
             comboBoxScheme.Items.AddRange(noDupes);

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using lib60870;
+﻿using lib60870;
 
 namespace CK11Model
 {
     public class DataTransferToCK11
     {
-        public Server ConnectServer(string ipAddress, int strverPort)
+        public Server ConnectServer(string ipAddress, int serverPort)
         {
             Server server = new Server
             {
@@ -19,7 +14,7 @@ namespace CK11Model
             };
 
             server.SetLocalAddress(ipAddress); // IP-адрес сервера
-            server.SetLocalPort(strverPort);
+            server.SetLocalPort(serverPort);
             server.Start();
 
             return server;

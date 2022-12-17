@@ -105,7 +105,9 @@ namespace DataBaseModel
 
         public static string QueryForSchemaData => "SELECT * FROM Schema_data";
 
-        public static string QueryForSchemaName => "SELECT Scheme_name FROM Schema_data";
+        public static string QueryForSchemaName(string objName) => $"SELECT Scheme_name " +
+                                                                   $"FROM Schema_data, Energy_object " +
+                                                                   $"WHERE Energy_object_name = '{objName}'";
 
         //public static string QueryForColumn(string tableName, 
         //    string columnName) => $"SELECT {columnName} FROM {tableName}";
