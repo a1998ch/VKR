@@ -195,10 +195,6 @@
       <Project>{f604286a-1afc-4355-8c2c-a998cfcee979}</Project>
       <Name>lib60870</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RastrWinModel\RastrWinModel.csproj">
-      <Project>{b6377385-4f1f-465a-9a85-389c99bfca74}</Project>
-      <Name>RastrWinModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

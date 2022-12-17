@@ -11,7 +11,6 @@ using lib60870;
 using System.Linq;
 using DataBaseModel;
 using System.Data;
-using RastrWinModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Threading.Tasks;
 using System.Threading;
@@ -294,25 +293,6 @@ namespace ViewGUI
         private int GetRandomVoltageValue(Random rnd) => rnd.Next(200, 252);
 
         private int GetRandomPowerValue(Random rnd) => rnd.Next(50, 100);
-
-        private void CalcRastrWin3Click(object sender, EventArgs e)
-        {
-            var openFile = new OpenFileDialog
-            {
-                Filter = "Файл rg2 (*.rg2)|*.rg2"
-            };
-            openFile.ShowDialog();
-            string path = openFile.FileName;
-
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new ArgumentException("Не найден файл \"*.rg2\"");
-            }
-
-            var rastr = new WorkingWithRastrWin();
-
-            //textBox1.Text = rastr.GetPowerValue(path);
-        }
 
         private void AddEnObjButtonClick(object sender, EventArgs e)
         {

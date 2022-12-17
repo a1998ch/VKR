@@ -38,7 +38,6 @@ namespace ViewGUI
             this.AddEditDataDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ExternalSystems = new System.Windows.Forms.ToolStripMenuItem();
             this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
-            this.CalcRastrWin3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,8 +112,7 @@ namespace ViewGUI
             // ExternalSystems
             // 
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OikDB,
-            this.CalcRastrWin3});
+            this.OikDB});
             this.ExternalSystems.Name = "ExternalSystems";
             this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
             this.ExternalSystems.Text = "Внешние Системы";
@@ -122,16 +120,9 @@ namespace ViewGUI
             // OikDB
             // 
             this.OikDB.Name = "OikDB";
-            this.OikDB.Size = new System.Drawing.Size(289, 26);
+            this.OikDB.Size = new System.Drawing.Size(224, 26);
             this.OikDB.Text = "БД ОИК \"СК-11\"";
             this.OikDB.Click += new System.EventHandler(this.OikDBClick);
-            // 
-            // CalcRastrWin3
-            // 
-            this.CalcRastrWin3.Name = "CalcRastrWin3";
-            this.CalcRastrWin3.Size = new System.Drawing.Size(289, 26);
-            this.CalcRastrWin3.Text = "Расчётная модель RastrWin3";
-            this.CalcRastrWin3.Click += new System.EventHandler(this.CalcRastrWin3Click);
             // 
             // Documentation
             // 
@@ -229,7 +220,6 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem AboutProg;
         private System.Windows.Forms.ToolStripMenuItem Manual;
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
-        private System.Windows.Forms.ToolStripMenuItem CalcRastrWin3;
         private System.Windows.Forms.ToolStripMenuItem OikDB;
         private System.Windows.Forms.CheckedListBox CheckedListBoxEnObj;
         private System.Windows.Forms.Button AddEnObjButton;
