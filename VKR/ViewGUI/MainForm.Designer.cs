@@ -120,7 +120,7 @@ namespace ViewGUI
             // OikDB
             // 
             this.OikDB.Name = "OikDB";
-            this.OikDB.Size = new System.Drawing.Size(224, 26);
+            this.OikDB.Size = new System.Drawing.Size(202, 26);
             this.OikDB.Text = "БД ОИК \"СК-11\"";
             this.OikDB.Click += new System.EventHandler(this.OikDBClick);
             // 
@@ -148,17 +148,17 @@ namespace ViewGUI
             // CheckedListBoxEnObj
             // 
             this.CheckedListBoxEnObj.FormattingEnabled = true;
-            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(12, 42);
+            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(12, 72);
             this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
-            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(316, 364);
+            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(316, 334);
             this.CheckedListBoxEnObj.TabIndex = 2;
             this.CheckedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxEnObjItemCheck);
             // 
             // AddEnObjButton
             // 
-            this.AddEnObjButton.Location = new System.Drawing.Point(362, 42);
+            this.AddEnObjButton.Location = new System.Drawing.Point(12, 38);
             this.AddEnObjButton.Name = "AddEnObjButton";
-            this.AddEnObjButton.Size = new System.Drawing.Size(171, 47);
+            this.AddEnObjButton.Size = new System.Drawing.Size(316, 28);
             this.AddEnObjButton.TabIndex = 3;
             this.AddEnObjButton.Text = "Добавить объект электроэнергетики";
             this.AddEnObjButton.UseVisualStyleBackColor = true;
@@ -166,9 +166,9 @@ namespace ViewGUI
             // 
             // SelectionOfRequestedData
             // 
-            this.SelectionOfRequestedData.Location = new System.Drawing.Point(362, 116);
+            this.SelectionOfRequestedData.Location = new System.Drawing.Point(362, 72);
             this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
-            this.SelectionOfRequestedData.Size = new System.Drawing.Size(171, 54);
+            this.SelectionOfRequestedData.Size = new System.Drawing.Size(171, 69);
             this.SelectionOfRequestedData.TabIndex = 4;
             this.SelectionOfRequestedData.Text = "Выбор запрашиваемых данных";
             this.SelectionOfRequestedData.UseVisualStyleBackColor = true;
@@ -176,11 +176,11 @@ namespace ViewGUI
             // 
             // ChoiceOfSchema
             // 
-            this.ChoiceOfSchema.Location = new System.Drawing.Point(362, 195);
+            this.ChoiceOfSchema.Location = new System.Drawing.Point(362, 168);
             this.ChoiceOfSchema.Name = "ChoiceOfSchema";
-            this.ChoiceOfSchema.Size = new System.Drawing.Size(171, 51);
+            this.ChoiceOfSchema.Size = new System.Drawing.Size(171, 69);
             this.ChoiceOfSchema.TabIndex = 5;
-            this.ChoiceOfSchema.Text = "Выбор схемно-режимной ситуации";
+            this.ChoiceOfSchema.Text = "Выбор схемно-режимной ситуации и типа регулирования";
             this.ChoiceOfSchema.UseVisualStyleBackColor = true;
             this.ChoiceOfSchema.Click += new System.EventHandler(this.ChoiceOfSchemaClick);
             // 
