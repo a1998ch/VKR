@@ -174,50 +174,45 @@ namespace ViewGUI
 
             var obj = wwck.GetObjectByUid<Analog>(_modelImage, list);
 
+            _listVoltageUid.Clear();
             var voltage = wwck.GetFilterObject(obj, _measurementTypeVoltage);
             var voltageEnumPhase = wwck.GetFilterVoltage(voltage);
             var childVoltage = wwck.GetChildObject(voltageEnumPhase);
-            try
-            {
-                foreach (var item in childVoltage)
-                {
-                    _listVoltageUid.Add(item.Uid);
-                }
-            }
-            catch
+            if (childVoltage.Count() != 3) 
             {
                 MessageBox.Show("Неверно выбраны значения междуфазных напряжений",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
+            }
+            foreach (var item in childVoltage)
+            {
+                _listVoltageUid.Add(item.Uid);
             }
 
             var activePower = wwck.GetFilterObject(obj, _measurementTypeActivePower);
             var childActivePower = wwck.GetChildObject(activePower);
-            try
-            {
-                foreach (var item in childActivePower)
-                {
-                    _activePowerUid[0] = item.Uid;
-                }
-            }
-            catch
+            if (childActivePower.Count() != 1)
             {
                 MessageBox.Show("Неверно выбрано значение активной мощности",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            foreach (var item in childActivePower)
+            {
+                _activePowerUid[0] = item.Uid;
             }
 
             var reactivePower = wwck.GetFilterObject(obj, _measurementTypeReactivePower);
             var childReactivePower = wwck.GetChildObject(reactivePower);
-            try
-            {
-                foreach (var item in childReactivePower)
-                {
-                    _reactivePowerUid[0] = item.Uid;
-                }
-            }
-            catch
+            if (childReactivePower.Count() != 1)
             {
                 MessageBox.Show("Неверно выбрано значение реактивной мощности",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            foreach (var item in childReactivePower)
+            {
+                _reactivePowerUid[0] = item.Uid;
             }
             this.Close();
         }
