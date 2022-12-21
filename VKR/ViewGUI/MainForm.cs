@@ -188,41 +188,41 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private async void StartSystemClick(object sender, EventArgs e)
         {
-            await Task.Run(() =>
+            await Task.Run(() => StartCalc());
+        }
+
+        private void StartCalc()
+        {
+            _false = true;
+            SetData();
+
+            PowerReserve power = new PowerReserve();
+            var sendCK11 = new DataTransferToCK11();
+
+            while (_false)
             {
-                _false = true;
-                SetData();
+                double checkPower = _activePower;
+                GetActivePower();
+                GetVoltage();
 
-                PowerReserve power = new PowerReserve();
-                var sendCK11 = new DataTransferToCK11();
+                if (checkPower == _activePower) { continue; }
 
-                while (_false)
+                double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
+                double correctVoltage = 0;
+                float activePowerReserve = 0;
+                for (int k = 0; k < 2; k++)
                 {
-                    double checkPower = _activePower;
-                    GetActivePower();
-                    GetVoltage();
+                    if (k != 0) { meanVoltage = correctVoltage; }
 
-                    if (checkPower == _activePower) { continue; }
-
-                    double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
-                    double correctVoltage = 0;
-                    float activePowerReserve = 0;
-                    for (int k = 0; k < 2; k++)
-                    {
-                        if (k != 0) { meanVoltage = correctVoltage; }
-
-                        var limitingActivePower = power.LimitFlow(
-                                                                    _objectName, _schemeName, _regulationType,
-                                                                    _sqlConnection, _listVoltage, meanVoltage);
-                        activePowerReserve = (float)limitingActivePower - _activePower;
-                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
-
-                        correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
-                    }
+                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType,
+                                                                _sqlConnection, _listVoltage, meanVoltage);
+                    activePowerReserve = (float)limitingActivePower - _activePower;
                     sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                    correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
                 }
+                sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
             }
-            );
         }
 
         private async void SetData()
