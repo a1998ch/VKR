@@ -14,6 +14,7 @@ using System.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO.Ports;
 
 namespace ViewGUI
 {
@@ -124,6 +125,8 @@ namespace ViewGUI
         /// </summary>
         private bool _false = true;
 
+        private double _voltageSensitivity = 0.00256;
+
         /// <summary>
         /// Конструктор класса MainForm
         /// </summary>
@@ -187,29 +190,59 @@ namespace ViewGUI
         {
             await Task.Run(() =>
             {
-                int i = 1;
-                double j = 0;
                 _false = true;
+                SetData();
 
                 PowerReserve power = new PowerReserve();
                 var sendCK11 = new DataTransferToCK11();
 
                 while (_false)
                 {
-                    i += 5;
-                    j += 0.5;
-                    SetValueToCK11(i, j);
+                    double checkPower = _activePower;
                     GetActivePower();
                     GetVoltage();
 
-                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType, _sqlConnection, _listVoltage);
-                    float activePowerReserve = (float)limitingActivePower - _activePower;
-                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+                    if (checkPower == _activePower) { continue; }
 
-                    Thread.Sleep(5000);
+                    double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
+                    double correctVoltage = 0;
+                    float activePowerReserve = 0;
+                    for (int k = 0; k < 2; k++)
+                    {
+                        if (k != 0) { meanVoltage = correctVoltage; }
+
+                        var limitingActivePower = power.LimitFlow(
+                                                                    _objectName, _schemeName, _regulationType,
+                                                                    _sqlConnection, _listVoltage, meanVoltage);
+                        activePowerReserve = (float)limitingActivePower - _activePower;
+                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                        correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
+                    }
+                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
                 }
             }
             );
+        }
+
+        private async void SetData()
+        {
+            int i = 1;
+            double j = 0;
+            if (_false == true)
+            {
+                await Task.Run(() =>
+                {
+                    while (_false)
+                    {
+                        i += 5;
+                        j += 0.5;
+                        SetValueToCK11(i, j);
+                        Thread.Sleep(5000);
+                    }
+                }
+                );
+            }
         }
 
         private void StopSystemClick(object sender, EventArgs e)

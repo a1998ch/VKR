@@ -59,11 +59,11 @@ namespace CalculationModel
         /// <returns>Предельную мощность</returns>
         /// <exception cref="ArgumentException">Некорректный уровень напряжения</exception>
         public double LimitFlow(string eoName, string schemeName, 
-                                string regulationType, string connectionString, List<double> listVoltage)
+                                string regulationType, string connectionString, List<double> listVoltage, double meanVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
 
-            if (MeanVoltage(listVoltage) >= 220)
+            if (meanVoltage >= 220)
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
@@ -75,7 +75,7 @@ namespace CalculationModel
                 dict.Add(220, two);
                 return Interpolation(dict, listVoltage, true);
             }
-            else if (MeanVoltage(listVoltage) < 220)
+            else if (meanVoltage < 220)
             {
                 var one = Interpolation(RangePowerAndK2U(
                     listVoltage, DatabaseDataLoading(
