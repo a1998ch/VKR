@@ -66,21 +66,6 @@ namespace ViewGUI
         private Guid[] _reactivePowerUid = new Guid[1];
 
         /// <summary>
-        /// Uid типа значения - "Напряжение"
-        /// </summary>
-        private readonly Guid _measurementTypeVoltage = Guid.Parse("10000bdf-0000-0000-c000-0000006d746c");
-
-        /// <summary>
-        /// Uid типа значения - "Переток активной мощности"
-        /// </summary>
-        private readonly Guid _measurementTypeActivePower = Guid.Parse("10000849-0000-0000-C000-0000006D746C");
-
-        /// <summary>
-        /// Uid типа значения - "Переток реактивной мощности"
-        /// </summary>
-        private readonly Guid _measurementTypeReactivePower = Guid.Parse("10000B3B-0000-0000-C000-0000006D746C");
-
-        /// <summary>
         /// Наименование объекта энергетики
         /// </summary>
         private string _objectName;
@@ -125,6 +110,9 @@ namespace ViewGUI
         /// </summary>
         private bool _false = true;
 
+        /// <summary>
+        /// Коэффициент чувствительности напряжения
+        /// </summary>
         private double _voltageSensitivity = 0.00256;
 
         /// <summary>
@@ -142,13 +130,6 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            //CheckedListBoxEnObj.Items.Add("Объект электроэнергетики");
-
-            //double Uab = 215, Ubc = 243.7, Uca = 223;
-            //_listVoltage.Add(Uab);
-            //_listVoltage.Add(Ubc);
-            //_listVoltage.Add(Uca);
-
             // Подключение к модели
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
@@ -191,8 +172,13 @@ namespace ViewGUI
             await Task.Run(() => StartCalc());
         }
 
+        /// <summary>
+        /// Расчёт резерва активной мощности
+        /// </summary>
         private void StartCalc()
         {
+            if (!CheckObj) { return; }
+
             _false = true;
             SetData();
 
@@ -225,6 +211,9 @@ namespace ViewGUI
             }
         }
 
+        /// <summary>
+        /// Имитация поступления данных в СК-11 с ОЭ
+        /// </summary>
         private async void SetData()
         {
             int i = 1;
@@ -245,11 +234,19 @@ namespace ViewGUI
             }
         }
 
+        /// <summary>
+        /// Прекращение расчёта
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
         private void StopSystemClick(object sender, EventArgs e)
         {
             _false = false;
         }
 
+        /// <summary>
+        /// Получения значения активной мощности из СК-11
+        /// </summary>
         private void GetActivePower()
         {
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
@@ -257,6 +254,9 @@ namespace ViewGUI
             _activePower = (float)Convert.ToDouble(data[0].Value.AnalogValue);
         }
 
+        /// <summary>
+        /// Получения значений междуфазных напряжений из СК-11
+        /// </summary>
         private void GetVoltage()
         {
             _listVoltage.Clear();
@@ -271,6 +271,11 @@ namespace ViewGUI
             }
         }
 
+        /// <summary>
+        /// Задание величин, имитирующих поступление данных в СК-11 с ОЭ
+        /// </summary>
+        /// <param name="i">Величина увеличения АМ на одной итерации</param>
+        /// <param name="j">Величина уменьшения междуфазных напряжений на одной итерации</param>
         private void SetValueToCK11(int i, double j)
         {
             Random random = new Random();
@@ -322,6 +327,9 @@ namespace ViewGUI
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
         }
 
+        /// <summary>
+        /// Получение UID контролируемого объекта по имени
+        /// </summary>
         private void GetUidObj()
         {
             foreach (var item in CheckedListBoxEnObj.CheckedItems) 
@@ -330,6 +338,11 @@ namespace ViewGUI
             }
         }
 
+        /// <summary>
+        /// Добавление нового контролируемого объекта
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
         private void AddEnObjButtonClick(object sender, EventArgs e)
         {
             this.Hide();
@@ -355,6 +368,11 @@ namespace ViewGUI
             addNewObjForm.ShowDialog();
         }
 
+        /// <summary>
+        /// Исключение возможности выбора нескольких объектов
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
         private void CheckedListBoxEnObjItemCheck(object sender, ItemCheckEventArgs e)
         {
             for (int ix = 0; ix < CheckedListBoxEnObj.Items.Count; ++ix)
@@ -363,6 +381,11 @@ namespace ViewGUI
             }
         }
 
+        /// <summary>
+        /// Получение значений АМ, РМ и междуфазных напряжений
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
         private void SelectionOfRequestedDataClick(object sender, EventArgs e)
         {
             if (!CheckObj) { return; }
@@ -378,6 +401,11 @@ namespace ViewGUI
             customizeSettingsForm.ShowDialog();
         }
 
+        /// <summary>
+        /// Выбор С-РС и типв регулирования
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
         private void ChoiceOfSchemaClick(object sender, EventArgs e)
         {
             if (!CheckObj) { return; }
@@ -390,6 +418,9 @@ namespace ViewGUI
             choiceOfSchemaForm.ShowDialog();
         }
 
+        /// <summary>
+        /// Проверка на выбор ОЭ
+        /// </summary>
         private bool CheckObj
         {
             get
