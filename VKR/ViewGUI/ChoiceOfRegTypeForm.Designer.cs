@@ -1,6 +1,6 @@
 ﻿namespace ViewGUI
 {
-    partial class ChoiceOfSchemaForm
+    partial class ChoiceOfRegTypeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,65 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBoxReg = new System.Windows.Forms.ComboBox();
             this.OK = new System.Windows.Forms.Button();
             this.ButtonClose = new System.Windows.Forms.Button();
-            this.comboBoxScheme = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.comboBoxReg);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(335, 75);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Выбор типа регулирования";
+            // 
+            // comboBoxReg
+            // 
+            this.comboBoxReg.FormattingEnabled = true;
+            this.comboBoxReg.Location = new System.Drawing.Point(6, 29);
+            this.comboBoxReg.Name = "comboBoxReg";
+            this.comboBoxReg.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxReg.TabIndex = 0;
+            // 
             // OK
             // 
-            this.OK.Location = new System.Drawing.Point(22, 112);
+            this.OK.Location = new System.Drawing.Point(18, 130);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(133, 34);
-            this.OK.TabIndex = 0;
-            this.OK.Text = "OK";
+            this.OK.TabIndex = 1;
+            this.OK.Text = "ОК";
             this.OK.UseVisualStyleBackColor = true;
             this.OK.Click += new System.EventHandler(this.OKClick);
             // 
             // ButtonClose
             // 
-            this.ButtonClose.Location = new System.Drawing.Point(188, 112);
+            this.ButtonClose.Location = new System.Drawing.Point(214, 130);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(127, 34);
-            this.ButtonClose.TabIndex = 1;
+            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
+            this.ButtonClose.TabIndex = 2;
             this.ButtonClose.Text = "Отмена";
             this.ButtonClose.UseVisualStyleBackColor = true;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
-            // comboBoxScheme
-            // 
-            this.comboBoxScheme.FormattingEnabled = true;
-            this.comboBoxScheme.Location = new System.Drawing.Point(6, 19);
-            this.comboBoxScheme.Name = "comboBoxScheme";
-            this.comboBoxScheme.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxScheme.TabIndex = 2;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.comboBoxScheme);
-            this.groupBox1.Location = new System.Drawing.Point(22, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 56);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Выбор схемно-режимной ситуации";
-            // 
-            // ChoiceOfSchemaForm
+            // ChoiceOfRegTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 158);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(359, 178);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.OK);
+            this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
-            this.Name = "ChoiceOfSchemaForm";
+            this.Name = "ChoiceOfRegTypeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ChoiceOfSchemaForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChoiceOfSchemaFormClosing);
-            this.Load += new System.EventHandler(this.ChoiceOfSchemaFormLoad);
+            this.Text = "ChoiceOfRegTypeForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChoiceOfRegTypeFormClosing);
+            this.Load += new System.EventHandler(this.ChoiceOfRegTypeFormLoad);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -94,9 +94,9 @@
 
         #endregion
 
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox comboBoxReg;
         private System.Windows.Forms.Button OK;
         private System.Windows.Forms.Button ButtonClose;
-        private System.Windows.Forms.ComboBox comboBoxScheme;
-        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

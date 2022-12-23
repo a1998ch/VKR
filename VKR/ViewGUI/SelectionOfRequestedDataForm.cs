@@ -16,7 +16,7 @@ using System.Security.Cryptography;
 
 namespace ViewGUI
 {
-    public partial class CustomizeSettingsForm : Form
+    public partial class SelectionOfRequestedDataForm : Form
     {
         internal event EventHandler CloseForm;
 
@@ -69,7 +69,7 @@ namespace ViewGUI
 
         public Guid[] GetReactivePowerUid => _reactivePowerUid;
 
-        public CustomizeSettingsForm(List<Guid> listVoltageUid, ModelImage modelImage, Guid observableObjectUid)
+        public SelectionOfRequestedDataForm(List<Guid> listVoltageUid, ModelImage modelImage, Guid observableObjectUid)
         {
             InitializeComponent();
             _listVoltageUid = listVoltageUid;
@@ -77,7 +77,7 @@ namespace ViewGUI
             _observableObjectUid = observableObjectUid;
         }
 
-        public CustomizeSettingsForm() 
+        public SelectionOfRequestedDataForm() 
         {
             InitializeComponent();
         }

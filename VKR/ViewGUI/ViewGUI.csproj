@@ -105,6 +105,12 @@
     <Compile Include="AddNewObjForm.Designer.cs">
       <DependentUpon>AddNewObjForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChoiceOfRegTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoiceOfRegTypeForm.Designer.cs">
+      <DependentUpon>ChoiceOfRegTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChoiceOfSchemaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,11 +123,11 @@
     <Compile Include="ConnectDataBaseForm.Designer.cs">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomizeSettingsForm.cs">
+    <Compile Include="SelectionOfRequestedDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomizeSettingsForm.Designer.cs">
-      <DependentUpon>CustomizeSettingsForm.cs</DependentUpon>
+    <Compile Include="SelectionOfRequestedDataForm.Designer.cs">
+      <DependentUpon>SelectionOfRequestedDataForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEditorForm.cs">
       <SubType>Form</SubType>
@@ -140,14 +146,17 @@
     <EmbeddedResource Include="AddNewObjForm.resx">
       <DependentUpon>AddNewObjForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChoiceOfRegTypeForm.resx">
+      <DependentUpon>ChoiceOfRegTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChoiceOfSchemaForm.resx">
       <DependentUpon>ChoiceOfSchemaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectDataBaseForm.resx">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomizeSettingsForm.resx">
-      <DependentUpon>CustomizeSettingsForm.cs</DependentUpon>
+    <EmbeddedResource Include="SelectionOfRequestedDataForm.resx">
+      <DependentUpon>SelectionOfRequestedDataForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatabaseEditorForm.resx">
       <DependentUpon>DatabaseEditorForm.cs</DependentUpon>

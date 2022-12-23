@@ -1,6 +1,6 @@
 ﻿namespace ViewGUI
 {
-    partial class CustomizeSettingsForm
+    partial class SelectionOfRequestedDataForm
     {
         /// <summary>
         /// Required designer variable.

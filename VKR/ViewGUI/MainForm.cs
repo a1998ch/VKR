@@ -394,7 +394,7 @@ namespace ViewGUI
 
             this.Hide();
             var customizeSettingsForm = 
-                new CustomizeSettingsForm(_listVoltageUid, _modelImage, _observableObjectUid);
+                new SelectionOfRequestedDataForm(_listVoltageUid, _modelImage, _observableObjectUid);
             _activePowerUid = customizeSettingsForm.GetActivePowerUid;
             _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
             customizeSettingsForm.CloseForm += OtherCloseForm;
@@ -402,7 +402,7 @@ namespace ViewGUI
         }
 
         /// <summary>
-        /// Выбор С-РС и типв регулирования
+        /// Выбор С-РС
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
@@ -414,8 +414,24 @@ namespace ViewGUI
             ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
+            choiceOfSchemaForm.ShowDialog();
+        }
+
+        /// <summary>
+        /// Выбор типа регулирования
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Данные события</param>
+        private void ChoiceOfRegTypeClick(object sender, EventArgs e)
+        {
+            if (!CheckObj) { return; }
+
+            this.Hide();
+            ChoiceOfRegTypeForm choiceOfSchemaForm = new ChoiceOfRegTypeForm(_sqlConnection, _objectName);
+            choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.RegulationTypeEvent += (o, args) => _regulationType = args;
             choiceOfSchemaForm.ShowDialog();
+
         }
 
         /// <summary>
