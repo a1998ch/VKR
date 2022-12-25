@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DataBaseModel;
 
 
@@ -15,6 +16,8 @@ namespace CalculationModel
     /// </summary>
     public class PowerReserve
     {
+        private double _k2u;
+
         /// <summary>
         /// Конструктор класса PowerReserve
         /// </summary>
@@ -62,30 +65,49 @@ namespace CalculationModel
                                 string regulationType, string connectionString, List<double> listVoltage, double meanVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
+            _k2u = AsymmetryCoefficientCalc(listVoltage);
 
             if (meanVoltage >= 220)
             {
                 var one = Interpolation(RangePowerAndK2U(
-                    listVoltage, DatabaseDataLoading(
+                    DatabaseDataLoading(
                         eoName, schemeName, connectionString, regulationType, 240)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
-                    listVoltage, DatabaseDataLoading(
+                    DatabaseDataLoading(
                         eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
                 dict.Add(240, one);
                 dict.Add(220, two);
-                return Interpolation(dict, listVoltage, true);
+                double powerReserve = Interpolation(dict, listVoltage, true);
+
+                if (regulationType == "Симметричное")
+                {
+                    return powerReserve;
+                }
+                else
+                {
+                    return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
+                }
             }
             else if (meanVoltage < 220)
             {
                 var one = Interpolation(RangePowerAndK2U(
-                    listVoltage, DatabaseDataLoading(
+                    DatabaseDataLoading(
                         eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
                 var two = Interpolation(RangePowerAndK2U(
-                    listVoltage, DatabaseDataLoading(
+                    DatabaseDataLoading(
                         eoName, schemeName, connectionString, regulationType, 200)), listVoltage);
                 dict.Add(220, one);
                 dict.Add(200, two);
-                return Interpolation(dict, listVoltage, true);
+                double powerReserve = Interpolation(dict, listVoltage, true);
+
+                if (regulationType == "Симметричное")
+                {
+                    return powerReserve;
+                }
+                else
+                {
+                    return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
+                }
             }
             else
             {
@@ -99,14 +121,12 @@ namespace CalculationModel
         /// <param name="listVoltage">Список междуфазных напряжений</param>
         /// <param name="dict">Словарь зависимостей P(K2U)</param>
         /// <returns>Словарь P(K2U)</returns>
-        private Dictionary<double, double> RangePowerAndK2U(List<double> listVoltage, Dictionary<double, double> dict)
+        private Dictionary<double, double> RangePowerAndK2U(Dictionary<double, double> dict)
         {
-            var K2U = AsymmetryCoefficientCalc(listVoltage);
-
             Dictionary<double, double> dictResult = new Dictionary<double, double>();
             for (int i = 0; i < dict.Count; i++)
             {
-                if (dict.Keys.ElementAt(i) > K2U)
+                if (dict.Keys.ElementAt(i) > _k2u)
                 {
                     dictResult.Add(dict.Keys.ElementAt(i - 1), dict.Values.ElementAt(i - 1));
                     dictResult.Add(dict.Keys.ElementAt(i), dict.Values.ElementAt(i));
@@ -125,13 +145,12 @@ namespace CalculationModel
         /// <returns>Уточнённые величины мощности и напряжения</returns>
         private double Interpolation(Dictionary<double, double> dict, List<double> listVoltage, bool flag = false)
         {
-            var K2U = AsymmetryCoefficientCalc(listVoltage);
             var pathEquations = ((dict.Values.ElementAt(1) - dict.Values.ElementAt(0)) /
                                 (dict.Keys.ElementAt(1) - dict.Keys.ElementAt(0)));
 
             if (!flag)
             {
-                return pathEquations * K2U + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(0));
+                return pathEquations * _k2u + (dict.Values.ElementAt(0) - pathEquations * dict.Keys.ElementAt(0));
             }
             else
             {
@@ -169,6 +188,54 @@ namespace CalculationModel
         private double MeanVoltage(List<double> listVoltage)
         {
             return (listVoltage[0] + listVoltage[1] + listVoltage[2]) / listVoltage.Count;
+        }
+
+        private Dictionary<double, double> LoadingCurrentForAsym(string eoName, string schemeName, 
+                                                                    string connectionString, int voltageLevel)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                Dictionary<double, double> dictWithCharact = new Dictionary<double, double>();
+
+                string sql = DataBaseQuerys.QueryForCalcAsym(eoName, schemeName, "Несимметричное", voltageLevel);
+                sqlConnection.Open();
+                SqlCommand comand = new SqlCommand(sql, sqlConnection);
+                SqlDataReader dataReader = comand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    dictWithCharact.Add(dataReader.GetDouble(0), dataReader.GetDouble(1));
+                }
+                return dictWithCharact;
+            }
+        }
+
+        private Dictionary<double, double> CurrentDetectionForAsym(Dictionary<double, double> dict)
+        {
+            Dictionary<double, double> dictResult = new Dictionary<double, double>();
+            for (int i = 0; i < dict.Count; i++)
+            {
+                if (dict.Keys.ElementAt(i) >= _k2u)
+                {
+                    dictResult.Add(dict.Keys.ElementAt(i), dict.Values.ElementAt(i));
+                    break;
+                }
+            }
+            return dictResult;
+        }
+
+        private double LimitPowerForAsym(string eoName, string schemeName, string connectionString, 
+                                          int voltageLevel, double powerReserv)
+        {
+            var dictOne = LoadingCurrentForAsym(eoName, schemeName, connectionString, voltageLevel);
+
+            var dictTwo = CurrentDetectionForAsym(dictOne);
+
+            var newCurrent = dictTwo.Values.ElementAt(0) * ((200 - powerReserv) / 200);
+
+            var pathEquations = ((_k2u - _k2u * 2.1) / (dictTwo.Values.ElementAt(0)));
+
+            return pathEquations * newCurrent + ((_k2u * 2.1) - pathEquations);
         }
     }
 }

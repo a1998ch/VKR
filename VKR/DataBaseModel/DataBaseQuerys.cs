@@ -42,6 +42,18 @@ namespace DataBaseModel
                            $"Voltage_value = '{voltageLevel}'";
         }
 
+        public static string QueryForCalcAsym(string eoName, string schemeName, string regulationType, int voltageLevel)
+        {
+            return $"SELECT s.K2U_value, s.Current_value, s.Scheme_name, " +
+                            $"s.Regulation_type, s.Voltage_value, e.Energy_object_name " +
+                   $"FROM Schema_data s, Energy_object e " +
+                   $"WHERE e.Scheme_id = s.Scheme_id AND " +
+                           $"Energy_object_name = '{eoName}' AND " +
+                           $"Scheme_name = '{schemeName}' AND " +
+                           $"Regulation_type = '{regulationType}' AND " +
+                           $"Voltage_value = '{voltageLevel}'";
+        }
+
         //public static string QueryData
         //{
         //    get =>
