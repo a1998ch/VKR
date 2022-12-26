@@ -28,7 +28,7 @@ namespace ViewGUI
         /// <summary>
         /// Адрес сервера передачи ТИ
         /// </summary>
-        private const string _serverAddress = "172.25.54.91";
+        private const string _serverAddress = "10.221.3.57";
 
         /// <summary>
         /// Сервер СК-11
