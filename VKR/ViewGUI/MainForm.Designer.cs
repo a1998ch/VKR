@@ -46,7 +46,9 @@ namespace ViewGUI
             this.SelectionOfRequestedData = new System.Windows.Forms.Button();
             this.ChoiceOfSchema = new System.Windows.Forms.Button();
             this.ChoiceOfRegType = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +62,7 @@ namespace ViewGUI
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(570, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(570, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -70,7 +72,7 @@ namespace ViewGUI
             this.StartSystem,
             this.StopSystem});
             this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(69, 26);
+            this.Start.Size = new System.Drawing.Size(69, 24);
             this.Start.Text = "Запуск";
             // 
             // StartSystem
@@ -93,7 +95,7 @@ namespace ViewGUI
             this.ConnectDB,
             this.AddEditDataDB});
             this.SystemDB.Name = "SystemDB";
-            this.SystemDB.Size = new System.Drawing.Size(176, 26);
+            this.SystemDB.Size = new System.Drawing.Size(176, 24);
             this.SystemDB.Text = "База данных Системы";
             // 
             // ConnectDB
@@ -115,7 +117,7 @@ namespace ViewGUI
             this.ExternalSystems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OikDB});
             this.ExternalSystems.Name = "ExternalSystems";
-            this.ExternalSystems.Size = new System.Drawing.Size(152, 26);
+            this.ExternalSystems.Size = new System.Drawing.Size(152, 24);
             this.ExternalSystems.Text = "Внешние Системы";
             // 
             // OikDB
@@ -131,7 +133,7 @@ namespace ViewGUI
             this.AboutProg,
             this.Manual});
             this.Documentation.Name = "Documentation";
-            this.Documentation.Size = new System.Drawing.Size(81, 26);
+            this.Documentation.Size = new System.Drawing.Size(81, 24);
             this.Documentation.Text = "Справка";
             // 
             // AboutProg
@@ -149,9 +151,9 @@ namespace ViewGUI
             // CheckedListBoxEnObj
             // 
             this.CheckedListBoxEnObj.FormattingEnabled = true;
-            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(12, 72);
+            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(6, 20);
             this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
-            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(316, 334);
+            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(332, 319);
             this.CheckedListBoxEnObj.TabIndex = 2;
             this.CheckedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxEnObjItemCheck);
             // 
@@ -167,7 +169,7 @@ namespace ViewGUI
             // 
             // SelectionOfRequestedData
             // 
-            this.SelectionOfRequestedData.Location = new System.Drawing.Point(362, 72);
+            this.SelectionOfRequestedData.Location = new System.Drawing.Point(372, 72);
             this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
             this.SelectionOfRequestedData.Size = new System.Drawing.Size(171, 69);
             this.SelectionOfRequestedData.TabIndex = 4;
@@ -177,7 +179,7 @@ namespace ViewGUI
             // 
             // ChoiceOfSchema
             // 
-            this.ChoiceOfSchema.Location = new System.Drawing.Point(362, 168);
+            this.ChoiceOfSchema.Location = new System.Drawing.Point(372, 170);
             this.ChoiceOfSchema.Name = "ChoiceOfSchema";
             this.ChoiceOfSchema.Size = new System.Drawing.Size(171, 69);
             this.ChoiceOfSchema.TabIndex = 5;
@@ -187,7 +189,7 @@ namespace ViewGUI
             // 
             // ChoiceOfRegType
             // 
-            this.ChoiceOfRegType.Location = new System.Drawing.Point(362, 263);
+            this.ChoiceOfRegType.Location = new System.Drawing.Point(372, 264);
             this.ChoiceOfRegType.Name = "ChoiceOfRegType";
             this.ChoiceOfRegType.Size = new System.Drawing.Size(171, 69);
             this.ChoiceOfRegType.TabIndex = 6;
@@ -195,16 +197,26 @@ namespace ViewGUI
             this.ChoiceOfRegType.UseVisualStyleBackColor = true;
             this.ChoiceOfRegType.Click += new System.EventHandler(this.ChoiceOfRegTypeClick);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.CheckedListBoxEnObj);
+            this.groupBox1.Location = new System.Drawing.Point(12, 72);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(344, 350);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Перечень объектов электроэнергетики";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(570, 421);
+            this.ClientSize = new System.Drawing.Size(570, 430);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ChoiceOfRegType);
             this.Controls.Add(this.ChoiceOfSchema);
             this.Controls.Add(this.SelectionOfRequestedData);
             this.Controls.Add(this.AddEnObjButton);
-            this.Controls.Add(this.CheckedListBoxEnObj);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
@@ -214,6 +226,7 @@ namespace ViewGUI
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,6 +251,7 @@ namespace ViewGUI
         private System.Windows.Forms.Button SelectionOfRequestedData;
         private System.Windows.Forms.Button ChoiceOfSchema;
         private System.Windows.Forms.Button ChoiceOfRegType;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
