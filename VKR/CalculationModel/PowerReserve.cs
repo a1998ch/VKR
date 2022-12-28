@@ -235,7 +235,20 @@ namespace CalculationModel
 
             var pathEquations = ((_k2u - _k2u * 2.1) / (dictTwo.Values.ElementAt(0)));
 
-            return pathEquations * newCurrent + ((_k2u * 2.1) - pathEquations);
+            var newK2u = pathEquations * newCurrent + ((_k2u * 2.1) - pathEquations);
+
+            var data = DatabaseDataLoading(eoName, schemeName, connectionString, "Несимметричное", voltageLevel);
+
+            double limitPower = 0;
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data.Keys.ElementAt(i) >= newK2u)
+                {
+                    limitPower = data.Values.ElementAt(i);
+                    break;
+                }
+            }
+            return limitPower;
         }
     }
 }
