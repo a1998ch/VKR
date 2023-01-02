@@ -17,7 +17,7 @@ namespace ViewGUI
 
         private void ConnectDataBaseLoad(object sender, EventArgs e)
         {
-            NameServer.Text = @"STS81\SQLEXPRESS";
+            NameServer.Text = @"DESKTOP-M77O4Q0\SQLEXPRESS";
             NameDB.Text = "DataBase";
         }
 

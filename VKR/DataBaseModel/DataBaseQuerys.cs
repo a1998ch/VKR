@@ -76,6 +76,16 @@ namespace DataBaseModel
                    $"WHERE e.Scheme_id = s.Scheme_id";
         }
 
+        public static string VoltageFilter(string voltageValue)
+        {
+            return
+                   $"SELECT s.Scheme_name, s.Regulation_type, s.Voltage_value, " +
+                            $"s.K2U_value, s.Power_value, s.Current_value, " +
+                            $"e.Energy_object_name " +
+                   $"FROM Schema_data s, Energy_object e " +
+                   $"WHERE e.Scheme_id = s.Scheme_id AND Voltage_value = '{voltageValue}'";
+        }
+
         //public static string QueryAllData
         //{
         //    get =>
@@ -126,7 +136,7 @@ namespace DataBaseModel
                                                                 $"FROM Schema_data, Energy_object " +
                                                                 $"WHERE Energy_object_name = '{objName}'";
 
-        //public static string QueryForColumn(string tableName, 
-        //    string columnName) => $"SELECT {columnName} FROM {tableName}";
+        public static string QueryForColumn(string tableName,
+            string columnName) => $"SELECT {columnName} FROM {tableName}";
     }
 }
