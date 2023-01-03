@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseEditorForm));
             this.dataGridViewDB = new System.Windows.Forms.DataGridView();
             this.groupBoxDB = new System.Windows.Forms.GroupBox();
@@ -38,20 +37,14 @@
             this.DataExportFromDB = new System.Windows.Forms.Button();
             this.LoadDataIntoDB = new System.Windows.Forms.Button();
             this.LoadDataFromDb = new System.Windows.Forms.Button();
-            this.dataBaseDataSet = new ViewGUI.DataBaseDataSet();
-            this.dataBaseDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.energyobjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.energy_objectTableAdapter = new ViewGUI.DataBaseDataSetTableAdapters.Energy_objectTableAdapter();
-            this.schemadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.schema_dataTableAdapter = new ViewGUI.DataBaseDataSetTableAdapters.Schema_dataTableAdapter();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
+            this.ButtonClearFilter = new System.Windows.Forms.Button();
+            this.ButtonRegType = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.TreeViewRegType = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             this.groupBoxDB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataBaseDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataBaseDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.energyobjectBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.schemadataBindingSource)).BeginInit();
             this.groupBoxFilter.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,7 +67,7 @@
             // groupBoxDB
             // 
             this.groupBoxDB.Controls.Add(this.dataGridViewDB);
-            this.groupBoxDB.Location = new System.Drawing.Point(12, 130);
+            this.groupBoxDB.Location = new System.Drawing.Point(9, 130);
             this.groupBoxDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBoxDB.Name = "groupBoxDB";
             this.groupBoxDB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -86,7 +79,7 @@
             // TreeViewVoltage
             // 
             this.TreeViewVoltage.CheckBoxes = true;
-            this.TreeViewVoltage.Location = new System.Drawing.Point(254, 95);
+            this.TreeViewVoltage.Location = new System.Drawing.Point(841, 104);
             this.TreeViewVoltage.Name = "TreeViewVoltage";
             this.TreeViewVoltage.Size = new System.Drawing.Size(92, 86);
             this.TreeViewVoltage.TabIndex = 6;
@@ -100,7 +93,7 @@
             this.ButtonVoltage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ButtonVoltage.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.ButtonVoltage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonVoltage.Location = new System.Drawing.Point(226, 14);
+            this.ButtonVoltage.Location = new System.Drawing.Point(809, 15);
             this.ButtonVoltage.Name = "ButtonVoltage";
             this.ButtonVoltage.Size = new System.Drawing.Size(23, 19);
             this.ButtonVoltage.TabIndex = 7;
@@ -151,59 +144,76 @@
             this.LoadDataFromDb.UseVisualStyleBackColor = true;
             this.LoadDataFromDb.Click += new System.EventHandler(this.LoadDataFromDbClick);
             // 
-            // dataBaseDataSet
-            // 
-            this.dataBaseDataSet.DataSetName = "DataBaseDataSet";
-            this.dataBaseDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // dataBaseDataSetBindingSource
-            // 
-            this.dataBaseDataSetBindingSource.DataSource = this.dataBaseDataSet;
-            this.dataBaseDataSetBindingSource.Position = 0;
-            // 
-            // energyobjectBindingSource
-            // 
-            this.energyobjectBindingSource.DataMember = "Energy_object";
-            this.energyobjectBindingSource.DataSource = this.dataBaseDataSetBindingSource;
-            // 
-            // energy_objectTableAdapter
-            // 
-            this.energy_objectTableAdapter.ClearBeforeFill = true;
-            // 
-            // schemadataBindingSource
-            // 
-            this.schemadataBindingSource.DataMember = "Schema_data";
-            this.schemadataBindingSource.DataSource = this.dataBaseDataSetBindingSource;
-            // 
-            // schema_dataTableAdapter
-            // 
-            this.schema_dataTableAdapter.ClearBeforeFill = true;
-            // 
             // groupBoxFilter
             // 
+            this.groupBoxFilter.Controls.Add(this.ButtonClearFilter);
+            this.groupBoxFilter.Controls.Add(this.ButtonRegType);
+            this.groupBoxFilter.Controls.Add(this.label2);
             this.groupBoxFilter.Controls.Add(this.label1);
             this.groupBoxFilter.Controls.Add(this.ButtonVoltage);
             this.groupBoxFilter.Location = new System.Drawing.Point(12, 74);
             this.groupBoxFilter.Name = "groupBoxFilter";
-            this.groupBoxFilter.Size = new System.Drawing.Size(1069, 39);
+            this.groupBoxFilter.Size = new System.Drawing.Size(1069, 44);
             this.groupBoxFilter.TabIndex = 6;
             this.groupBoxFilter.TabStop = false;
             this.groupBoxFilter.Text = "Фильтр";
             // 
+            // ButtonClearFilter
+            // 
+            this.ButtonClearFilter.Location = new System.Drawing.Point(901, 10);
+            this.ButtonClearFilter.Name = "ButtonClearFilter";
+            this.ButtonClearFilter.Size = new System.Drawing.Size(162, 28);
+            this.ButtonClearFilter.TabIndex = 11;
+            this.ButtonClearFilter.Text = "Отчистить фильтр";
+            this.ButtonClearFilter.UseVisualStyleBackColor = true;
+            this.ButtonClearFilter.Click += new System.EventHandler(this.ButtonClearFilterClick);
+            // 
+            // ButtonRegType
+            // 
+            this.ButtonRegType.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonRegType.BackgroundImage")));
+            this.ButtonRegType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ButtonRegType.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.ButtonRegType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonRegType.Location = new System.Drawing.Point(617, 15);
+            this.ButtonRegType.Name = "ButtonRegType";
+            this.ButtonRegType.Size = new System.Drawing.Size(23, 19);
+            this.ButtonRegType.TabIndex = 10;
+            this.ButtonRegType.UseVisualStyleBackColor = true;
+            this.ButtonRegType.Click += new System.EventHandler(this.ButtonRegTypeClick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(469, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(142, 16);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Тип регулирования: ";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 15);
+            this.label1.Location = new System.Drawing.Point(655, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(148, 16);
             this.label1.TabIndex = 8;
             this.label1.Text = "Уровень напряжения:";
+            // 
+            // TreeViewRegType
+            // 
+            this.TreeViewRegType.Location = new System.Drawing.Point(641, 109);
+            this.TreeViewRegType.Name = "TreeViewRegType";
+            this.TreeViewRegType.Size = new System.Drawing.Size(183, 77);
+            this.TreeViewRegType.TabIndex = 11;
+            this.TreeViewRegType.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewRegTypeAfterCheck);
+            this.TreeViewRegType.MouseLeave += new System.EventHandler(this.TreeViewRegTypeMouseLeave);
             // 
             // DatabaseEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1093, 639);
+            this.Controls.Add(this.TreeViewRegType);
             this.Controls.Add(this.TreeViewVoltage);
             this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.LoadDataFromDb);
@@ -221,10 +231,6 @@
             this.Load += new System.EventHandler(this.DatabaseEditorFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).EndInit();
             this.groupBoxDB.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataBaseDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataBaseDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.energyobjectBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.schemadataBindingSource)).EndInit();
             this.groupBoxFilter.ResumeLayout(false);
             this.groupBoxFilter.PerformLayout();
             this.ResumeLayout(false);
@@ -241,13 +247,11 @@
         private System.Windows.Forms.Button LoadDataFromDb;
         private System.Windows.Forms.TreeView TreeViewVoltage;
         private System.Windows.Forms.Button ButtonVoltage;
-        private System.Windows.Forms.BindingSource dataBaseDataSetBindingSource;
-        private DataBaseDataSet dataBaseDataSet;
-        private System.Windows.Forms.BindingSource energyobjectBindingSource;
-        private DataBaseDataSetTableAdapters.Energy_objectTableAdapter energy_objectTableAdapter;
-        private System.Windows.Forms.BindingSource schemadataBindingSource;
-        private DataBaseDataSetTableAdapters.Schema_dataTableAdapter schema_dataTableAdapter;
         private System.Windows.Forms.GroupBox groupBoxFilter;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ButtonRegType;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TreeView TreeViewRegType;
+        private System.Windows.Forms.Button ButtonClearFilter;
     }
 }

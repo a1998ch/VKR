@@ -128,22 +128,14 @@
         dgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="dataBaseDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="dataBaseDataSetBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>188, 17</value>
-  </metadata>
-  <metadata name="energyobjectBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>458, 17</value>
-  </metadata>
-  <metadata name="energy_objectTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>702, 17</value>
-  </metadata>
-  <metadata name="schemadataBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>946, 17</value>
-  </metadata>
-  <metadata name="schema_dataTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 60</value>
-  </metadata>
+  <data name="ButtonRegType.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        OAAAADgBFdMvnwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAC2SURBVDhPzcyx
+        DcJAEATAs+TEmVN3QjW0YdEDiVtABJYzAjqgAdqgBJJn93VvDtjAdsRLI7/3985wLpA24qz1IVirt5T4
+        tSGESw151hdUcPaHJdit5gW+pIYrxKLCTj3PlYsvaeAGcSDiW/MxE39yYNbCHeIgMWt/+t9BDs06eEAZ
+        5r2TXRUSzuTDNKkOyZBwxrBgVB2SIf3dgpPqkAwpLHjCTnVIhhQW7NV7IUPCOcJBvb0lewF3Ee84ysoq
+        dgAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>

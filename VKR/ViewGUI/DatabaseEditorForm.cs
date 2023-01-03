@@ -37,6 +37,9 @@ namespace ViewGUI
         {
             TreeViewVoltage.Visible = false;
             TreeViewVoltage.CheckBoxes = true;
+
+            TreeViewRegType.Visible = false;
+            TreeViewRegType.CheckBoxes = true;
         }
 
         private void DatabaseEditorFormClosing(object sender, FormClosingEventArgs e)
@@ -51,7 +54,11 @@ namespace ViewGUI
             dataGridViewDB.DataSource = _dataTable;
             dataGridViewDB.AutoResizeColumns();
 
-            GetElemnet("Voltage_value");
+            TreeViewVoltage.Nodes.Clear();
+            TreeViewRegType.Nodes.Clear();
+
+            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
+            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
         }
 
         /// <summary>
@@ -122,11 +129,17 @@ namespace ViewGUI
             }
         }
 
-        private void GetElemnet(string colimnName)
+        private void GetElemnet(string tableName, string columnName, TrView treeView)
         {
-            var wdb = new WorkingWithDatabase();
-            var listDataCol = wdb.GetData(_connectionString, DataBaseQuerys.QueryForColumn("Schema_data", colimnName));
-            var noDupeslistDataCol = listDataCol.Distinct().ToArray();
+            List<string> list = new List<string>();
+            foreach (DataRow row in _dataTable.Rows)
+            {
+                foreach (DataColumn col in _dataTable.Columns)
+                {
+                    list.Add(row[columnName].ToString());
+                }
+            }
+            var noDupeslistDataCol = list.Distinct().ToArray();
 
             foreach (var element in noDupeslistDataCol)
             {
@@ -135,7 +148,7 @@ namespace ViewGUI
                     Name = element,
                     Text = element
                 };
-                TreeViewVoltage.Nodes.Add(rootNode);
+                treeView.Nodes.Add(rootNode);
             }
         }
 
@@ -166,12 +179,12 @@ namespace ViewGUI
             return FilterParam;
         }
 
-        private void TreeViewVoltageAfterCheck(object sender, TreeViewEventArgs e)
+        private void TreeViewFilter(TreeViewEventArgs e, TrView treeView, string columnName)
         {
             CheckedTreeView(e);
-            string voltage = GetTreeValue(TreeViewVoltage);
+            string value = GetTreeValue(treeView);
 
-            DataTable dt = new DataTable(); 
+            DataTable dt = new DataTable();
             dt.Merge(_dataTable);
             _dataTable.Clear();
 
@@ -181,7 +194,7 @@ namespace ViewGUI
                 bool flag = false;
                 foreach (DataColumn col in dt.Columns)
                 {
-                    if (row["Voltage_value"].ToString() == voltage)
+                    if (row[columnName].ToString() == value)
                     {
                         flag = true;
                     }
@@ -198,22 +211,56 @@ namespace ViewGUI
                     }
                 }
             }
-
-            var wdb = new WorkingWithDatabase();
-            //_dataTable = wdb.PullData(_connectionString, DataBaseQuerys.VoltageFilter(voltage));
             dataGridViewDB.DataSource = _dataTable;
             dataGridViewDB.AutoResizeColumns();
-            _dataTable = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
+        }
+
+        private void TreeViewVoltageAfterCheck(object sender, TreeViewEventArgs e)
+        {
+            TreeViewFilter(e, TreeViewVoltage, "Voltage_value");
+        }
+
+        private void TreeViewRegTypeAfterCheck(object sender, TreeViewEventArgs e)
+        {
+            TreeViewFilter(e, TreeViewRegType, "Regulation_type");
         }
 
         private void ButtonVoltageClick(object sender, EventArgs e)
         {
             TreeViewVoltage.Visible = true;
+            TreeViewVoltage.Nodes.Clear();
+            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
+        }
+
+        private void ButtonRegTypeClick(object sender, EventArgs e)
+        {
+            TreeViewRegType.Visible = true;
+            TreeViewRegType.Nodes.Clear();
+            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
         }
 
         private void TreeViewVoltageMouseLeave(object sender, EventArgs e)
         {
             TreeViewVoltage.Visible = false;
+        }
+
+        private void TreeViewRegTypeMouseLeave(object sender, EventArgs e)
+        {
+            TreeViewRegType.Visible = false;
+        }
+
+        private void ButtonClearFilterClick(object sender, EventArgs e)
+        {
+            var wdb = new WorkingWithDatabase();
+            _dataTable = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
+            dataGridViewDB.DataSource = _dataTable;
+            dataGridViewDB.AutoResizeColumns();
+
+            TreeViewVoltage.Nodes.Clear();
+            TreeViewRegType.Nodes.Clear();
+
+            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
+            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
         }
     }
 }
