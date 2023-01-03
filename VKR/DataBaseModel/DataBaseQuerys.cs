@@ -69,9 +69,9 @@ namespace DataBaseModel
         public static string QueryData
         {
             get =>
-                   $"SELECT s.Scheme_name, s.Regulation_type, s.Voltage_value, " +
-                            $"s.K2U_value, s.Power_value, s.Current_value, " +
-                            $"e.Energy_object_name " +
+                   $"SELECT e.Energy_object_name, s.Scheme_name, " +
+                   $"s.Regulation_type, s.Voltage_value, " +
+                   $"s.K2U_value, s.Power_value, s.Current_value " +
                    $"FROM Schema_data s, Energy_object e " +
                    $"WHERE e.Scheme_id = s.Scheme_id";
         }

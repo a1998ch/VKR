@@ -38,11 +38,17 @@
             this.LoadDataIntoDB = new System.Windows.Forms.Button();
             this.LoadDataFromDb = new System.Windows.Forms.Button();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
+            this.ButtonEnergyObj = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ButtonSchema = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.ButtonClearFilter = new System.Windows.Forms.Button();
             this.ButtonRegType = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TreeViewRegType = new System.Windows.Forms.TreeView();
+            this.TreeViewSchema = new System.Windows.Forms.TreeView();
+            this.TreeViewEnObj = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             this.groupBoxDB.SuspendLayout();
             this.groupBoxFilter.SuspendLayout();
@@ -67,7 +73,7 @@
             // groupBoxDB
             // 
             this.groupBoxDB.Controls.Add(this.dataGridViewDB);
-            this.groupBoxDB.Location = new System.Drawing.Point(9, 130);
+            this.groupBoxDB.Location = new System.Drawing.Point(12, 130);
             this.groupBoxDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBoxDB.Name = "groupBoxDB";
             this.groupBoxDB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -79,9 +85,9 @@
             // TreeViewVoltage
             // 
             this.TreeViewVoltage.CheckBoxes = true;
-            this.TreeViewVoltage.Location = new System.Drawing.Point(841, 104);
+            this.TreeViewVoltage.Location = new System.Drawing.Point(851, 113);
             this.TreeViewVoltage.Name = "TreeViewVoltage";
-            this.TreeViewVoltage.Size = new System.Drawing.Size(92, 86);
+            this.TreeViewVoltage.Size = new System.Drawing.Size(92, 77);
             this.TreeViewVoltage.TabIndex = 6;
             this.TreeViewVoltage.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewVoltageAfterCheck);
             this.TreeViewVoltage.MouseLeave += new System.EventHandler(this.TreeViewVoltageMouseLeave);
@@ -93,9 +99,9 @@
             this.ButtonVoltage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ButtonVoltage.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.ButtonVoltage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonVoltage.Location = new System.Drawing.Point(809, 15);
+            this.ButtonVoltage.Location = new System.Drawing.Point(828, 16);
             this.ButtonVoltage.Name = "ButtonVoltage";
-            this.ButtonVoltage.Size = new System.Drawing.Size(23, 19);
+            this.ButtonVoltage.Size = new System.Drawing.Size(27, 23);
             this.ButtonVoltage.TabIndex = 7;
             this.ButtonVoltage.UseVisualStyleBackColor = false;
             this.ButtonVoltage.Click += new System.EventHandler(this.ButtonVoltageClick);
@@ -146,6 +152,10 @@
             // 
             // groupBoxFilter
             // 
+            this.groupBoxFilter.Controls.Add(this.ButtonEnergyObj);
+            this.groupBoxFilter.Controls.Add(this.label4);
+            this.groupBoxFilter.Controls.Add(this.ButtonSchema);
+            this.groupBoxFilter.Controls.Add(this.label3);
             this.groupBoxFilter.Controls.Add(this.ButtonClearFilter);
             this.groupBoxFilter.Controls.Add(this.ButtonRegType);
             this.groupBoxFilter.Controls.Add(this.label2);
@@ -157,6 +167,50 @@
             this.groupBoxFilter.TabIndex = 6;
             this.groupBoxFilter.TabStop = false;
             this.groupBoxFilter.Text = "Фильтр";
+            // 
+            // ButtonEnergyObj
+            // 
+            this.ButtonEnergyObj.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonEnergyObj.BackgroundImage")));
+            this.ButtonEnergyObj.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ButtonEnergyObj.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.ButtonEnergyObj.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonEnergyObj.Location = new System.Drawing.Point(213, 14);
+            this.ButtonEnergyObj.Name = "ButtonEnergyObj";
+            this.ButtonEnergyObj.Size = new System.Drawing.Size(27, 23);
+            this.ButtonEnergyObj.TabIndex = 15;
+            this.ButtonEnergyObj.UseVisualStyleBackColor = true;
+            this.ButtonEnergyObj.Click += new System.EventHandler(this.ButtonEnergyObjClick);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(195, 16);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Объект электроэнергетики: ";
+            // 
+            // ButtonSchema
+            // 
+            this.ButtonSchema.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonSchema.BackgroundImage")));
+            this.ButtonSchema.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ButtonSchema.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.ButtonSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonSchema.Location = new System.Drawing.Point(444, 14);
+            this.ButtonSchema.Name = "ButtonSchema";
+            this.ButtonSchema.Size = new System.Drawing.Size(27, 23);
+            this.ButtonSchema.TabIndex = 13;
+            this.ButtonSchema.UseVisualStyleBackColor = true;
+            this.ButtonSchema.Click += new System.EventHandler(this.ButtonSchemaClick);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(246, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(194, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Схемно-режимная ситуация: ";
             // 
             // ButtonClearFilter
             // 
@@ -174,9 +228,9 @@
             this.ButtonRegType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ButtonRegType.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.ButtonRegType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonRegType.Location = new System.Drawing.Point(617, 15);
+            this.ButtonRegType.Location = new System.Drawing.Point(634, 15);
             this.ButtonRegType.Name = "ButtonRegType";
-            this.ButtonRegType.Size = new System.Drawing.Size(23, 19);
+            this.ButtonRegType.Size = new System.Drawing.Size(27, 23);
             this.ButtonRegType.TabIndex = 10;
             this.ButtonRegType.UseVisualStyleBackColor = true;
             this.ButtonRegType.Click += new System.EventHandler(this.ButtonRegTypeClick);
@@ -184,7 +238,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(469, 16);
+            this.label2.Location = new System.Drawing.Point(486, 18);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 16);
             this.label2.TabIndex = 9;
@@ -193,7 +247,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(655, 16);
+            this.label1.Location = new System.Drawing.Point(674, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(148, 16);
             this.label1.TabIndex = 8;
@@ -201,20 +255,40 @@
             // 
             // TreeViewRegType
             // 
-            this.TreeViewRegType.Location = new System.Drawing.Point(641, 109);
+            this.TreeViewRegType.Location = new System.Drawing.Point(662, 113);
             this.TreeViewRegType.Name = "TreeViewRegType";
             this.TreeViewRegType.Size = new System.Drawing.Size(183, 77);
             this.TreeViewRegType.TabIndex = 11;
             this.TreeViewRegType.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewRegTypeAfterCheck);
             this.TreeViewRegType.MouseLeave += new System.EventHandler(this.TreeViewRegTypeMouseLeave);
             // 
+            // TreeViewSchema
+            // 
+            this.TreeViewSchema.Location = new System.Drawing.Point(478, 113);
+            this.TreeViewSchema.Name = "TreeViewSchema";
+            this.TreeViewSchema.Size = new System.Drawing.Size(208, 77);
+            this.TreeViewSchema.TabIndex = 14;
+            this.TreeViewSchema.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewSchemaAfterCheck);
+            this.TreeViewSchema.MouseLeave += new System.EventHandler(this.TreeViewSchemaMouseLeave);
+            // 
+            // TreeViewEnObj
+            // 
+            this.TreeViewEnObj.Location = new System.Drawing.Point(243, 113);
+            this.TreeViewEnObj.Name = "TreeViewEnObj";
+            this.TreeViewEnObj.Size = new System.Drawing.Size(249, 77);
+            this.TreeViewEnObj.TabIndex = 12;
+            this.TreeViewEnObj.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewEnObjAfterCheck);
+            this.TreeViewEnObj.MouseLeave += new System.EventHandler(this.TreeViewEnObjMouseLeave);
+            // 
             // DatabaseEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1093, 639);
-            this.Controls.Add(this.TreeViewRegType);
             this.Controls.Add(this.TreeViewVoltage);
+            this.Controls.Add(this.TreeViewEnObj);
+            this.Controls.Add(this.TreeViewSchema);
+            this.Controls.Add(this.TreeViewRegType);
             this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.LoadDataFromDb);
             this.Controls.Add(this.LoadDataIntoDB);
@@ -253,5 +327,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TreeView TreeViewRegType;
         private System.Windows.Forms.Button ButtonClearFilter;
+        private System.Windows.Forms.Button ButtonEnergyObj;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button ButtonSchema;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TreeView TreeViewSchema;
+        private System.Windows.Forms.TreeView TreeViewEnObj;
     }
 }

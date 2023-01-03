@@ -40,6 +40,12 @@ namespace ViewGUI
 
             TreeViewRegType.Visible = false;
             TreeViewRegType.CheckBoxes = true;
+
+            TreeViewSchema.Visible = false;
+            TreeViewSchema.CheckBoxes = true;
+
+            TreeViewEnObj.Visible = false;
+            TreeViewEnObj.CheckBoxes = true;
         }
 
         private void DatabaseEditorFormClosing(object sender, FormClosingEventArgs e)
@@ -52,13 +58,29 @@ namespace ViewGUI
             var wdb = new WorkingWithDatabase();
             _dataTable = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
             dataGridViewDB.DataSource = _dataTable;
+            DataGridViewHeadersName();
             dataGridViewDB.AutoResizeColumns();
 
             TreeViewVoltage.Nodes.Clear();
             TreeViewRegType.Nodes.Clear();
+            TreeViewSchema.Nodes.Clear();
+            TreeViewEnObj.Nodes.Clear();
 
             GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
             GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
+            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
+            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
+        }
+
+        private void DataGridViewHeadersName()
+        {
+            dataGridViewDB.Columns[0].HeaderText = "Наименование объекта электроэнергетики";
+            dataGridViewDB.Columns[1].HeaderText = "Схемно-режимная ситуация";
+            dataGridViewDB.Columns[2].HeaderText = "Тип регулирования";
+            dataGridViewDB.Columns[3].HeaderText = "Уровень напряжения, кВ";
+            dataGridViewDB.Columns[4].HeaderText = "Коэффициент несимметрии, %";
+            dataGridViewDB.Columns[5].HeaderText = "Активная мощность, МВт";
+            dataGridViewDB.Columns[6].HeaderText = "Ток обратной последовательности, А";
         }
 
         /// <summary>
@@ -152,20 +174,6 @@ namespace ViewGUI
             }
         }
 
-        private void CheckedTreeView(TreeViewEventArgs e)
-        {
-            if (e.Node.Checked)
-            {
-                foreach (TrNode cur_node in e.Node.TreeView.Nodes)
-                {
-                    if (cur_node != e.Node)
-                    {
-                        cur_node.Checked = false;
-                    }
-                }
-            }
-        }
-
         private string GetTreeValue(TrView treeView)
         {
             var FilterParam = String.Empty;
@@ -181,7 +189,6 @@ namespace ViewGUI
 
         private void TreeViewFilter(TreeViewEventArgs e, TrView treeView, string columnName)
         {
-            CheckedTreeView(e);
             string value = GetTreeValue(treeView);
 
             DataTable dt = new DataTable();
@@ -218,25 +225,49 @@ namespace ViewGUI
         private void TreeViewVoltageAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewVoltage, "Voltage_value");
+            TreeViewVoltage.Nodes.Clear();
+            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
         }
 
         private void TreeViewRegTypeAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewRegType, "Regulation_type");
+            TreeViewRegType.Nodes.Clear();
+            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
+        }
+
+        private void TreeViewSchemaAfterCheck(object sender, TreeViewEventArgs e)
+        {
+            TreeViewFilter(e, TreeViewSchema, "Scheme_name");
+            TreeViewSchema.Nodes.Clear();
+            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
+        }
+
+        private void TreeViewEnObjAfterCheck(object sender, TreeViewEventArgs e)
+        {
+            TreeViewFilter(e, TreeViewEnObj, "Energy_object_name");
+            TreeViewEnObj.Nodes.Clear();
+            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void ButtonVoltageClick(object sender, EventArgs e)
         {
             TreeViewVoltage.Visible = true;
-            TreeViewVoltage.Nodes.Clear();
-            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
         }
 
         private void ButtonRegTypeClick(object sender, EventArgs e)
         {
             TreeViewRegType.Visible = true;
-            TreeViewRegType.Nodes.Clear();
-            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
+        }
+
+        private void ButtonSchemaClick(object sender, EventArgs e)
+        {
+            TreeViewSchema.Visible = true;
+        }
+
+        private void ButtonEnergyObjClick(object sender, EventArgs e)
+        {
+            TreeViewEnObj.Visible = true;
         }
 
         private void TreeViewVoltageMouseLeave(object sender, EventArgs e)
@@ -249,18 +280,33 @@ namespace ViewGUI
             TreeViewRegType.Visible = false;
         }
 
+        private void TreeViewSchemaMouseLeave(object sender, EventArgs e)
+        {
+            TreeViewSchema.Visible = false;
+        }
+
+        private void TreeViewEnObjMouseLeave(object sender, EventArgs e)
+        {
+            TreeViewEnObj.Visible = false;
+        }
+
         private void ButtonClearFilterClick(object sender, EventArgs e)
         {
             var wdb = new WorkingWithDatabase();
             _dataTable = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
             dataGridViewDB.DataSource = _dataTable;
+            DataGridViewHeadersName();
             dataGridViewDB.AutoResizeColumns();
 
             TreeViewVoltage.Nodes.Clear();
             TreeViewRegType.Nodes.Clear();
+            TreeViewSchema.Nodes.Clear();
+            TreeViewEnObj.Nodes.Clear();
 
             GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
             GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
+            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
+            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
     }
 }
