@@ -84,6 +84,43 @@ namespace DataBaseModel
             }
         }
 
+        public void SaveToCSV(string connectionString, DataTable dataTable, string path)
+        {
+            using (var writer = new StreamWriter(path, false, Encoding.Default))
+            {
+                int i = 1;
+                foreach (DataColumn col in dataTable.Columns)
+                {
+                    if (i == dataTable.Columns.Count - 1)
+                    {
+                        writer.Write(col.ColumnName.ToString());
+                    }
+                    else
+                    {
+                        writer.Write(col.ColumnName.ToString() + ";");
+                    }
+                }
+                writer.Write("\n");
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    int j = 1;
+                    foreach (DataColumn col in dataTable.Columns)
+                    {
+                        if (j == dataTable.Columns.Count - 1)
+                        {
+                            writer.Write(row[col.ColumnName].ToString());
+                        }
+                        else
+                        {
+                            writer.Write(row[col.ColumnName].ToString() + ";");
+                        }
+                    }
+                    writer.Write("\n");
+                }
+            }
+        }
+
         public DataTable ConvertToDataTable(string filePath)
         {
             DataTable dataTable = new DataTable();
@@ -153,7 +190,7 @@ namespace DataBaseModel
             return dt;
         }
 
-        public void AddTableToDb(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
+        public bool AddTableToDb(string connectionString, string query, DataTable dataTable, bool autoGenId = false)
         {
             int checkResult = 0;
             DataTable dt = AddTableToDataTable(connectionString, query, dataTable, autoGenId);
@@ -177,7 +214,7 @@ namespace DataBaseModel
                     }
                     if (checkResult > 1)
                     {
-                        throw new ArgumentException("Нельзя добавить уже существующие данные");
+                        return false;
                     }
                 }
             }
@@ -189,6 +226,7 @@ namespace DataBaseModel
                 var commandBuilder = new SqlCommandBuilder(adapter);
                 adapter.Update(dt);
             }
+            return true;
         }
 
         public int SearchLastId(string connectionString, string tableName, string columnName)

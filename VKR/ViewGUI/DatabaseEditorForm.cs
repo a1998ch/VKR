@@ -66,10 +66,10 @@ namespace ViewGUI
             TreeViewSchema.Nodes.Clear();
             TreeViewEnObj.Nodes.Clear();
 
-            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
-            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
-            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
-            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void DataGridViewHeadersName()
@@ -106,26 +106,23 @@ namespace ViewGUI
             var db = new WorkingWithDatabase();
             _dataTable = db.ConvertToDataTable(path);
             dataGridViewDB.DataSource = _dataTable;
+            DataGridViewHeadersName();
             dataGridViewDB.AutoResizeColumns();
         }
 
         private void LoadDataIntoDBClick(object sender, EventArgs e)
         {
             var db = new WorkingWithDatabase();
-            try
-            {
-                db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
-                db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
+            var checkSchema = db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
+            var checkEnObj = db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
 
+            if (checkSchema || checkEnObj)
+            {
                 MessageBox.Show("Запись данных в БД выполнена", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (ArgumentException ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Нельзя добавить уже существующие данные", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -139,8 +136,8 @@ namespace ViewGUI
             try
             {
                 var save = new WorkingWithDatabase();
-                save.SaveToCSV(_connectionString, DataBaseQuerys.QueryData, path);
-                
+                save.SaveToCSV(_connectionString, _dataTable, path);
+
                 MessageBox.Show("Сохранение успешно", "Сообщение",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -151,7 +148,7 @@ namespace ViewGUI
             }
         }
 
-        private void GetElemnet(string tableName, string columnName, TrView treeView)
+        private void SetElemnetToTreeView(string tableName, string columnName, TrView treeView)
         {
             List<string> list = new List<string>();
             foreach (DataRow row in _dataTable.Rows)
@@ -225,29 +222,69 @@ namespace ViewGUI
         private void TreeViewVoltageAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewVoltage, "Voltage_value");
+
             TreeViewVoltage.Nodes.Clear();
-            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+
+            TreeViewRegType.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+
+            TreeViewSchema.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+
+            TreeViewEnObj.Nodes.Clear();
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void TreeViewRegTypeAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewRegType, "Regulation_type");
+
+            TreeViewVoltage.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+
             TreeViewRegType.Nodes.Clear();
-            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+
+            TreeViewSchema.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+
+            TreeViewEnObj.Nodes.Clear();
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void TreeViewSchemaAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewSchema, "Scheme_name");
+
+            TreeViewVoltage.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+
+            TreeViewRegType.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+
             TreeViewSchema.Nodes.Clear();
-            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+
+            TreeViewEnObj.Nodes.Clear();
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void TreeViewEnObjAfterCheck(object sender, TreeViewEventArgs e)
         {
             TreeViewFilter(e, TreeViewEnObj, "Energy_object_name");
+
+            TreeViewVoltage.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+
+            TreeViewRegType.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+
+            TreeViewSchema.Nodes.Clear();
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+
             TreeViewEnObj.Nodes.Clear();
-            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
 
         private void ButtonVoltageClick(object sender, EventArgs e)
@@ -303,10 +340,10 @@ namespace ViewGUI
             TreeViewSchema.Nodes.Clear();
             TreeViewEnObj.Nodes.Clear();
 
-            GetElemnet("Schema_data", "Voltage_value", TreeViewVoltage);
-            GetElemnet("Schema_data", "Regulation_type", TreeViewRegType);
-            GetElemnet("Schema_data", "Scheme_name", TreeViewSchema);
-            GetElemnet("Energy_object", "Energy_object_name", TreeViewEnObj);
+            SetElemnetToTreeView("Schema_data", "Voltage_value", TreeViewVoltage);
+            SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
+            SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
+            SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
         }
     }
 }

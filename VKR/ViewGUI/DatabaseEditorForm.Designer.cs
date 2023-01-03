@@ -85,7 +85,7 @@
             // TreeViewVoltage
             // 
             this.TreeViewVoltage.CheckBoxes = true;
-            this.TreeViewVoltage.Location = new System.Drawing.Point(851, 113);
+            this.TreeViewVoltage.Location = new System.Drawing.Point(851, 94);
             this.TreeViewVoltage.Name = "TreeViewVoltage";
             this.TreeViewVoltage.Size = new System.Drawing.Size(92, 77);
             this.TreeViewVoltage.TabIndex = 6;
@@ -108,10 +108,10 @@
             // 
             // ImportFromCSV
             // 
-            this.ImportFromCSV.Location = new System.Drawing.Point(35, 12);
+            this.ImportFromCSV.Location = new System.Drawing.Point(12, 10);
             this.ImportFromCSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ImportFromCSV.Name = "ImportFromCSV";
-            this.ImportFromCSV.Size = new System.Drawing.Size(165, 42);
+            this.ImportFromCSV.Size = new System.Drawing.Size(259, 39);
             this.ImportFromCSV.TabIndex = 2;
             this.ImportFromCSV.Text = "Импорт данных из csv";
             this.ImportFromCSV.UseVisualStyleBackColor = true;
@@ -119,10 +119,10 @@
             // 
             // DataExportFromDB
             // 
-            this.DataExportFromDB.Location = new System.Drawing.Point(228, 10);
+            this.DataExportFromDB.Location = new System.Drawing.Point(282, 11);
             this.DataExportFromDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DataExportFromDB.Name = "DataExportFromDB";
-            this.DataExportFromDB.Size = new System.Drawing.Size(155, 41);
+            this.DataExportFromDB.Size = new System.Drawing.Size(259, 39);
             this.DataExportFromDB.TabIndex = 3;
             this.DataExportFromDB.Text = "Экспорт в csv";
             this.DataExportFromDB.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             // 
             // LoadDataIntoDB
             // 
-            this.LoadDataIntoDB.Location = new System.Drawing.Point(411, 11);
+            this.LoadDataIntoDB.Location = new System.Drawing.Point(553, 11);
             this.LoadDataIntoDB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LoadDataIntoDB.Name = "LoadDataIntoDB";
             this.LoadDataIntoDB.Size = new System.Drawing.Size(259, 39);
@@ -141,10 +141,10 @@
             // 
             // LoadDataFromDb
             // 
-            this.LoadDataFromDb.Location = new System.Drawing.Point(689, 10);
+            this.LoadDataFromDb.Location = new System.Drawing.Point(819, 11);
             this.LoadDataFromDb.Margin = new System.Windows.Forms.Padding(4);
             this.LoadDataFromDb.Name = "LoadDataFromDb";
-            this.LoadDataFromDb.Size = new System.Drawing.Size(207, 37);
+            this.LoadDataFromDb.Size = new System.Drawing.Size(259, 39);
             this.LoadDataFromDb.TabIndex = 5;
             this.LoadDataFromDb.Text = "Загрузить данные из бд";
             this.LoadDataFromDb.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
             this.groupBoxFilter.Controls.Add(this.label2);
             this.groupBoxFilter.Controls.Add(this.label1);
             this.groupBoxFilter.Controls.Add(this.ButtonVoltage);
-            this.groupBoxFilter.Location = new System.Drawing.Point(12, 74);
+            this.groupBoxFilter.Location = new System.Drawing.Point(12, 57);
             this.groupBoxFilter.Name = "groupBoxFilter";
             this.groupBoxFilter.Size = new System.Drawing.Size(1069, 44);
             this.groupBoxFilter.TabIndex = 6;
@@ -255,7 +255,7 @@
             // 
             // TreeViewRegType
             // 
-            this.TreeViewRegType.Location = new System.Drawing.Point(662, 113);
+            this.TreeViewRegType.Location = new System.Drawing.Point(662, 94);
             this.TreeViewRegType.Name = "TreeViewRegType";
             this.TreeViewRegType.Size = new System.Drawing.Size(183, 77);
             this.TreeViewRegType.TabIndex = 11;
@@ -264,7 +264,7 @@
             // 
             // TreeViewSchema
             // 
-            this.TreeViewSchema.Location = new System.Drawing.Point(478, 113);
+            this.TreeViewSchema.Location = new System.Drawing.Point(478, 94);
             this.TreeViewSchema.Name = "TreeViewSchema";
             this.TreeViewSchema.Size = new System.Drawing.Size(208, 77);
             this.TreeViewSchema.TabIndex = 14;
@@ -273,9 +273,9 @@
             // 
             // TreeViewEnObj
             // 
-            this.TreeViewEnObj.Location = new System.Drawing.Point(243, 113);
+            this.TreeViewEnObj.Location = new System.Drawing.Point(243, 94);
             this.TreeViewEnObj.Name = "TreeViewEnObj";
-            this.TreeViewEnObj.Size = new System.Drawing.Size(249, 77);
+            this.TreeViewEnObj.Size = new System.Drawing.Size(298, 77);
             this.TreeViewEnObj.TabIndex = 12;
             this.TreeViewEnObj.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewEnObjAfterCheck);
             this.TreeViewEnObj.MouseLeave += new System.EventHandler(this.TreeViewEnObjMouseLeave);
