@@ -75,6 +75,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.HTML, Version=22.11.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.HTML.22.11.0\lib\net40\Aspose.HTML.dll</HintPath>
+    </Reference>
     <Reference Include="Monitel.Mal, Version=11.5.9.930, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
@@ -128,6 +131,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Manual.cs" />
     <Compile Include="SelectionOfRequestedDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +194,7 @@
     <None Include="DataBaseDataSet.xss">
       <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

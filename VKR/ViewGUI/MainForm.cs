@@ -457,5 +457,20 @@ namespace ViewGUI
                 return true;
             }
         }
+
+        private void AboutProgClick(object sender, EventArgs e)
+        {
+            var saveFile = new SaveFileDialog();
+            saveFile.Filter = "Файл html (*.html)|*.html";
+            saveFile.ShowDialog();
+            string path = saveFile.FileName;
+
+            if (string.IsNullOrEmpty(path)) { return; }
+
+            var manual = new Manual();
+            manual.CreateHtmlDoc(path);
+
+            MessageBox.Show("Сохранение успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
