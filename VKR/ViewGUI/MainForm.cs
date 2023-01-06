@@ -15,6 +15,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO.Ports;
+using System.IO;
+using System.Text;
 
 namespace ViewGUI
 {
@@ -460,17 +462,8 @@ namespace ViewGUI
 
         private void AboutProgClick(object sender, EventArgs e)
         {
-            var saveFile = new SaveFileDialog();
-            saveFile.Filter = "Файл html (*.html)|*.html";
-            saveFile.ShowDialog();
-            string path = saveFile.FileName;
-
-            if (string.IsNullOrEmpty(path)) { return; }
-
-            var manual = new Manual();
-            manual.CreateHtmlDoc(path);
-
-            MessageBox.Show("Сохранение успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string path = @"D:\Магистратура\ВКР\Моё\Диссер ИТ\VKR\_VKR\VKR\Manual\Hello world.html";
+            System.Diagnostics.Process.Start(path);
         }
     }
 }

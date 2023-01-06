@@ -131,7 +131,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Manual.cs" />
     <Compile Include="SelectionOfRequestedDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
