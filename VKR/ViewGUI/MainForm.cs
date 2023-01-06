@@ -132,12 +132,12 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            //// Подключение к модели
-            //_modelImage = new WorkingWithCK11().AccessingTheMalApi();
+            // Подключение к модели
+            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
-            //// Подключение к скрверу для передачи данных в БДРВ
-            //var sendCK11 = new DataTransferToCK11();
-            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            // Подключение к скрверу для передачи данных в БДРВ
+            var sendCK11 = new DataTransferToCK11();
+            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>

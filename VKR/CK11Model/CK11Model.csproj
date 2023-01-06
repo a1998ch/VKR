@@ -50,9 +50,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.HTML, Version=22.11.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aspose.HTML.22.11.0\lib\net40\Aspose.HTML.dll</HintPath>
-    </Reference>
     <Reference Include="Monitel.CIM.Ext.Common">
       <HintPath>..\Monitel\Monitel.CIM.Ext.Common.dll</HintPath>
     </Reference>
@@ -114,9 +111,6 @@
       <Project>{f604286a-1afc-4355-8c2c-a998cfcee979}</Project>
       <Name>lib60870</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

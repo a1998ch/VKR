@@ -75,9 +75,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.HTML, Version=22.11.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aspose.HTML.22.11.0\lib\net40\Aspose.HTML.dll</HintPath>
-    </Reference>
     <Reference Include="Monitel.Mal, Version=11.5.9.930, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Monitel\Monitel.Mal.dll</HintPath>
@@ -125,11 +122,6 @@
     </Compile>
     <Compile Include="ConnectDataBaseForm.Designer.cs">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataBaseDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="SelectionOfRequestedDataForm.cs">
       <SubType>Form</SubType>
@@ -182,18 +174,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DataBaseDataSet.xsc">
-      <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DataBaseDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataBaseDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataBaseDataSet.xss">
-      <DependentUpon>DataBaseDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
