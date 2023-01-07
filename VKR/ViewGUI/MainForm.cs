@@ -179,6 +179,10 @@ namespace ViewGUI
         /// </summary>
         private void StartCalc()
         {
+            // Подключение к скрверу для передачи данных в БДРВ
+            var sendCK11x = new DataTransferToCK11();
+            _server = sendCK11x.ConnectServer(_serverAddress, _serverPort);
+
             if (!CheckObj) { return; }
 
             _false = true;
@@ -224,9 +228,6 @@ namespace ViewGUI
         /// </summary>
         private async void SetData()
         {
-            var sendCK11X = new DataTransferToCK11();
-            _server = sendCK11X.ConnectServer(_serverAddress, _serverPort);
-
             _false2 = true;
             int i = 1;
             double j = 0;
@@ -257,10 +258,6 @@ namespace ViewGUI
             _false2 = false;
             var sendCK11X = new DataTransferToCK11();
             sendCK11X.StopServer(_server, _serverAddress, _serverPort);
-
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11 = new DataTransferToCK11();
-            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
