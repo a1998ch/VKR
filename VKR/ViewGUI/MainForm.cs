@@ -135,9 +135,9 @@ namespace ViewGUI
             // Подключение к модели
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
-            //// Подключение к скрверу для передачи данных в БДРВ
-            //var sendCK11 = new DataTransferToCK11();
-            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            // Подключение к скрверу для передачи данных в БДРВ
+            var sendCK11 = new DataTransferToCK11();
+            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -179,18 +179,15 @@ namespace ViewGUI
         /// </summary>
         private void StartCalc()
         {
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11x = new DataTransferToCK11();
-            _server = sendCK11x.ConnectServer(_serverAddress, _serverPort);
-
             if (!CheckObj) { return; }
 
             _false = true;
-            //SetData();
+            SetData();
 
             PowerReserve power = new PowerReserve();
             var sendCK11 = new DataTransferToCK11();
 
+            float activePowerReserve = 0;
             while (_false)
             {
                 double checkPower = _activePower;
@@ -201,13 +198,12 @@ namespace ViewGUI
 
                 if (_activePower == -1 || _listVoltage.Count == 0)
                 {
-                    sendCK11.DataTransfer(_server, _coa, 200, -1111);
+                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve, true);
                     continue;
                 }
 
                 double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
                 double correctVoltage = 0;
-                float activePowerReserve = 0;
                 for (int k = 0; k < 2; k++)
                 {
                     if (k != 0) { meanVoltage = correctVoltage; }
@@ -228,36 +224,35 @@ namespace ViewGUI
         /// </summary>
         private async void SetData()
         {
-            _false2 = true;
+            int invalid = 0;
             int i = 1;
             double j = 0;
-            if (_false2 == true)
+            if (_false == true)
             {
                 await Task.Run(() =>
                 {
-                    while (_false2)
+                    while (_false)
                     {
+                        invalid += 1;
                         i += 5;
                         j += 0.5;
-                        SetValueToCK11(i, j);
+                        if (invalid <= 5)
+                        {
+                            SetValueToCK11(i, j);
+                        }
+                        else if (invalid > 5 && invalid <= 10)
+                        {
+                            SetValueToCK11(i, j, nonTop: true);
+                        }
+                        else
+                        {
+                            SetValueToCK11(i, j);
+                        }
                         Thread.Sleep(5000);
                     }
                 }
                 );
             }
-        }
-
-        bool _false2 = true;
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            await Task.Run(() => SetData());
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            _false2 = false;
-            var sendCK11X = new DataTransferToCK11();
-            sendCK11X.StopServer(_server, _serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -320,7 +315,7 @@ namespace ViewGUI
         /// </summary>
         /// <param name="i">Величина увеличения АМ на одной итерации</param>
         /// <param name="j">Величина уменьшения междуфазных напряжений на одной итерации</param>
-        private void SetValueToCK11(int i, double j)
+        private void SetValueToCK11(int i, double j, bool nonTop = false)
         {
             Random random = new Random();
             float Uab = (float)(215 - j);
@@ -334,7 +329,7 @@ namespace ViewGUI
             sendCK11.DataTransfer(_server, _coa, 101, Uab);
             sendCK11.DataTransfer(_server, _coa, 102, Ubc);
             sendCK11.DataTransfer(_server, _coa, 103, Uca);
-            sendCK11.DataTransfer(_server, _coa, 104, P);
+            sendCK11.DataTransfer(_server, _coa, 104, P, invalid: false, nonTopical: nonTop);
         }
 
         /// <summary>

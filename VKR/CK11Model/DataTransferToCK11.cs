@@ -20,10 +20,16 @@ namespace CK11Model
             return server;
         }
 
-        public void DataTransfer(Server server, int coa, int ioa, float data)
+        public void DataTransfer(Server server, int coa, int ioa, float data, bool invalid = false, bool nonTopical = false)
         {
+            var Quality = new QualityDescriptor
+            {
+                Invalid = invalid, // Недействительно
+                NonTopical = nonTopical // Неактуально
+            };
+
             ASDU newAsdu = new ASDU(server.GetConnectionParameters(), CauseOfTransmission.PERIODIC, false, false, 1, coa, false);
-            InformationObject io = new MeasuredValueShort(ioa, data, new QualityDescriptor());
+            InformationObject io = new MeasuredValueShort(ioa, data, Quality);
             newAsdu.AddInformationObject(io);
 
             server.EnqueueASDU(newAsdu);
