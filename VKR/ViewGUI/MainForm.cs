@@ -135,9 +135,9 @@ namespace ViewGUI
             // Подключение к модели
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11 = new DataTransferToCK11();
-            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            //// Подключение к скрверу для передачи данных в БДРВ
+            //var sendCK11 = new DataTransferToCK11();
+            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace ViewGUI
             if (!CheckObj) { return; }
 
             _false = true;
-            SetData();
+            //SetData();
 
             PowerReserve power = new PowerReserve();
             var sendCK11 = new DataTransferToCK11();
@@ -194,6 +194,12 @@ namespace ViewGUI
                 GetVoltage();
 
                 if (checkPower == _activePower) { continue; }
+
+                if (_activePower == -1 || _listVoltage.Count == 0)
+                {
+                    sendCK11.DataTransfer(_server, _coa, 200, -1111);
+                    continue;
+                }
 
                 double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
                 double correctVoltage = 0;
@@ -218,13 +224,17 @@ namespace ViewGUI
         /// </summary>
         private async void SetData()
         {
+            var sendCK11X = new DataTransferToCK11();
+            _server = sendCK11X.ConnectServer(_serverAddress, _serverPort);
+
+            _false2 = true;
             int i = 1;
             double j = 0;
-            if (_false == true)
+            if (_false2 == true)
             {
                 await Task.Run(() =>
                 {
-                    while (_false)
+                    while (_false2)
                     {
                         i += 5;
                         j += 0.5;
@@ -234,6 +244,23 @@ namespace ViewGUI
                 }
                 );
             }
+        }
+
+        bool _false2 = true;
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() => SetData());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            _false2 = false;
+            var sendCK11X = new DataTransferToCK11();
+            sendCK11X.StopServer(_server, _serverAddress, _serverPort);
+
+            // Подключение к скрверу для передачи данных в БДРВ
+            var sendCK11 = new DataTransferToCK11();
+            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -253,7 +280,17 @@ namespace ViewGUI
         {
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
             var data = dataRequest.GetSignals(_activePowerUid);
-            _activePower = (float)Convert.ToDouble(data[0].Value.AnalogValue);
+            var tempData = new Examination(data);
+            bool checkValue = tempData.GetValidData();
+
+            if (!checkValue)
+            {
+                _activePower = -1;
+            }
+            else
+            {
+                _activePower = (float)Convert.ToDouble(data[0].Value.AnalogValue);
+            }
         }
 
         /// <summary>
@@ -263,13 +300,21 @@ namespace ViewGUI
         {
             _listVoltage.Clear();
 
-            var ConnectCK11 = new WorkingWithCK11();
             var dataRequest = new WorkingWithCK11(_connectionStringToRtdb);
             var data = dataRequest.GetSignals(_listVoltageUid.ToArray());
+            var tempData = new Examination(data);
+            bool checkValue = tempData.GetValidData();
 
-            foreach (var item in data)
+            if (!checkValue)
             {
-                _listVoltage.Add(item.Value.AnalogValue);
+                _listVoltage.Clear();
+            }
+            else
+            {
+                foreach (var item in data)
+                {
+                    _listVoltage.Add(item.Value.AnalogValue);
+                }
             }
         }
 

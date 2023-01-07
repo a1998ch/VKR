@@ -28,5 +28,12 @@ namespace CK11Model
 
             server.EnqueueASDU(newAsdu);
         }
+
+        public void StopServer(Server server, string ipAddress, int serverPort)
+        {
+            server.SetLocalAddress(ipAddress); // IP-адрес сервера
+            server.SetLocalPort(serverPort);
+            server.Stop();
+        }
     }
 }

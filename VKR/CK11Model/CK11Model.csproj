@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTransferToCK11.cs" />
+    <Compile Include="Examination.cs" />
     <Compile Include="WorkingWithCK11.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

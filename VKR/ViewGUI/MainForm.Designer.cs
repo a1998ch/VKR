@@ -47,6 +47,8 @@ namespace ViewGUI
             this.ChoiceOfSchema = new System.Windows.Forms.Button();
             this.ChoiceOfRegType = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -153,7 +155,7 @@ namespace ViewGUI
             // 
             this.CheckedListBoxEnObj.FormattingEnabled = true;
             this.CheckedListBoxEnObj.Location = new System.Drawing.Point(8, 25);
-            this.CheckedListBoxEnObj.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CheckedListBoxEnObj.Margin = new System.Windows.Forms.Padding(4);
             this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
             this.CheckedListBoxEnObj.Size = new System.Drawing.Size(441, 378);
             this.CheckedListBoxEnObj.TabIndex = 2;
@@ -162,7 +164,7 @@ namespace ViewGUI
             // AddEnObjButton
             // 
             this.AddEnObjButton.Location = new System.Drawing.Point(16, 47);
-            this.AddEnObjButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddEnObjButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddEnObjButton.Name = "AddEnObjButton";
             this.AddEnObjButton.Size = new System.Drawing.Size(421, 34);
             this.AddEnObjButton.TabIndex = 3;
@@ -173,7 +175,7 @@ namespace ViewGUI
             // SelectionOfRequestedData
             // 
             this.SelectionOfRequestedData.Location = new System.Drawing.Point(496, 89);
-            this.SelectionOfRequestedData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SelectionOfRequestedData.Margin = new System.Windows.Forms.Padding(4);
             this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
             this.SelectionOfRequestedData.Size = new System.Drawing.Size(228, 85);
             this.SelectionOfRequestedData.TabIndex = 4;
@@ -184,7 +186,7 @@ namespace ViewGUI
             // ChoiceOfSchema
             // 
             this.ChoiceOfSchema.Location = new System.Drawing.Point(496, 209);
-            this.ChoiceOfSchema.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChoiceOfSchema.Margin = new System.Windows.Forms.Padding(4);
             this.ChoiceOfSchema.Name = "ChoiceOfSchema";
             this.ChoiceOfSchema.Size = new System.Drawing.Size(228, 85);
             this.ChoiceOfSchema.TabIndex = 5;
@@ -195,7 +197,7 @@ namespace ViewGUI
             // ChoiceOfRegType
             // 
             this.ChoiceOfRegType.Location = new System.Drawing.Point(496, 325);
-            this.ChoiceOfRegType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChoiceOfRegType.Margin = new System.Windows.Forms.Padding(4);
             this.ChoiceOfRegType.Name = "ChoiceOfRegType";
             this.ChoiceOfRegType.Size = new System.Drawing.Size(228, 85);
             this.ChoiceOfRegType.TabIndex = 6;
@@ -207,19 +209,41 @@ namespace ViewGUI
             // 
             this.groupBox1.Controls.Add(this.CheckedListBoxEnObj);
             this.groupBox1.Location = new System.Drawing.Point(16, 89);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(459, 431);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Перечень объектов электроэнергетики";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(473, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(568, 31);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 529);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ChoiceOfRegType);
             this.Controls.Add(this.ChoiceOfSchema);
@@ -228,7 +252,7 @@ namespace ViewGUI
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
@@ -261,6 +285,8 @@ namespace ViewGUI
         private System.Windows.Forms.Button ChoiceOfSchema;
         private System.Windows.Forms.Button ChoiceOfRegType;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
