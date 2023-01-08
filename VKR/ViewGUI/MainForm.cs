@@ -17,6 +17,7 @@ using System.Threading;
 using System.IO.Ports;
 using System.IO;
 using System.Text;
+using Monitel.Rtdb.Api.Config;
 
 namespace ViewGUI
 {
@@ -132,12 +133,12 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
-            // Подключение к модели
-            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
+            //// Подключение к модели
+            //_modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11 = new DataTransferToCK11();
-            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
+            //// Подключение к скрверу для передачи данных в БДРВ
+            //var sendCK11 = new DataTransferToCK11();
+            //_server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -179,6 +180,13 @@ namespace ViewGUI
         /// </summary>
         private void StartCalc()
         {
+            if (_sqlConnection == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (!CheckObj) { return; }
 
             _false = true;

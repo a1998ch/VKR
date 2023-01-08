@@ -1,5 +1,6 @@
 ﻿using DataBaseModel;
 using Monitel.Mal.Context.CIM16;
+using Monitel.Rtdb.Api.Config;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace ViewGUI
 
         private void DatabaseEditorFormLoad(object sender, EventArgs e)
         {
+            ButtonClearFilter.Enabled = false;
+
             TreeViewVoltage.Visible = false;
             TreeViewVoltage.CheckBoxes = true;
 
@@ -55,6 +58,13 @@ namespace ViewGUI
 
         private void LoadDataFromDbClick(object sender, EventArgs e)
         {
+            if (_connectionString == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных", 
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var wdb = new WorkingWithDatabase();
             _dataTable = wdb.PullData(_connectionString, DataBaseQuerys.QueryData);
             dataGridViewDB.DataSource = _dataTable;
@@ -103,15 +113,35 @@ namespace ViewGUI
 
             if (string.IsNullOrEmpty(path)) { return; }
 
-            var db = new WorkingWithDatabase();
-            _dataTable = db.ConvertToDataTable(path);
-            dataGridViewDB.DataSource = _dataTable;
-            DataGridViewHeadersName();
-            dataGridViewDB.AutoResizeColumns();
+            try
+            {
+                var db = new WorkingWithDatabase();
+                _dataTable = db.ConvertToDataTable(path);
+                dataGridViewDB.DataSource = _dataTable;
+                DataGridViewHeadersName();
+                dataGridViewDB.AutoResizeColumns();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadDataIntoDBClick(object sender, EventArgs e)
         {
+            if (_connectionString == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_dataTable.Columns.Count == 0)
+            {
+                MessageBox.Show("Нет данных для сохранения", "Сообщение",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             var db = new WorkingWithDatabase();
             var checkSchema = db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForSchemaData, _dataTable);
             var checkEnObj = db.AddTableToDb(_connectionString, DataBaseQuerys.QueryForEnObj, _dataTable, autoGenId: true);
@@ -128,6 +158,13 @@ namespace ViewGUI
 
         private void DataExportFromDBClick(object sender, EventArgs e)
         {
+            if (_dataTable.Columns.Count == 0)
+            {
+                MessageBox.Show("Нет данных для сохранения", "Сообщение", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             var saveFile = new SaveFileDialog();
             string path = WorkWithCSV(saveFile);
 
@@ -136,7 +173,7 @@ namespace ViewGUI
             try
             {
                 var save = new WorkingWithDatabase();
-                save.SaveToCSV(_connectionString, _dataTable, path);
+                save.SaveToCSV(_dataTable, path);
 
                 MessageBox.Show("Сохранение успешно", "Сообщение",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -221,6 +258,8 @@ namespace ViewGUI
 
         private void TreeViewVoltageAfterCheck(object sender, TreeViewEventArgs e)
         {
+            ButtonClearFilter.Enabled = true;
+
             TreeViewFilter(e, TreeViewVoltage, "Voltage_value");
 
             TreeViewVoltage.Nodes.Clear();
@@ -238,6 +277,8 @@ namespace ViewGUI
 
         private void TreeViewRegTypeAfterCheck(object sender, TreeViewEventArgs e)
         {
+            ButtonClearFilter.Enabled = true;
+
             TreeViewFilter(e, TreeViewRegType, "Regulation_type");
 
             TreeViewVoltage.Nodes.Clear();
@@ -255,6 +296,8 @@ namespace ViewGUI
 
         private void TreeViewSchemaAfterCheck(object sender, TreeViewEventArgs e)
         {
+            ButtonClearFilter.Enabled = true;
+
             TreeViewFilter(e, TreeViewSchema, "Scheme_name");
 
             TreeViewVoltage.Nodes.Clear();
@@ -272,6 +315,8 @@ namespace ViewGUI
 
         private void TreeViewEnObjAfterCheck(object sender, TreeViewEventArgs e)
         {
+            ButtonClearFilter.Enabled = true;
+
             TreeViewFilter(e, TreeViewEnObj, "Energy_object_name");
 
             TreeViewVoltage.Nodes.Clear();
@@ -344,6 +389,8 @@ namespace ViewGUI
             SetElemnetToTreeView("Schema_data", "Regulation_type", TreeViewRegType);
             SetElemnetToTreeView("Schema_data", "Scheme_name", TreeViewSchema);
             SetElemnetToTreeView("Energy_object", "Energy_object_name", TreeViewEnObj);
+
+            ButtonClearFilter.Enabled = false;
         }
     }
 }

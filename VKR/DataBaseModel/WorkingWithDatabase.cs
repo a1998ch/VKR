@@ -84,11 +84,11 @@ namespace DataBaseModel
             }
         }
 
-        public void SaveToCSV(string connectionString, DataTable dataTable, string path)
+        public void SaveToCSV(DataTable dataTable, string path)
         {
             using (var writer = new StreamWriter(path, false, Encoding.Default))
             {
-                int i = 1;
+                int i = 0;
                 foreach (DataColumn col in dataTable.Columns)
                 {
                     if (i == dataTable.Columns.Count - 1)
@@ -99,12 +99,13 @@ namespace DataBaseModel
                     {
                         writer.Write(col.ColumnName.ToString() + ";");
                     }
+                    i++;
                 }
                 writer.Write("\n");
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    int j = 1;
+                    int j = 0;
                     foreach (DataColumn col in dataTable.Columns)
                     {
                         if (j == dataTable.Columns.Count - 1)
@@ -115,6 +116,7 @@ namespace DataBaseModel
                         {
                             writer.Write(row[col.ColumnName].ToString() + ";");
                         }
+                        j++;
                     }
                     writer.Write("\n");
                 }
@@ -131,6 +133,12 @@ namespace DataBaseModel
                 {
                     dataTable.Columns.Add(header);
                 }
+
+                if (dataTable.Columns.Count != 7)
+                {
+                    throw new ArgumentException("Структура файла не соответствует требуемому формату");
+                }
+
                 while (!stream.EndOfStream)
                 {
                     string[] rows = stream.ReadLine().Split(';');
