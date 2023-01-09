@@ -126,12 +126,25 @@ namespace DataBaseModel
         public DataTable ConvertToDataTable(string filePath)
         {
             DataTable dataTable = new DataTable();
+            List<string> listColumnName = new List<string>(7)
+            {
+                "Energy_object_name",
+                "Scheme_name",
+                "Regulation_type",
+                "Voltage_value",
+                "K2U_value",
+                "Power_value",
+                "Current_value"
+            };
             using (var stream = new StreamReader(filePath, Encoding.Default))
             {
                 string[] headers = stream.ReadLine().Split(';');
                 foreach (string header in headers)
                 {
-                    dataTable.Columns.Add(header);
+                    if (listColumnName.Contains(header))
+                    {
+                        dataTable.Columns.Add(header);
+                    }
                 }
 
                 if (dataTable.Columns.Count != 7)
