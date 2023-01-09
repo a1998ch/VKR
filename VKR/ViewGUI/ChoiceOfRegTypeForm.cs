@@ -22,21 +22,24 @@ namespace ViewGUI
 
         private readonly string _objName;
 
+        private readonly string _schemeName;
+
         private readonly string _regulationType;
 
-        public ChoiceOfRegTypeForm(string connectionString, string objName, string regulationType)
+        public ChoiceOfRegTypeForm(string connectionString, string objName, string schemeName, string regulationType)
         {
             InitializeComponent();
             _connectionString = connectionString;
             _objName = objName;
             _regulationType = regulationType;
+            _schemeName = schemeName;
         }
 
         private void ChoiceOfRegTypeFormLoad(object sender, EventArgs e)
         {
             comboBoxReg.SelectedText = _regulationType;
             var wdb = new WorkingWithDatabase();
-            var listRegType = wdb.GetData(_connectionString, DataBaseQuerys.QueryForRegType(_objName));
+            var listRegType = wdb.GetData(_connectionString, DataBaseQuerys.QueryForRegType(_objName, _schemeName));
             var noDupesRegType = listRegType.Distinct().ToArray();
             comboBoxReg.Items.AddRange(noDupesRegType);
         }

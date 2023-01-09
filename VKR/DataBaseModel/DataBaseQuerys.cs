@@ -129,12 +129,15 @@ namespace DataBaseModel
         public static string QueryForSchemaData => "SELECT * FROM Schema_data";
 
         public static string QueryForSchemaName(string objName) => $"SELECT Scheme_name " +
-                                                                   $"FROM Schema_data, Energy_object " +
-                                                                   $"WHERE Energy_object_name = '{objName}'";
+                                                                   $"FROM Schema_data s, Energy_object e " +
+                                                                   $"WHERE e.Scheme_id = s.Scheme_id AND " +
+                                                                   $"Energy_object_name = '{objName}'";
 
-        public static string QueryForRegType(string objName) => $"SELECT Regulation_type " +
-                                                                $"FROM Schema_data, Energy_object " +
-                                                                $"WHERE Energy_object_name = '{objName}'";
+        public static string QueryForRegType(string objName, string schemeName) => $"SELECT Regulation_type " +
+                                                                                   $"FROM Schema_data s, Energy_object e " +
+                                                                                   $"WHERE e.Scheme_id = s.Scheme_id AND " +
+                                                                                   $"Energy_object_name = '{objName}' AND " +
+                                                                                   $"Scheme_name = '{schemeName}'";
 
         public static string QueryForColumn(string tableName,
             string columnName) => $"SELECT {columnName} FROM {tableName}";

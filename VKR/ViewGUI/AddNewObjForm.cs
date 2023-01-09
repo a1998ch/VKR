@@ -74,6 +74,12 @@ namespace ViewGUI
                     listObj.Add(node.Text.Trim());
                 }
             }
+            if (listObj.Count == 0) 
+            {
+                MessageBox.Show("Выберете объект электроэнергетики",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             AddObjEvent?.Invoke(this, listObj);
             this.Close();
         }

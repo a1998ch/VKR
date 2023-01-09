@@ -69,7 +69,7 @@ namespace ViewGUI
         /// </summary>
         private Guid[] _reactivePowerUid = new Guid[1];
 
-        private List<string> _listCheckObj = new List<string>();
+        private List<string> _listCheckParamForObj = new List<string>();
 
         /// <summary>
         /// Наименование объекта энергетики
@@ -114,7 +114,7 @@ namespace ViewGUI
         /// <summary>
         /// Остановить расчёт
         /// </summary>
-        private bool _false = true;
+        private bool _false = false;
 
         /// <summary>
         /// Коэффициент чувствительности напряжения
@@ -186,11 +186,14 @@ namespace ViewGUI
             if (_sqlConnection == null)
             {
                 MessageBox.Show("Не осуществлено подключение к базе данных",
-                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
             if (!CheckObj) { return; }
+            if (!CheckParamForObj) { return; }
+            if (!CheckSchema) { return; }
+            if (!CheckRegType) { return; }
 
             _false = true;
             SetData();
@@ -273,6 +276,12 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void StopSystemClick(object sender, EventArgs e)
         {
+            if (_false == false)
+            {
+                MessageBox.Show("Расчёт не запущен",
+                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             _false = false;
         }
 
@@ -433,7 +442,7 @@ namespace ViewGUI
             SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            _listCheckObj.Clear();
+            _listCheckParamForObj.Clear();
             _schemeName = String.Empty;
             _regulationType = String.Empty;
         }
@@ -451,15 +460,15 @@ namespace ViewGUI
 
             this.Hide();
             var customizeSettingsForm = 
-                new SelectionOfRequestedDataForm(_listVoltageUid, _modelImage, _observableObjectUid, _listCheckObj);
-            _activePowerUid = customizeSettingsForm.GetActivePowerUid;
-            _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
+                new SelectionOfRequestedDataForm(_listVoltageUid, _modelImage, _observableObjectUid, _listCheckParamForObj);
             customizeSettingsForm.CloseForm += OtherCloseForm;
             customizeSettingsForm.ShowDialog();
 
-            _listCheckObj.AddRange(customizeSettingsForm.ListCheckObj);
+            _listCheckParamForObj.AddRange(customizeSettingsForm.ListCheckObj);
+            _activePowerUid = customizeSettingsForm.GetActivePowerUid;
+            _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
 
-            if (_listCheckObj.Count != 0)
+            if (_listCheckParamForObj.Count != 0)
             {
                 SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Green;
             }
@@ -472,7 +481,16 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void ChoiceOfSchemaClick(object sender, EventArgs e)
         {
+            string checkSchemName = _schemeName;
+
             if (!CheckObj) { return; }
+
+            if (_sqlConnection == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             this.Hide();
             ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName, _schemeName);
@@ -480,9 +498,15 @@ namespace ViewGUI
             choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
             choiceOfSchemaForm.ShowDialog();
 
-            if (_schemeName != null)
+            if (_schemeName != null && _schemeName != String.Empty)
             {
                 ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
+
+            if (checkSchemName != _schemeName)
+            {
+                _regulationType = null;
+                ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             }
         }
 
@@ -493,15 +517,23 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void ChoiceOfRegTypeClick(object sender, EventArgs e)
         {
-            if (!CheckObj) { return; }
+            if (!CheckSchema) { return; }
+
+            if (_sqlConnection == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             this.Hide();
-            ChoiceOfRegTypeForm choiceOfSchemaForm = new ChoiceOfRegTypeForm(_sqlConnection, _objectName, _regulationType);
+            ChoiceOfRegTypeForm choiceOfSchemaForm = 
+                new ChoiceOfRegTypeForm(_sqlConnection, _objectName, _schemeName, _regulationType);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.RegulationTypeEvent += (o, args) => _regulationType = args;
             choiceOfSchemaForm.ShowDialog();
 
-            if (_regulationType != null)
+            if (_regulationType != null && _regulationType != String.Empty)
             {
                 ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Green;
             }
@@ -526,6 +558,48 @@ namespace ViewGUI
                     {
                         _objectName = item.ToString();
                     }
+                }
+                return true;
+            }
+        }
+
+        private bool CheckParamForObj
+        {
+            get
+            {
+                if (_listCheckParamForObj.Count == 0)
+                {
+                    MessageBox.Show("Выбирете запрашиваемые данные для объекта электроэнергетики",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private bool CheckSchema
+        {
+            get
+            {
+                if (_schemeName == null || _schemeName == String.Empty)
+                {
+                    MessageBox.Show("Выбирете схемно-режимную ситуацию для объекта электроэнергетики",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private bool CheckRegType
+        {
+            get
+            {
+                if (_regulationType == null || _regulationType == String.Empty)
+                {
+                    MessageBox.Show("Выбирете тип регулирования для объекта электроэнергетики",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
                 }
                 return true;
             }

@@ -153,6 +153,10 @@ namespace ViewGUI
 
         private void ButtonCloseClick(object sender, EventArgs e)
         {
+            if (_listCheckObj.Count != 0)
+            {
+                ButtonOKClick(sender, e);
+            }
             this.Close();
         }
 
