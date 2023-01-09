@@ -50,27 +50,33 @@
             this.comboBoxReg.FormattingEnabled = true;
             this.comboBoxReg.Location = new System.Drawing.Point(6, 29);
             this.comboBoxReg.Name = "comboBoxReg";
-            this.comboBoxReg.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxReg.Size = new System.Drawing.Size(194, 21);
             this.comboBoxReg.TabIndex = 0;
             // 
             // OK
             // 
+            this.OK.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.OK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OK.Location = new System.Drawing.Point(18, 130);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(133, 34);
             this.OK.TabIndex = 1;
             this.OK.Text = "ОК";
-            this.OK.UseVisualStyleBackColor = true;
+            this.OK.UseVisualStyleBackColor = false;
             this.OK.Click += new System.EventHandler(this.OKClick);
             // 
             // ButtonClose
             // 
+            this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonClose.Location = new System.Drawing.Point(214, 130);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(133, 34);
             this.ButtonClose.TabIndex = 2;
             this.ButtonClose.Text = "Отмена";
-            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // ChoiceOfRegTypeForm

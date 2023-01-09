@@ -22,18 +22,20 @@ namespace ViewGUI
 
         private readonly string _objName;
 
-        public ChoiceOfRegTypeForm(string connectionString, string objName)
+        private readonly string _regulationType;
+
+        public ChoiceOfRegTypeForm(string connectionString, string objName, string regulationType)
         {
             InitializeComponent();
             _connectionString = connectionString;
             _objName = objName;
+            _regulationType = regulationType;
         }
 
         private void ChoiceOfRegTypeFormLoad(object sender, EventArgs e)
         {
-            comboBoxReg.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxReg.SelectedText = _regulationType;
             var wdb = new WorkingWithDatabase();
-
             var listRegType = wdb.GetData(_connectionString, DataBaseQuerys.QueryForRegType(_objName));
             var noDupesRegType = listRegType.Distinct().ToArray();
             comboBoxReg.Items.AddRange(noDupesRegType);
@@ -53,7 +55,7 @@ namespace ViewGUI
         {
             if (comboBoxReg.SelectedItem == null)
             {
-                MessageBox.Show("Не выбран тип регулирования",
+                MessageBox.Show("Неверно выбран или не выбран тип регулирования",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

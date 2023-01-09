@@ -37,30 +37,36 @@
             // 
             // OK
             // 
-            this.OK.Location = new System.Drawing.Point(22, 112);
+            this.OK.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.OK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OK.Location = new System.Drawing.Point(12, 112);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(133, 34);
             this.OK.TabIndex = 0;
             this.OK.Text = "OK";
-            this.OK.UseVisualStyleBackColor = true;
+            this.OK.UseVisualStyleBackColor = false;
             this.OK.Click += new System.EventHandler(this.OKClick);
             // 
             // ButtonClose
             // 
-            this.ButtonClose.Location = new System.Drawing.Point(188, 112);
+            this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonClose.Location = new System.Drawing.Point(182, 112);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(127, 34);
+            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
             this.ButtonClose.TabIndex = 1;
             this.ButtonClose.Text = "Отмена";
-            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // comboBoxScheme
             // 
             this.comboBoxScheme.FormattingEnabled = true;
-            this.comboBoxScheme.Location = new System.Drawing.Point(6, 19);
+            this.comboBoxScheme.Location = new System.Drawing.Point(6, 29);
             this.comboBoxScheme.Name = "comboBoxScheme";
-            this.comboBoxScheme.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxScheme.Size = new System.Drawing.Size(194, 21);
             this.comboBoxScheme.TabIndex = 2;
             // 
             // groupBox1
@@ -68,7 +74,7 @@
             this.groupBox1.Controls.Add(this.comboBoxScheme);
             this.groupBox1.Location = new System.Drawing.Point(22, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 56);
+            this.groupBox1.Size = new System.Drawing.Size(293, 69);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Выбор схемно-режимной ситуации";

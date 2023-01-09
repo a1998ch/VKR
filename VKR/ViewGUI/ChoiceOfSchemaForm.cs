@@ -22,18 +22,20 @@ namespace ViewGUI
 
         private readonly string _objName;
 
-        public ChoiceOfSchemaForm(string connectionString, string objName)
+        private readonly string _schemeName;
+
+        public ChoiceOfSchemaForm(string connectionString, string objName, string schemeName)
         {
             InitializeComponent();
             _connectionString = connectionString;
             _objName = objName;
+            _schemeName = schemeName;
         }
 
         private void ChoiceOfSchemaFormLoad(object sender, EventArgs e)
         {
-            comboBoxScheme.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxScheme.SelectedText = _schemeName;
             var wdb = new WorkingWithDatabase();
-
             var listScheme = wdb.GetData(_connectionString, DataBaseQuerys.QueryForSchemaName(_objName));
             var noDupesScheme = listScheme.Distinct().ToArray();
             comboBoxScheme.Items.AddRange(noDupesScheme);
@@ -53,7 +55,7 @@ namespace ViewGUI
         {
             if (comboBoxScheme.SelectedItem == null)
             {
-                MessageBox.Show("Не выбрана схемно-режимная ситуация", 
+                MessageBox.Show("Неверно выбрана или не выбрана схемно-режимная ситуация", 
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

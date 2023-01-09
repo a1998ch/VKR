@@ -18,6 +18,7 @@ using System.IO.Ports;
 using System.IO;
 using System.Text;
 using Monitel.Rtdb.Api.Config;
+using System.Collections;
 
 namespace ViewGUI
 {
@@ -67,6 +68,8 @@ namespace ViewGUI
         /// Uid реактивной мощности контролируемого объекта энергетики
         /// </summary>
         private Guid[] _reactivePowerUid = new Guid[1];
+
+        private List<string> _listCheckObj = new List<string>();
 
         /// <summary>
         /// Наименование объекта энергетики
@@ -426,6 +429,13 @@ namespace ViewGUI
             {
                 if (ix != e.Index) CheckedListBoxEnObj.SetItemChecked(ix, false);
             }
+
+            SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            _listCheckObj.Clear();
+            _schemeName = String.Empty;
+            _regulationType = String.Empty;
         }
 
         /// <summary>
@@ -441,11 +451,18 @@ namespace ViewGUI
 
             this.Hide();
             var customizeSettingsForm = 
-                new SelectionOfRequestedDataForm(_listVoltageUid, _modelImage, _observableObjectUid);
+                new SelectionOfRequestedDataForm(_listVoltageUid, _modelImage, _observableObjectUid, _listCheckObj);
             _activePowerUid = customizeSettingsForm.GetActivePowerUid;
             _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
             customizeSettingsForm.CloseForm += OtherCloseForm;
             customizeSettingsForm.ShowDialog();
+
+            _listCheckObj.AddRange(customizeSettingsForm.ListCheckObj);
+
+            if (_listCheckObj.Count != 0)
+            {
+                SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
         }
 
         /// <summary>
@@ -458,10 +475,15 @@ namespace ViewGUI
             if (!CheckObj) { return; }
 
             this.Hide();
-            ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName);
+            ChoiceOfSchemaForm choiceOfSchemaForm = new ChoiceOfSchemaForm(_sqlConnection, _objectName, _schemeName);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.SchemeEvent += (o, args) => _schemeName = args;
             choiceOfSchemaForm.ShowDialog();
+
+            if (_schemeName != null)
+            {
+                ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
         }
 
         /// <summary>
@@ -474,11 +496,15 @@ namespace ViewGUI
             if (!CheckObj) { return; }
 
             this.Hide();
-            ChoiceOfRegTypeForm choiceOfSchemaForm = new ChoiceOfRegTypeForm(_sqlConnection, _objectName);
+            ChoiceOfRegTypeForm choiceOfSchemaForm = new ChoiceOfRegTypeForm(_sqlConnection, _objectName, _regulationType);
             choiceOfSchemaForm.CloseForm += OtherCloseForm;
             choiceOfSchemaForm.RegulationTypeEvent += (o, args) => _regulationType = args;
             choiceOfSchemaForm.ShowDialog();
 
+            if (_regulationType != null)
+            {
+                ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
         }
 
         /// <summary>

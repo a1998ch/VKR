@@ -65,16 +65,22 @@ namespace ViewGUI
         /// </summary>
         private Guid[] _reactivePowerUid = new Guid[1];
 
+        private List<string> _listCheckObj;
+
+        public List<string> ListCheckObj => _listCheckObj;
+
         public Guid[] GetActivePowerUid => _activePowerUid;
 
         public Guid[] GetReactivePowerUid => _reactivePowerUid;
 
-        public SelectionOfRequestedDataForm(List<Guid> listVoltageUid, ModelImage modelImage, Guid observableObjectUid)
+        public SelectionOfRequestedDataForm(
+            List<Guid> listVoltageUid, ModelImage modelImage, Guid observableObjectUid, List<string> listCheckObj)
         {
             InitializeComponent();
             _listVoltageUid = listVoltageUid;
             _modelImage = modelImage;
             _observableObjectUid = observableObjectUid;
+            _listCheckObj = listCheckObj;
         }
 
         public SelectionOfRequestedDataForm() 
@@ -88,6 +94,8 @@ namespace ViewGUI
 
             GetElemnt<BusbarSection>();
             GetElemnt<PowerTransformer>();
+
+            SetCheckNode();
         }
 
         private void GetElemnt<T>() where T : class, IdentifiedObject
@@ -169,6 +177,7 @@ namespace ViewGUI
 
         private void ButtonOKClick(object sender, EventArgs e)
         {
+            _listCheckObj.Clear();
             var wwck = new WorkingWithCK11();
             var list = GetUids();
 
@@ -214,7 +223,47 @@ namespace ViewGUI
             //{
             //    _reactivePowerUid[0] = item.Uid;
             //}
+            _listCheckObj = SaveCheckNode();
             this.Close();
+        }
+
+        public List<string> SaveCheckNode()
+        {
+            List<string> list = new List<string>();
+            foreach (TrNode parent in treeViewObj.Nodes)
+            {
+                foreach (TrNode child in parent.Nodes)
+                {
+                    foreach (TrNode childTwo in child.Nodes)
+                    {
+                        if (childTwo.Checked)
+                        {
+                            list.Add(childTwo.Text.Trim());
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        private void SetCheckNode()
+        {
+            if (_listCheckObj.Count == 0) { return; }
+
+            foreach (TrNode parent in treeViewObj.Nodes)
+            {
+                foreach (TrNode child in parent.Nodes)
+                {
+                    foreach (TrNode childTwo in child.Nodes)
+                    {
+                        if (_listCheckObj.Contains(childTwo.Text))
+                        {
+                            treeViewObj.SelectedNode = childTwo;
+                            childTwo.Checked = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }

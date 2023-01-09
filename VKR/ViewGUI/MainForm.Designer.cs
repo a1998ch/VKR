@@ -61,8 +61,8 @@ namespace ViewGUI
             this.Documentation});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(760, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(570, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -152,74 +152,79 @@ namespace ViewGUI
             // CheckedListBoxEnObj
             // 
             this.CheckedListBoxEnObj.FormattingEnabled = true;
-            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(8, 25);
-            this.CheckedListBoxEnObj.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckedListBoxEnObj.Location = new System.Drawing.Point(6, 20);
             this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
-            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(441, 378);
+            this.CheckedListBoxEnObj.Size = new System.Drawing.Size(332, 304);
             this.CheckedListBoxEnObj.TabIndex = 2;
             this.CheckedListBoxEnObj.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBoxEnObjItemCheck);
             // 
             // AddEnObjButton
             // 
-            this.AddEnObjButton.Location = new System.Drawing.Point(16, 47);
-            this.AddEnObjButton.Margin = new System.Windows.Forms.Padding(4);
+            this.AddEnObjButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.AddEnObjButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.AddEnObjButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddEnObjButton.Location = new System.Drawing.Point(12, 38);
             this.AddEnObjButton.Name = "AddEnObjButton";
-            this.AddEnObjButton.Size = new System.Drawing.Size(421, 34);
+            this.AddEnObjButton.Size = new System.Drawing.Size(316, 28);
             this.AddEnObjButton.TabIndex = 3;
             this.AddEnObjButton.Text = "Добавить объект электроэнергетики";
-            this.AddEnObjButton.UseVisualStyleBackColor = true;
+            this.AddEnObjButton.UseVisualStyleBackColor = false;
             this.AddEnObjButton.Click += new System.EventHandler(this.AddEnObjButtonClick);
             // 
             // SelectionOfRequestedData
             // 
-            this.SelectionOfRequestedData.Location = new System.Drawing.Point(496, 89);
-            this.SelectionOfRequestedData.Margin = new System.Windows.Forms.Padding(4);
+            this.SelectionOfRequestedData.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.SelectionOfRequestedData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectionOfRequestedData.Location = new System.Drawing.Point(372, 72);
             this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
-            this.SelectionOfRequestedData.Size = new System.Drawing.Size(228, 85);
+            this.SelectionOfRequestedData.Size = new System.Drawing.Size(171, 69);
             this.SelectionOfRequestedData.TabIndex = 4;
             this.SelectionOfRequestedData.Text = "Выбор запрашиваемых данных";
-            this.SelectionOfRequestedData.UseVisualStyleBackColor = true;
+            this.SelectionOfRequestedData.UseVisualStyleBackColor = false;
             this.SelectionOfRequestedData.Click += new System.EventHandler(this.SelectionOfRequestedDataClick);
             // 
             // ChoiceOfSchema
             // 
-            this.ChoiceOfSchema.Location = new System.Drawing.Point(496, 209);
-            this.ChoiceOfSchema.Margin = new System.Windows.Forms.Padding(4);
+            this.ChoiceOfSchema.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ChoiceOfSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChoiceOfSchema.Location = new System.Drawing.Point(372, 170);
             this.ChoiceOfSchema.Name = "ChoiceOfSchema";
-            this.ChoiceOfSchema.Size = new System.Drawing.Size(228, 85);
+            this.ChoiceOfSchema.Size = new System.Drawing.Size(171, 69);
             this.ChoiceOfSchema.TabIndex = 5;
             this.ChoiceOfSchema.Text = "Выбор схемно-режимной ситуации";
-            this.ChoiceOfSchema.UseVisualStyleBackColor = true;
+            this.ChoiceOfSchema.UseVisualStyleBackColor = false;
             this.ChoiceOfSchema.Click += new System.EventHandler(this.ChoiceOfSchemaClick);
             // 
             // ChoiceOfRegType
             // 
-            this.ChoiceOfRegType.Location = new System.Drawing.Point(496, 325);
-            this.ChoiceOfRegType.Margin = new System.Windows.Forms.Padding(4);
+            this.ChoiceOfRegType.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ChoiceOfRegType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChoiceOfRegType.Location = new System.Drawing.Point(372, 264);
             this.ChoiceOfRegType.Name = "ChoiceOfRegType";
-            this.ChoiceOfRegType.Size = new System.Drawing.Size(228, 85);
+            this.ChoiceOfRegType.Size = new System.Drawing.Size(171, 69);
             this.ChoiceOfRegType.TabIndex = 6;
             this.ChoiceOfRegType.Text = "Выбор типа регулирования";
-            this.ChoiceOfRegType.UseVisualStyleBackColor = true;
+            this.ChoiceOfRegType.UseVisualStyleBackColor = false;
             this.ChoiceOfRegType.Click += new System.EventHandler(this.ChoiceOfRegTypeClick);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.CheckedListBoxEnObj);
-            this.groupBox1.Location = new System.Drawing.Point(16, 89);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(12, 72);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(459, 431);
+            this.groupBox1.Size = new System.Drawing.Size(344, 350);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Перечень объектов электроэнергетики";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 529);
+            this.ClientSize = new System.Drawing.Size(570, 430);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ChoiceOfRegType);
             this.Controls.Add(this.ChoiceOfSchema);
@@ -228,7 +233,6 @@ namespace ViewGUI
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";

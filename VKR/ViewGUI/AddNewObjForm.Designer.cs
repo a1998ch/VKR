@@ -54,22 +54,28 @@
             // 
             // AddElement
             // 
-            this.AddElement.Location = new System.Drawing.Point(12, 331);
+            this.AddElement.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.AddElement.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.AddElement.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddElement.Location = new System.Drawing.Point(18, 331);
             this.AddElement.Name = "AddElement";
-            this.AddElement.Size = new System.Drawing.Size(186, 37);
+            this.AddElement.Size = new System.Drawing.Size(133, 34);
             this.AddElement.TabIndex = 1;
             this.AddElement.Text = "Добавить";
-            this.AddElement.UseVisualStyleBackColor = true;
+            this.AddElement.UseVisualStyleBackColor = false;
             this.AddElement.Click += new System.EventHandler(this.AddElementClick);
             // 
             // ButtonClose
             // 
-            this.ButtonClose.Location = new System.Drawing.Point(249, 331);
+            this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonClose.Location = new System.Drawing.Point(287, 331);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(171, 37);
+            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
             this.ButtonClose.TabIndex = 2;
             this.ButtonClose.Text = "Отмена";
-            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
             // AddNewObjForm

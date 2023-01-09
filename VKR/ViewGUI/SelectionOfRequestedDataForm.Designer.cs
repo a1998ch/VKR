@@ -42,25 +42,31 @@
             // 
             // ButtonOK
             // 
+            this.ButtonOK.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ButtonOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ButtonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonOK.Location = new System.Drawing.Point(12, 382);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(125, 35);
+            this.ButtonOK.Size = new System.Drawing.Size(133, 34);
             this.ButtonOK.TabIndex = 3;
             this.ButtonOK.Text = "ОК";
-            this.ButtonOK.UseVisualStyleBackColor = true;
+            this.ButtonOK.UseVisualStyleBackColor = false;
             this.ButtonOK.Click += new System.EventHandler(this.ButtonOKClick);
             // 
             // ButtonClose
             // 
+            this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonClose.Location = new System.Drawing.Point(176, 382);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(135, 35);
+            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
             this.ButtonClose.TabIndex = 4;
             this.ButtonClose.Text = "Отмена";
-            this.ButtonClose.UseVisualStyleBackColor = true;
+            this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
-            // CustomizeSettingsForm
+            // SelectionOfRequestedDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -69,7 +75,7 @@
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.treeViewObj);
             this.MaximizeBox = false;
-            this.Name = "CustomizeSettingsForm";
+            this.Name = "SelectionOfRequestedDataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CustomizeSettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomizeSettingsFormFormClosing);
