@@ -202,18 +202,18 @@ namespace ViewGUI
                 _activePowerUid[0] = item.Uid;
             }
 
-            var reactivePower = wwck.GetFilterObject(obj, _measurementTypeReactivePower);
-            var childReactivePower = wwck.GetChildObject(reactivePower);
-            if (childReactivePower.Count() != 1)
-            {
-                MessageBox.Show("Неверно выбрано значение реактивной мощности",
-                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            foreach (var item in childReactivePower)
-            {
-                _reactivePowerUid[0] = item.Uid;
-            }
+            //var reactivePower = wwck.GetFilterObject(obj, _measurementTypeReactivePower);
+            //var childReactivePower = wwck.GetChildObject(reactivePower);
+            //if (childReactivePower.Count() != 1)
+            //{
+            //    MessageBox.Show("Неверно выбрано значение реактивной мощности",
+            //                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+            //foreach (var item in childReactivePower)
+            //{
+            //    _reactivePowerUid[0] = item.Uid;
+            //}
             this.Close();
         }
     }
