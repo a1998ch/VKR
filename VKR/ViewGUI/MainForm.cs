@@ -136,6 +136,8 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
+            LabelWorkStatus.Text = "Расчёт не запущен";
+
             // Подключение к модели
             _modelImage = new WorkingWithCK11().AccessingTheMalApi();
 
@@ -175,12 +177,13 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void StartSystemClick(object sender, EventArgs e)
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             if (_false == true)
             {
                 SelectionOfRequestedData.Enabled = false;
                 ChoiceOfSchema.Enabled = false;
             }
+            LabelWorkStatus.Text = "Система осуществляет расчёт";
         }
 
         private async void StartSystemMouseDown(object sender, MouseEventArgs e)
@@ -306,6 +309,8 @@ namespace ViewGUI
 
             SelectionOfRequestedData.Enabled = true;
             ChoiceOfSchema.Enabled = true;
+
+            LabelWorkStatus.Text = "Расчёт не запущен";
         }
 
         /// <summary>
