@@ -62,56 +62,64 @@ namespace CalculationModel
         /// <returns>Предельную мощность</returns>
         /// <exception cref="ArgumentException">Некорректный уровень напряжения</exception>
         public double LimitFlow(string eoName, string schemeName, 
-                                string regulationType, string connectionString, List<double> listVoltage, double meanVoltage)
+                                string regulationType, string connectionString, 
+                                List<double> listVoltage, double meanVoltage)
         {
             Dictionary<double, double> dict = new Dictionary<double, double>();
             _k2u = AsymmetryCoefficientCalc(listVoltage);
 
-            if (meanVoltage >= 220)
+            try
             {
-                var one = Interpolation(RangePowerAndK2U(
-                    DatabaseDataLoading(
-                        eoName, schemeName, connectionString, regulationType, 240)), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(
-                    DatabaseDataLoading(
-                        eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
-                dict.Add(240, one);
-                dict.Add(220, two);
-                double powerReserve = Interpolation(dict, listVoltage, true);
-
-                if (regulationType == "Симметричное")
+                if (meanVoltage >= 220)
                 {
-                    return powerReserve;
+                    var one = Interpolation(RangePowerAndK2U(
+                        DatabaseDataLoading(
+                            eoName, schemeName, connectionString, regulationType, 240)), listVoltage);
+                    var two = Interpolation(RangePowerAndK2U(
+                        DatabaseDataLoading(
+                            eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
+                    dict.Add(240, one);
+                    dict.Add(220, two);
+                    double powerReserve = Interpolation(dict, listVoltage, true);
+
+                    if (regulationType == "Симметричное")
+                    {
+                        return powerReserve;
+                    }
+                    else
+                    {
+                        return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
+                    }
+                }
+                else if (meanVoltage < 220)
+                {
+                    var one = Interpolation(RangePowerAndK2U(
+                        DatabaseDataLoading(
+                            eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
+                    var two = Interpolation(RangePowerAndK2U(
+                        DatabaseDataLoading(
+                            eoName, schemeName, connectionString, regulationType, 200)), listVoltage);
+                    dict.Add(220, one);
+                    dict.Add(200, two);
+                    double powerReserve = Interpolation(dict, listVoltage, true);
+
+                    if (regulationType == "Симметричное")
+                    {
+                        return powerReserve;
+                    }
+                    else
+                    {
+                        return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
+                    }
                 }
                 else
                 {
-                    return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
+                    throw new ArgumentException("Ошибка");
                 }
             }
-            else if (meanVoltage < 220)
+            catch (ArgumentException ex)
             {
-                var one = Interpolation(RangePowerAndK2U(
-                    DatabaseDataLoading(
-                        eoName, schemeName, connectionString, regulationType, 220)), listVoltage);
-                var two = Interpolation(RangePowerAndK2U(
-                    DatabaseDataLoading(
-                        eoName, schemeName, connectionString, regulationType, 200)), listVoltage);
-                dict.Add(220, one);
-                dict.Add(200, two);
-                double powerReserve = Interpolation(dict, listVoltage, true);
-
-                if (regulationType == "Симметричное")
-                {
-                    return powerReserve;
-                }
-                else
-                {
-                    return LimitPowerForAsym(eoName, schemeName, connectionString, 240, powerReserve);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Ошибка");
+                throw new ArgumentException(ex.Message);
             }
         }
 
@@ -133,6 +141,12 @@ namespace CalculationModel
                     break;
                 }
             }
+
+            if (dictResult.Count != 2)
+            {
+                throw new ArgumentException("Недостаточно данных для проведения расчёта");
+            }
+
             return dictResult;
         }
 

@@ -81,6 +81,7 @@ namespace ViewGUI
             this.StartSystem.Size = new System.Drawing.Size(234, 26);
             this.StartSystem.Text = "Запустить Систему";
             this.StartSystem.Click += new System.EventHandler(this.StartSystemClick);
+            this.StartSystem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StartSystemMouseDown);
             // 
             // StopSystem
             // 

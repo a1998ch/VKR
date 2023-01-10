@@ -173,7 +173,17 @@ namespace ViewGUI
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
-        private async void StartSystemClick(object sender, EventArgs e)
+        private void StartSystemClick(object sender, EventArgs e)
+        {
+            Thread.Sleep(3000);
+            if (_false == true)
+            {
+                SelectionOfRequestedData.Enabled = false;
+                ChoiceOfSchema.Enabled = false;
+            }
+        }
+
+        private async void StartSystemMouseDown(object sender, MouseEventArgs e)
         {
             await Task.Run(() => StartCalc());
         }
@@ -183,6 +193,8 @@ namespace ViewGUI
         /// </summary>
         private void StartCalc()
         {
+            if (_false == true) { return; }
+
             if (_sqlConnection == null)
             {
                 MessageBox.Show("Не осуществлено подключение к базе данных",
@@ -202,34 +214,42 @@ namespace ViewGUI
             var sendCK11 = new DataTransferToCK11();
 
             float activePowerReserve = 0;
-            while (_false)
+            try
             {
-                double checkPower = _activePower;
-                GetActivePower();
-                GetVoltage();
-
-                if (checkPower == _activePower) { continue; }
-
-                if (_activePower == -1 || _listVoltage.Count == 0)
+                while (_false)
                 {
-                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve, true);
-                    continue;
-                }
+                    double checkPower = _activePower;
+                    GetActivePower();
+                    GetVoltage();
 
-                double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
-                double correctVoltage = 0;
-                for (int k = 0; k < 2; k++)
-                {
-                    if (k != 0) { meanVoltage = correctVoltage; }
+                    if (checkPower == _activePower) { continue; }
 
-                    var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType,
-                                                                _sqlConnection, _listVoltage, meanVoltage);
-                    activePowerReserve = (float)limitingActivePower - _activePower;
+                    if (_activePower == -1 || _listVoltage.Count == 0)
+                    {
+                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve, true);
+                        continue;
+                    }
+
+                    double meanVoltage = (_listVoltage[0] + _listVoltage[1] + _listVoltage[2]) / _listVoltage.Count;
+                    double correctVoltage = 0;
+                    for (int k = 0; k < 2; k++)
+                    {
+                        if (k != 0) { meanVoltage = correctVoltage; }
+
+                        var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType,
+                                                                    _sqlConnection, _listVoltage, meanVoltage);
+                        activePowerReserve = (float)limitingActivePower - _activePower;
+                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                        correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
+                    }
                     sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
-
-                    correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
                 }
-                sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+            }
+            catch (ArgumentException ex)
+            {
+                _false = false;
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -283,6 +303,9 @@ namespace ViewGUI
                 return;
             }
             _false = false;
+
+            SelectionOfRequestedData.Enabled = true;
+            ChoiceOfSchema.Enabled = true;
         }
 
         /// <summary>
