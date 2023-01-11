@@ -117,6 +117,12 @@
     <Compile Include="ChoiceOfSchemaForm.Designer.cs">
       <DependentUpon>ChoiceOfSchemaForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConnectCK11Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectCK11Form.Designer.cs">
+      <DependentUpon>ConnectCK11Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectDataBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransferParamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransferParamForm.Designer.cs">
+      <DependentUpon>TransferParamForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddNewObjForm.resx">
       <DependentUpon>AddNewObjForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ChoiceOfSchemaForm.resx">
       <DependentUpon>ChoiceOfSchemaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectCK11Form.resx">
+      <DependentUpon>ConnectCK11Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectDataBaseForm.resx">
       <DependentUpon>ConnectDataBaseForm.cs</DependentUpon>
@@ -174,6 +189,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TransferParamForm.resx">
+      <DependentUpon>TransferParamForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

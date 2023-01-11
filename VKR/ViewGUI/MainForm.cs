@@ -27,12 +27,7 @@ namespace ViewGUI
         /// <summary>
         /// Строка подключения к СК-11, для запроса данных
         /// </summary>
-        private const string _connectionStringToRtdb = "10.221.3.29:900";
-
-        /// <summary>
-        /// Адрес сервера передачи ТИ
-        /// </summary>
-        private const string _serverAddress = "10.221.3.57";
+        private string _connectionStringToRtdb;
 
         /// <summary>
         /// Сервер СК-11
@@ -40,14 +35,14 @@ namespace ViewGUI
         private Server _server;
 
         /// <summary>
-        /// Порт для приняти ТИ
-        /// </summary>
-        private const int _serverPort = 2404;
-
-        /// <summary>
         /// Общий адрес ТИ
         /// </summary>
-        private const int _coa = 5;
+        private int _coa;
+
+        /// <summary>
+        /// Адрес ТИ
+        /// </summary>
+        private int _ioa;
 
         /// <summary>
         /// Модель СК-11
@@ -63,11 +58,6 @@ namespace ViewGUI
         /// Uid активной мощности контролируемого объекта энергетики
         /// </summary>
         private Guid[] _activePowerUid = new Guid[1];
-
-        /// <summary>
-        /// Uid реактивной мощности контролируемого объекта энергетики
-        /// </summary>
-        private Guid[] _reactivePowerUid = new Guid[1];
 
         private List<string> _listCheckParamForObj = new List<string>();
 
@@ -107,11 +97,6 @@ namespace ViewGUI
         private float _activePower;
 
         /// <summary>
-        /// Реактивная мощность ОЭ
-        /// </summary>
-        private float _reactivePower;
-
-        /// <summary>
         /// Остановить расчёт
         /// </summary>
         private bool _false = false;
@@ -137,13 +122,6 @@ namespace ViewGUI
         private void MainFormLoad(object sender, EventArgs e)
         {
             LabelWorkStatus.Text = "Расчёт не запущен";
-
-            // Подключение к модели
-            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
-
-            // Подключение к скрверу для передачи данных в БДРВ
-            var sendCK11 = new DataTransferToCK11();
-            _server = sendCK11.ConnectServer(_serverAddress, _serverPort);
         }
 
         /// <summary>
@@ -153,6 +131,13 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void ConnectDBClick(object sender, EventArgs e)
         {
+            if (LabelWorkStatus.Text == "Система осуществляет расчёт")
+            {
+                MessageBox.Show("Для того, чтобы продолжить остановите расчёт", 
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             this.Hide();
             ConnectDataBaseForm connectDataBase = new ConnectDataBaseForm();
             connectDataBase.CloseForm += OtherCloseForm;
@@ -182,8 +167,9 @@ namespace ViewGUI
             {
                 SelectionOfRequestedData.Enabled = false;
                 ChoiceOfSchema.Enabled = false;
+                CoaAndIoa.Enabled = false;
+                LabelWorkStatus.Text = "Система осуществляет расчёт";
             }
-            LabelWorkStatus.Text = "Система осуществляет расчёт";
         }
 
         private async void StartSystemMouseDown(object sender, MouseEventArgs e)
@@ -205,7 +191,15 @@ namespace ViewGUI
                 return;
             }
 
+            if (_server == null || _connectionStringToRtdb == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к СК-11",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             if (!CheckObj) { return; }
+            if (!CheckCoaIoa) { return; }
             if (!CheckParamForObj) { return; }
             if (!CheckSchema) { return; }
             if (!CheckRegType) { return; }
@@ -309,6 +303,7 @@ namespace ViewGUI
 
             SelectionOfRequestedData.Enabled = true;
             ChoiceOfSchema.Enabled = true;
+            CoaAndIoa.Enabled = true;
 
             LabelWorkStatus.Text = "Расчёт не запущен";
         }
@@ -394,24 +389,39 @@ namespace ViewGUI
         }
 
         /// <summary>
-        /// Сообщение об ошибке
-        /// </summary>
-        /// <param name="ex">Экземпляр exeption</param>
-        public void ExeptionMessage(Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        /// <summary>
         /// Подключение к БД СК-11
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Данные события</param>
         private void OikDBClick(object sender, EventArgs e)
         {
-            // Подключение к модели
-            _modelImage = new WorkingWithCK11().AccessingTheMalApi();
+            try
+            {
+                _modelImage = new WorkingWithCK11().AccessingTheMalApi();
+                MessageBox.Show("Соединение с базой данных СК-11 успешно",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConnectToСК11Click(object sender, EventArgs e)
+        {
+            if (LabelWorkStatus.Text == "Система осуществляет расчёт")
+            {
+                MessageBox.Show("Для того, чтобы продолжить остановите расчёт",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            this.Hide();
+            ConnectCK11Form connecCK11 = new ConnectCK11Form();
+            connecCK11.CloseForm += OtherCloseForm;
+            connecCK11.ConnectionStringBdrvEvent += (o, args) => _connectionStringToRtdb = args;
+            connecCK11.ServerEvent += (o, args) => _server = args;
+            connecCK11.ShowDialog();
         }
 
         /// <summary>
@@ -432,6 +442,13 @@ namespace ViewGUI
         /// <param name="e">Данные события</param>
         private void AddEnObjButtonClick(object sender, EventArgs e)
         {
+            if (_modelImage == null)
+            {
+                MessageBox.Show("Не осуществлено подключение к базе данных CK-11",
+                                "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             this.Hide();
             AddNewObjForm addNewObjForm = new AddNewObjForm(_modelImage);
             addNewObjForm.CloseForm += OtherCloseForm;
@@ -470,9 +487,29 @@ namespace ViewGUI
             SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            CoaAndIoa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             _listCheckParamForObj.Clear();
             _schemeName = String.Empty;
             _regulationType = String.Empty;
+            _coa = 0;
+            _ioa = 0;
+        }
+
+        private void CoaAndIoaClick(object sender, EventArgs e)
+        {
+            if (!CheckObj) { return; }
+
+            this.Hide();
+            TransferParamForm tpf = new TransferParamForm(_coa, _ioa);
+            tpf.CloseForm += OtherCloseForm;
+            tpf.CoaEvent += (o, args) => _coa = args;
+            tpf.IoaEvent += (o, args) => _ioa = args;
+            tpf.ShowDialog();
+
+            if (_coa != 0 && _ioa != 0)
+            {
+                CoaAndIoa.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
         }
 
         /// <summary>
@@ -494,7 +531,6 @@ namespace ViewGUI
 
             _listCheckParamForObj.AddRange(customizeSettingsForm.ListCheckObj);
             _activePowerUid = customizeSettingsForm.GetActivePowerUid;
-            _reactivePowerUid = customizeSettingsForm.GetReactivePowerUid;
 
             if (_listCheckParamForObj.Count != 0)
             {
@@ -586,6 +622,20 @@ namespace ViewGUI
                     {
                         _objectName = item.ToString();
                     }
+                }
+                return true;
+            }
+        }
+
+        private bool CheckCoaIoa
+        {
+            get
+            {
+                if (_coa == 0 || _ioa == 0)
+                {
+                    MessageBox.Show("Выбирете параметры для передачи данных в СК-11",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
                 }
                 return true;
             }
