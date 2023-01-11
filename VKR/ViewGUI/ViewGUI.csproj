@@ -149,6 +149,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensitivityFactorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SensitivityFactorForm.Designer.cs">
+      <DependentUpon>SensitivityFactorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransferParamForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +195,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SensitivityFactorForm.resx">
+      <DependentUpon>SensitivityFactorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TransferParamForm.resx">
       <DependentUpon>TransferParamForm.cs</DependentUpon>
     </EmbeddedResource>

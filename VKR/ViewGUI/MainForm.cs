@@ -37,12 +37,12 @@ namespace ViewGUI
         /// <summary>
         /// Общий адрес ТИ
         /// </summary>
-        private int _coa;
+        private int _coa; // 5
 
         /// <summary>
         /// Адрес ТИ
         /// </summary>
-        private int _ioa;
+        private int _ioa; // 200
 
         /// <summary>
         /// Модель СК-11
@@ -104,7 +104,7 @@ namespace ViewGUI
         /// <summary>
         /// Коэффициент чувствительности напряжения
         /// </summary>
-        private double _voltageSensitivity = 0.00256;
+        private double _voltageSensitivity; // = 0.00256;
 
         /// <summary>
         /// Конструктор класса MainForm
@@ -203,6 +203,7 @@ namespace ViewGUI
             if (!CheckParamForObj) { return; }
             if (!CheckSchema) { return; }
             if (!CheckRegType) { return; }
+            if (!CheckVoltageSensitivity) { return; }
 
             _false = true;
             SetData();
@@ -223,7 +224,7 @@ namespace ViewGUI
 
                     if (_activePower == -1 || _listVoltage.Count == 0)
                     {
-                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve, true);
+                        sendCK11.DataTransfer(_server, _coa, _ioa, activePowerReserve, true);
                         continue;
                     }
 
@@ -236,11 +237,17 @@ namespace ViewGUI
                         var limitingActivePower = power.LimitFlow(_objectName, _schemeName, _regulationType,
                                                                     _sqlConnection, _listVoltage, meanVoltage);
                         activePowerReserve = (float)limitingActivePower - _activePower;
-                        sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+                        sendCK11.DataTransfer(_server, _coa, _ioa, activePowerReserve);
 
                         correctVoltage = meanVoltage - _voltageSensitivity * (limitingActivePower - _activePower);
                     }
-                    sendCK11.DataTransfer(_server, _coa, 200, activePowerReserve);
+
+                    if (activePowerReserve <= 0)
+                    {
+                        activePowerReserve = 0;
+                    }
+
+                    sendCK11.DataTransfer(_server, _coa, _ioa, activePowerReserve);
                 }
             }
             catch (ArgumentException ex)
@@ -488,11 +495,14 @@ namespace ViewGUI
             ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             CoaAndIoa.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            SensitivityFactor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+
             _listCheckParamForObj.Clear();
             _schemeName = String.Empty;
             _regulationType = String.Empty;
             _coa = 0;
             _ioa = 0;
+            _voltageSensitivity = 0;
         }
 
         private void CoaAndIoaClick(object sender, EventArgs e)
@@ -603,6 +613,22 @@ namespace ViewGUI
             }
         }
 
+        private void SensitivityFactorClick(object sender, EventArgs e)
+        {
+            if (!CheckObj) { return; }
+
+            this.Hide();
+            SensitivityFactorForm sff = new SensitivityFactorForm(_voltageSensitivity);
+            sff.CloseForm += OtherCloseForm;
+            sff.FactorEvent += (o, args) => _voltageSensitivity = args;
+            sff.ShowDialog();
+
+            if (_voltageSensitivity != 0)
+            {
+                SensitivityFactor.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            }
+    }
+
         /// <summary>
         /// Проверка на выбор ОЭ
         /// </summary>
@@ -683,10 +709,32 @@ namespace ViewGUI
             }
         }
 
-        private void AboutProgClick(object sender, EventArgs e)
+        private bool CheckVoltageSensitivity
         {
-            string path = @"D:\Магистратура\ВКР\Моё\Диссер ИТ\VKR\_VKR\VKR\Manual\Hello world.html";
-            System.Diagnostics.Process.Start(path);
+            get
+            {
+                if (_voltageSensitivity == 0)
+                {
+                    MessageBox.Show("Введите коэффициент чувствительности напряжения",
+                                    "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private void ManualClick(object sender, EventArgs e)
+        {
+            string path = @"C:\Users\stdAdmin.PL01N\Desktop\Чугуевский А. С\VKR\tam.pdf";
+
+            try
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
