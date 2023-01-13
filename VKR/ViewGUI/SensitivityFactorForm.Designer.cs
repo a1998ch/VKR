@@ -36,17 +36,19 @@
             // 
             // SensitivityFactorTextBox
             // 
-            this.SensitivityFactorTextBox.Location = new System.Drawing.Point(301, 6);
+            this.SensitivityFactorTextBox.Location = new System.Drawing.Point(401, 7);
+            this.SensitivityFactorTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SensitivityFactorTextBox.Name = "SensitivityFactorTextBox";
-            this.SensitivityFactorTextBox.Size = new System.Drawing.Size(100, 20);
+            this.SensitivityFactorTextBox.Size = new System.Drawing.Size(132, 22);
             this.SensitivityFactorTextBox.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(283, 15);
+            this.label1.Size = new System.Drawing.Size(313, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Коэффициент чувствительности напряжения: ";
             // 
@@ -55,9 +57,10 @@
             this.ButtonOK.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonOK.Location = new System.Drawing.Point(12, 60);
+            this.ButtonOK.Location = new System.Drawing.Point(16, 74);
+            this.ButtonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(133, 34);
+            this.ButtonOK.Size = new System.Drawing.Size(177, 42);
             this.ButtonOK.TabIndex = 2;
             this.ButtonOK.Text = "ОК";
             this.ButtonOK.UseVisualStyleBackColor = false;
@@ -68,9 +71,10 @@
             this.ButtonCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonCancel.Location = new System.Drawing.Point(268, 60);
+            this.ButtonCancel.Location = new System.Drawing.Point(357, 74);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(133, 34);
+            this.ButtonCancel.Size = new System.Drawing.Size(177, 42);
             this.ButtonCancel.TabIndex = 3;
             this.ButtonCancel.Text = "Отмена";
             this.ButtonCancel.UseVisualStyleBackColor = false;
@@ -78,18 +82,20 @@
             // 
             // SensitivityFactorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 106);
+            this.ClientSize = new System.Drawing.Size(555, 130);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SensitivityFactorTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "SensitivityFactorForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SensitivityFactorForm";
+            this.Text = "Ввод коэффициента чувствительности напряжения";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SensitivityFactorFormClosing);
             this.Load += new System.EventHandler(this.SensitivityFactorFormLoad);
             this.ResumeLayout(false);

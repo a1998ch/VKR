@@ -31,14 +31,14 @@
             this.AddressBdrvTextBox = new System.Windows.Forms.TextBox();
             this.PortBdrvTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.PortPcTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.AddressPcTextBox = new System.Windows.Forms.TextBox();
             this.ButtonOK = new System.Windows.Forms.Button();
             this.ButtonClose = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.PortPcTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +72,22 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Подключение к СК-11";
+            // 
+            // PortPcTextBox
+            // 
+            this.PortPcTextBox.Location = new System.Drawing.Point(179, 155);
+            this.PortPcTextBox.Name = "PortPcTextBox";
+            this.PortPcTextBox.Size = new System.Drawing.Size(310, 22);
+            this.PortPcTextBox.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 155);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 16);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Порт:";
             // 
             // label3
             // 
@@ -133,22 +149,6 @@
             this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonCloseClick);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 155);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 16);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Порт:";
-            // 
-            // PortPcTextBox
-            // 
-            this.PortPcTextBox.Location = new System.Drawing.Point(179, 155);
-            this.PortPcTextBox.Name = "PortPcTextBox";
-            this.PortPcTextBox.Size = new System.Drawing.Size(310, 22);
-            this.PortPcTextBox.TabIndex = 7;
-            // 
             // ConnectCK11Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -160,8 +160,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "ConnectCK11Form";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ConnectCK11Form";
+            this.Text = "Подключение к СК-11";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConnectCK11FormFormClosing);
             this.Load += new System.EventHandler(this.ConnectCK11FormLoad);
             this.groupBox1.ResumeLayout(false);

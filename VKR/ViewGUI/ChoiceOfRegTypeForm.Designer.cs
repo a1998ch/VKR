@@ -38,9 +38,11 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.comboBoxReg);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(335, 75);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(447, 92);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Выбор типа регулирования";
@@ -48,9 +50,10 @@
             // comboBoxReg
             // 
             this.comboBoxReg.FormattingEnabled = true;
-            this.comboBoxReg.Location = new System.Drawing.Point(6, 29);
+            this.comboBoxReg.Location = new System.Drawing.Point(8, 36);
+            this.comboBoxReg.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxReg.Name = "comboBoxReg";
-            this.comboBoxReg.Size = new System.Drawing.Size(194, 21);
+            this.comboBoxReg.Size = new System.Drawing.Size(257, 24);
             this.comboBoxReg.TabIndex = 0;
             // 
             // OK
@@ -58,9 +61,10 @@
             this.OK.BackColor = System.Drawing.SystemColors.ControlLight;
             this.OK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OK.Location = new System.Drawing.Point(18, 130);
+            this.OK.Location = new System.Drawing.Point(24, 160);
+            this.OK.Margin = new System.Windows.Forms.Padding(4);
             this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(133, 34);
+            this.OK.Size = new System.Drawing.Size(177, 42);
             this.OK.TabIndex = 1;
             this.OK.Text = "ОК";
             this.OK.UseVisualStyleBackColor = false;
@@ -71,9 +75,10 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Location = new System.Drawing.Point(214, 130);
+            this.ButtonClose.Location = new System.Drawing.Point(285, 160);
+            this.ButtonClose.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
+            this.ButtonClose.Size = new System.Drawing.Size(177, 42);
             this.ButtonClose.TabIndex = 2;
             this.ButtonClose.Text = "Отмена";
             this.ButtonClose.UseVisualStyleBackColor = false;
@@ -81,16 +86,18 @@
             // 
             // ChoiceOfRegTypeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 178);
+            this.ClientSize = new System.Drawing.Size(479, 219);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "ChoiceOfRegTypeForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ChoiceOfRegTypeForm";
+            this.Text = "Выбор типа регулирования УСПН";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChoiceOfRegTypeFormClosing);
             this.Load += new System.EventHandler(this.ChoiceOfRegTypeFormLoad);
             this.groupBox1.ResumeLayout(false);

@@ -120,8 +120,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "TransferParamForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TransferParamForm";
+            this.Text = "Ввод адреса ТИ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TransferParamFormClosing);
             this.Load += new System.EventHandler(this.TransferParamFormLoad);
             this.groupBox1.ResumeLayout(false);

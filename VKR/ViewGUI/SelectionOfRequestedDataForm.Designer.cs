@@ -35,9 +35,10 @@
             // 
             // treeViewObj
             // 
-            this.treeViewObj.Location = new System.Drawing.Point(12, 12);
+            this.treeViewObj.Location = new System.Drawing.Point(16, 15);
+            this.treeViewObj.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.treeViewObj.Name = "treeViewObj";
-            this.treeViewObj.Size = new System.Drawing.Size(299, 351);
+            this.treeViewObj.Size = new System.Drawing.Size(397, 431);
             this.treeViewObj.TabIndex = 0;
             // 
             // ButtonOK
@@ -45,9 +46,10 @@
             this.ButtonOK.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonOK.Location = new System.Drawing.Point(12, 382);
+            this.ButtonOK.Location = new System.Drawing.Point(16, 470);
+            this.ButtonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonOK.Name = "ButtonOK";
-            this.ButtonOK.Size = new System.Drawing.Size(133, 34);
+            this.ButtonOK.Size = new System.Drawing.Size(177, 42);
             this.ButtonOK.TabIndex = 3;
             this.ButtonOK.Text = "ОК";
             this.ButtonOK.UseVisualStyleBackColor = false;
@@ -58,9 +60,10 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Location = new System.Drawing.Point(176, 382);
+            this.ButtonClose.Location = new System.Drawing.Point(235, 470);
+            this.ButtonClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(133, 34);
+            this.ButtonClose.Size = new System.Drawing.Size(177, 42);
             this.ButtonClose.TabIndex = 4;
             this.ButtonClose.Text = "Отмена";
             this.ButtonClose.UseVisualStyleBackColor = false;
@@ -68,16 +71,18 @@
             // 
             // SelectionOfRequestedDataForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 429);
+            this.ClientSize = new System.Drawing.Size(431, 528);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.treeViewObj);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "SelectionOfRequestedDataForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CustomizeSettingsForm";
+            this.Text = "Выбор аналоговых значений из СК-11";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomizeSettingsFormFormClosing);
             this.Load += new System.EventHandler(this.CustomizeSettingsFormLoad);
             this.ResumeLayout(false);
