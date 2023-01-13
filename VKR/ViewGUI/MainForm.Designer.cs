@@ -40,7 +40,6 @@ namespace ViewGUI
             this.ConnectToСК11 = new System.Windows.Forms.ToolStripMenuItem();
             this.OikDB = new System.Windows.Forms.ToolStripMenuItem();
             this.Documentation = new System.Windows.Forms.ToolStripMenuItem();
-            this.AboutProg = new System.Windows.Forms.ToolStripMenuItem();
             this.Manual = new System.Windows.Forms.ToolStripMenuItem();
             this.CheckedListBoxEnObj = new System.Windows.Forms.CheckedListBox();
             this.AddEnObjButton = new System.Windows.Forms.Button();
@@ -143,17 +142,10 @@ namespace ViewGUI
             // Documentation
             // 
             this.Documentation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AboutProg,
             this.Manual});
             this.Documentation.Name = "Documentation";
             this.Documentation.Size = new System.Drawing.Size(81, 24);
             this.Documentation.Text = "Справка";
-            // 
-            // AboutProg
-            // 
-            this.AboutProg.Name = "AboutProg";
-            this.AboutProg.Size = new System.Drawing.Size(278, 26);
-            this.AboutProg.Text = "О программе";
             // 
             // Manual
             // 
@@ -166,7 +158,7 @@ namespace ViewGUI
             // 
             this.CheckedListBoxEnObj.FormattingEnabled = true;
             this.CheckedListBoxEnObj.Location = new System.Drawing.Point(8, 25);
-            this.CheckedListBoxEnObj.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CheckedListBoxEnObj.Margin = new System.Windows.Forms.Padding(4);
             this.CheckedListBoxEnObj.Name = "CheckedListBoxEnObj";
             this.CheckedListBoxEnObj.Size = new System.Drawing.Size(441, 378);
             this.CheckedListBoxEnObj.TabIndex = 2;
@@ -178,7 +170,7 @@ namespace ViewGUI
             this.AddEnObjButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.AddEnObjButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddEnObjButton.Location = new System.Drawing.Point(16, 47);
-            this.AddEnObjButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddEnObjButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddEnObjButton.Name = "AddEnObjButton";
             this.AddEnObjButton.Size = new System.Drawing.Size(459, 34);
             this.AddEnObjButton.TabIndex = 3;
@@ -192,7 +184,7 @@ namespace ViewGUI
             this.SelectionOfRequestedData.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.SelectionOfRequestedData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SelectionOfRequestedData.Location = new System.Drawing.Point(496, 199);
-            this.SelectionOfRequestedData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SelectionOfRequestedData.Margin = new System.Windows.Forms.Padding(4);
             this.SelectionOfRequestedData.Name = "SelectionOfRequestedData";
             this.SelectionOfRequestedData.Size = new System.Drawing.Size(317, 62);
             this.SelectionOfRequestedData.TabIndex = 4;
@@ -206,7 +198,7 @@ namespace ViewGUI
             this.ChoiceOfSchema.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ChoiceOfSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ChoiceOfSchema.Location = new System.Drawing.Point(496, 281);
-            this.ChoiceOfSchema.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChoiceOfSchema.Margin = new System.Windows.Forms.Padding(4);
             this.ChoiceOfSchema.Name = "ChoiceOfSchema";
             this.ChoiceOfSchema.Size = new System.Drawing.Size(317, 62);
             this.ChoiceOfSchema.TabIndex = 5;
@@ -220,7 +212,7 @@ namespace ViewGUI
             this.ChoiceOfRegType.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ChoiceOfRegType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ChoiceOfRegType.Location = new System.Drawing.Point(497, 363);
-            this.ChoiceOfRegType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChoiceOfRegType.Margin = new System.Windows.Forms.Padding(4);
             this.ChoiceOfRegType.Name = "ChoiceOfRegType";
             this.ChoiceOfRegType.Size = new System.Drawing.Size(317, 62);
             this.ChoiceOfRegType.TabIndex = 6;
@@ -232,9 +224,9 @@ namespace ViewGUI
             // 
             this.groupBox1.Controls.Add(this.CheckedListBoxEnObj);
             this.groupBox1.Location = new System.Drawing.Point(16, 89);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(459, 431);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
@@ -270,7 +262,7 @@ namespace ViewGUI
             this.SensitivityFactor.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.SensitivityFactor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SensitivityFactor.Location = new System.Drawing.Point(497, 444);
-            this.SensitivityFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SensitivityFactor.Margin = new System.Windows.Forms.Padding(4);
             this.SensitivityFactor.Name = "SensitivityFactor";
             this.SensitivityFactor.Size = new System.Drawing.Size(317, 62);
             this.SensitivityFactor.TabIndex = 10;
@@ -294,7 +286,7 @@ namespace ViewGUI
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.ShowIcon = false;
@@ -319,7 +311,6 @@ namespace ViewGUI
         private System.Windows.Forms.ToolStripMenuItem ConnectDB;
         private System.Windows.Forms.ToolStripMenuItem AddEditDataDB;
         private System.Windows.Forms.ToolStripMenuItem Documentation;
-        private System.Windows.Forms.ToolStripMenuItem AboutProg;
         private System.Windows.Forms.ToolStripMenuItem Manual;
         private System.Windows.Forms.ToolStripMenuItem ExternalSystems;
         private System.Windows.Forms.ToolStripMenuItem OikDB;
