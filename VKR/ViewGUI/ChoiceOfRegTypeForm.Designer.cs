@@ -42,7 +42,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(447, 92);
+            this.groupBox1.Size = new System.Drawing.Size(531, 92);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Выбор типа регулирования";
@@ -53,7 +53,7 @@
             this.comboBoxReg.Location = new System.Drawing.Point(8, 36);
             this.comboBoxReg.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxReg.Name = "comboBoxReg";
-            this.comboBoxReg.Size = new System.Drawing.Size(257, 24);
+            this.comboBoxReg.Size = new System.Drawing.Size(335, 24);
             this.comboBoxReg.TabIndex = 0;
             // 
             // OK
@@ -75,7 +75,7 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Location = new System.Drawing.Point(285, 160);
+            this.ButtonClose.Location = new System.Drawing.Point(370, 160);
             this.ButtonClose.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(177, 42);
@@ -88,10 +88,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(479, 219);
+            this.ClientSize = new System.Drawing.Size(560, 219);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "ChoiceOfRegTypeForm";

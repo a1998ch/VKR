@@ -41,7 +41,7 @@
             this.OK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OK.Location = new System.Drawing.Point(16, 138);
-            this.OK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OK.Margin = new System.Windows.Forms.Padding(4);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(177, 42);
             this.OK.TabIndex = 0;
@@ -54,8 +54,8 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Location = new System.Drawing.Point(243, 138);
-            this.ButtonClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ButtonClose.Location = new System.Drawing.Point(373, 139);
+            this.ButtonClose.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(177, 42);
             this.ButtonClose.TabIndex = 1;
@@ -67,19 +67,19 @@
             // 
             this.comboBoxScheme.FormattingEnabled = true;
             this.comboBoxScheme.Location = new System.Drawing.Point(8, 36);
-            this.comboBoxScheme.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxScheme.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxScheme.Name = "comboBoxScheme";
-            this.comboBoxScheme.Size = new System.Drawing.Size(257, 24);
+            this.comboBoxScheme.Size = new System.Drawing.Size(355, 24);
             this.comboBoxScheme.TabIndex = 2;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.comboBoxScheme);
             this.groupBox1.Location = new System.Drawing.Point(29, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(391, 85);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(521, 85);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Выбор схемно-режимной ситуации";
@@ -88,11 +88,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 194);
+            this.ClientSize = new System.Drawing.Size(563, 194);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.OK);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "ChoiceOfSchemaForm";
             this.ShowIcon = false;
