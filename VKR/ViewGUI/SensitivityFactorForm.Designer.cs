@@ -37,7 +37,7 @@
             // SensitivityFactorTextBox
             // 
             this.SensitivityFactorTextBox.Location = new System.Drawing.Point(401, 7);
-            this.SensitivityFactorTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SensitivityFactorTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.SensitivityFactorTextBox.Name = "SensitivityFactorTextBox";
             this.SensitivityFactorTextBox.Size = new System.Drawing.Size(132, 22);
             this.SensitivityFactorTextBox.TabIndex = 0;
@@ -48,9 +48,9 @@
             this.label1.Location = new System.Drawing.Point(16, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(313, 16);
+            this.label1.Size = new System.Drawing.Size(366, 16);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Коэффициент чувствительности напряжения: ";
+            this.label1.Text = "Коэффициент чувствительности напряжения, кВ/МВт: ";
             // 
             // ButtonOK
             // 
@@ -58,7 +58,7 @@
             this.ButtonOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonOK.Location = new System.Drawing.Point(16, 74);
-            this.ButtonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ButtonOK.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonOK.Name = "ButtonOK";
             this.ButtonOK.Size = new System.Drawing.Size(177, 42);
             this.ButtonOK.TabIndex = 2;
@@ -72,7 +72,7 @@
             this.ButtonCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.ButtonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonCancel.Location = new System.Drawing.Point(357, 74);
-            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(177, 42);
             this.ButtonCancel.TabIndex = 3;
@@ -90,7 +90,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SensitivityFactorTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "SensitivityFactorForm";
             this.ShowIcon = false;
