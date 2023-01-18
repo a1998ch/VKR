@@ -725,7 +725,7 @@ namespace ViewGUI
 
         private void ManualClick(object sender, EventArgs e)
         {
-            string path = @"C:\Users\stdAdmin.PL01N\Desktop\Чугуевский А. С\VKR\tam.pdf";
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Руководство пользователя.pdf");
 
             try
             {
